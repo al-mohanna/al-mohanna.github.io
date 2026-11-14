@@ -717,7 +717,7 @@ function sheetItem(it){
   <span class="eyebrow" style="position:relative">${TYPES[it.t].l}</span><div class="sh-title">${titleOf(it)}</div><div class="sh-sub">${subOf(it).replace('class="fl"','style="color:#e6c77f"')}</div>
   </div>
   <div class="sh-body"><div class="player"><iframe src="https://www.youtube-nocookie.com/embed/${it.id}?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="تشغيل"></iframe></div>
-  ${AUD.has(it.id)?`<div class="aud"><span class="lbl">المقطع الصوتي</span><audio controls preload="none" src="${AUDURL(it.id)}"></audio><a class="fl-btn" href="${AUDURL(it.id)}" download>تحميل الصوت (m4a)</a></div>`:`<div class="fine">المقطع الصوتي يُجهَّز تلقائياً ويظهر هنا قريباً</div>`}
+  ${AUD.has(it.id)?`<div class="aud"><span class="lbl">المقطع الصوتي</span><audio controls preload="none" src="${AUDURL(it.id)}"></audio><a class="fl-btn" href="${AUDURL(it.id)}" download>تحميل الصوت (m4a)</a></div>`:''}
   <div class="c-act2"><a class="btn-gold wide" href="${u}">${I('play')}استمع على يوتيوب</a><button class="btn-ghost wide" data-share="${it.id}">مشاركة الرابط</button></div>
   <div class="rows">${it.h||it.year?`<div><small>تاريخ التلاوة</small><b>${dateOf(it)}</b></div>`:''}<div><small>تاريخ الرفع (ميلادي)</small><b>${it.up?fmtG(it.up):'—'}</b></div><div><small>المدة</small><b>${it.dur}</b></div></div>
   <div><span class="lbl">الرابط المختصر</span><div class="short"><code>${u.replace('https://','')}</code><button data-copy="${u}">نسخ</button></div></div>
