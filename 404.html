@@ -133,8 +133,8 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
 .src{display:inline-grid;place-items:center;width:26px;height:26px}
 .src svg{width:22px;height:22px}
 .src b{font-size:15px;font-weight:700}
-.c-title{font-family:var(--fq);font-size:25px;font-weight:700;line-height:1.35}
-.c-sub{color:var(--muted);font-size:14px;display:flex;gap:6px;align-items:center}
+.c-title{font-family:var(--fq);font-size:21px;font-weight:700;line-height:1.35}
+.c-sub{color:var(--gold);font-size:13.5px;flex-wrap:wrap;display:flex;gap:6px;align-items:center}
 .c-sub .fl{color:var(--gold);font-weight:600}
 .c-meta{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--muted)}
 .c-meta span{display:inline-flex;gap:5px;align-items:center}
@@ -294,6 +294,7 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
 .deco{font-family:'Aref Ruqaa',serif}
 .fl-3{grid-template-columns:repeat(3,1fr)}
 .mfol{display:none}
+.aud{display:flex;flex-direction:column;gap:8px}.aud audio{width:100%}
 .surahs{position:relative;font-size:13.5px;color:#e6c77f;margin-top:8px;line-height:1.7}
 .c-act2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 @media(max-width:1100px){.tiles{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}}
@@ -433,6 +434,8 @@ const fmtH=h=>`${ar(h.d)} ${HM[h.m-1]} ${ar(h.y)}هـ`;
 
 /* ---------- real data (YouTube @khalid_almihana) ---------- */
 const DATA=await fetch('/data.json',{cache:'no-cache'}).then(r=>r.json());
+const AUD=new Set(await fetch('/audio.json',{cache:'no-cache'}).then(r=>r.ok?r.json():[]).catch(()=>[]));
+const AUDURL=id=>`https://github.com/almohannakhaled-cloud/almohannakhaled-cloud.github.io/releases/download/audio/${id}.m4a`;
 const OVR=await fetch('/overrides.json',{cache:'no-cache'}).then(r=>r.ok?r.json():{}).catch(()=>({}));
 const RAW=DATA.items.filter(r=>!(OVR[r[0]]&&OVR[r[0]].hide)).map(r=>{const o=OVR[r[0]];if(!o)return r;const n=r.slice();if(o.t)n[1]=o.t;if(o.y!==undefined){n[2]=o.y;n[3]=o.m||0;n[4]=o.d||0}if(o.s)n[5]=o.s;if(o.title)n[8]=o.title;return n}).map(r=>{if(['fajr','maghrib','isha','taraweeh','other'].includes(r[1])){const sv=(r[5]||[]).slice();if(!sv.includes(1))sv.push(1);sv.sort((a,b)=>a-b);r[5]=sv}return r});
 const SYNC=DATA.synced;
@@ -467,22 +470,23 @@ let SQ='';
 
 /* ---------- components ---------- */
 const quoteOf=t=>{const m=t.match(/[«"“]\s*([^»"”]{6,60}?)\s*[»"”]/);return m?m[1].replace(/\.+$/,''):''};
+const PR=['fajr','maghrib','isha','jumuah','taraweeh','other','fitr','adha','istisqa','kusuf'];
+const shownS=it=>it.s.length>1?it.s.filter(n=>n!==1):it.s;
 function titleOf(it){
   if(it.t==='khutbah')return it.topic||'خطبة الجمعة';
-  const s=it.s;
-  if(s.length===1)return 'سورة '+SURAH[s[0]-1];
-  if(s.length===2)return 'سورتا '+SURAH[s[0]-1]+' و'+SURAH[s[1]-1];
-  if(s.length>2)return 'من '+SURAH[s[0]-1]+' إلى '+SURAH[s[s.length-1]-1];
-  const q=quoteOf(it.title);if(q)return '«'+q+'»';
-  if(it.t==='collection'||it.t==='lecture'||it.t==='other')return it.title.split(/\s[|–-]\s|\|\|/)[0].replace(/#/g,'').slice(0,70);
-  return TYPES[it.t].l;
+  if(it.t==='murattal')return it.s.length?'سورة '+SURAH[it.s[0]-1]:it.title.split('||')[0].trim();
+  if(it.t==='collection'||it.t==='lecture')return it.title.split(/\s[|–-]\s|\|\|/)[0].replace(/#/g,'').slice(0,70);
+  const S=shownS(it);
+  if(it.full&&S.length===1)return 'سورة '+SURAH[S[0]-1]+' كاملة';
+  const L=it.t==='taraweeh'?'التراويح':TYPES[it.t].l;
+  return it.h?`${L} · ${ar(it.h.d)} ${HM[it.h.m-1]} ${ar(it.h.y)}`:L;
 }
 function subOf(it){
-  if(it.full)return '<span class="fl">✦ السورة كاملة</span>';
-  if(it.t==='taraweeh'&&it.h)return `ليلة ${ar(it.h.d)} رمضان`;
+  const S=shownS(it);
   if(it.t==='khutbah')return 'خطبة الجمعة';
-  if(it.t==='collection'||it.t==='lecture'||it.t==='other')return TYPES[it.t].l;
-  return it.s.length?TYPES[it.t].l:'من '+TYPES[it.t].l;
+  if(it.t==='collection'||it.t==='lecture')return S.length?S.slice(0,6).map(n=>SURAH[n-1]).join('، ')+(S.length>6?' …':''):TYPES[it.t].l;
+  if(!S.length){const q=quoteOf(it.title);return q?'«'+q+'»':'السور تُضاف قريباً'}
+  return (S.length===1?'سورة ':'')+S.map(n=>SURAH[n-1]).join(' · ');
 }
 const dateOf=it=>it.h?fmtH(it.h):it.month&&it.year?`${HM[it.month-1]} ${ar(it.year)}هـ`:it.year?`${ar(it.year)}هـ · بدون يوم محدد`:'غير مؤرّخ';
 const shortUrl=it=>it.h?`${location.host}/${it.h.y}/${pad(it.h.m)}/${pad(it.h.d)}/${it.t}`:`${location.host}/v/${it.id}`;
@@ -707,12 +711,13 @@ let tt;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('sh
 function openSheet(html){SH.innerHTML=html;SH.scrollTop=0;OV.classList.add('open')}
 function closeSheet(){OV.classList.remove('open');setTimeout(()=>{if(!OV.classList.contains('open'))SH.innerHTML=''},500)}
 function sheetItem(it){
-  const u=ytUrl(it);
+  const u=ytUrl(it);const su=location.host+'/v/'+it.id;
   const sn=it.s.length?it.s.map(n=>SURAH[n-1]).join(' · '):'';
   openSheet(`<div class="sh-hero"><svg class="pat">${PATf()}</svg><div class="grab"></div><button class="x" data-close aria-label="إغلاق">${I('close')}</button>
-  <span class="eyebrow" style="position:relative">${TYPES[it.t].l}</span><div class="sh-title">${titleOf(it)}</div><div class="sh-sub">${subOf(it).replace('class="fl"','style="color:#e6c77f"')}</div>${sn?`<div class="surahs">${sn}</div>`:''}
+  <span class="eyebrow" style="position:relative">${TYPES[it.t].l}</span><div class="sh-title">${titleOf(it)}</div><div class="sh-sub">${subOf(it).replace('class="fl"','style="color:#e6c77f"')}</div>
   </div>
   <div class="sh-body"><div class="player"><iframe src="https://www.youtube-nocookie.com/embed/${it.id}?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="تشغيل"></iframe></div>
+  ${AUD.has(it.id)?`<div class="aud"><span class="lbl">المقطع الصوتي</span><audio controls preload="none" src="${AUDURL(it.id)}"></audio><a class="fl-btn" href="${AUDURL(it.id)}" download>تحميل الصوت (m4a)</a></div>`:`<div class="fine">المقطع الصوتي يُجهَّز تلقائياً ويظهر هنا قريباً</div>`}
   <div class="c-act2"><a class="btn-gold wide" href="${u}">${I('play')}استمع على يوتيوب</a><button class="btn-ghost wide" data-share="${it.id}">مشاركة الرابط</button></div>
   <div class="rows">${it.h||it.year?`<div><small>تاريخ التلاوة</small><b>${dateOf(it)}</b></div>`:''}<div><small>تاريخ الرفع (ميلادي)</small><b>${it.up?fmtG(it.up):'—'}</b></div><div><small>المدة</small><b>${it.dur}</b></div></div>
   <div><span class="lbl">الرابط المختصر</span><div class="short"><code>${u.replace('https://','')}</code><button data-copy="${u}">نسخ</button></div></div>
