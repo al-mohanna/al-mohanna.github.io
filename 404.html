@@ -286,6 +286,10 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
 .toast{position:fixed;left:50%;bottom:30px;transform:translate(-50%,20px);opacity:0;background:var(--text);color:var(--bg);padding:11px 18px;border-radius:14px;font-size:14px;font-weight:500;transition:opacity .4s var(--ease),transform .4s var(--ease);z-index:60;pointer-events:none;max-width:90vw;text-align:center}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
+.fl-link{text-decoration:none;color:inherit}
+.follow{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.fl-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fl-btn{display:block;text-align:center;padding:12px 10px;border-radius:14px;border:1px solid var(--gold);color:var(--gold);font-weight:700;font-size:14px}
 @media(max-width:1100px){.tiles{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:900px){
  .side{display:none}.main{margin-right:0}.bnav{display:grid}
@@ -302,6 +306,15 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
  .sgrid{grid-template-columns:repeat(2,1fr)}
  .late{padding:16px;border-radius:22px}
  .sec{margin-top:30px}
+ body{font-size:16px;line-height:1.7}
+ .sh-title{font-size:23px;line-height:1.5}
+ .sh-sub{font-size:14.5px}
+ .rows b{font-size:15.5px}
+ .rows small{font-size:12.5px}
+ .fl-btn{padding:15px 10px;font-size:15px}
+ .short code{font-size:12.5px}
+ .bnav a{min-height:56px;font-size:13.5px;font-weight:600}
+ .btn-gold{min-height:52px;font-size:16px}
 }
 @media(min-width:901px){.ov{align-items:center}.sheet{border-radius:30px;transform:translateY(30px) scale(.96);opacity:0;transition:transform .5s var(--ease),opacity .35s}.ov.open .sheet{opacity:1;transform:none}.grab{display:none}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
@@ -327,7 +340,8 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
   <div class="srcbox"><div class="sbt">مصادر الأرشيف</div>
     <div class="sr"><i></i>يوتيوب<span id="ytc"></span></div>
     <div class="sr"><i style="background:#8a8f8c;animation:none"></i>إكس<span>قريباً</span></div>
-    <div class="sr"><i style="background:#8a8f8c;animation:none"></i>تليجرام<span>قريباً</span></div>
+    <a class="sr fl-link" href="https://t.me/KhaledAlMuhanna" target="_blank" rel="noopener"><i style="background:#2aa3d9;animation:none"></i>تليجرام<span>تابعنا</span></a>
+    <a class="sr fl-link" href="https://chat.whatsapp.com/Hy3d4T0zxmU74ON0d6fLPF" target="_blank" rel="noopener"><i style="background:#25d366;animation:none"></i>واتساب<span>انضم للجروب</span></a>
     <small id="sync"></small></div>
 </aside>
 <div class="main">
@@ -682,7 +696,8 @@ function sheetItem(it){
   <div class="sh-body"><div class="player"><iframe src="https://www.youtube-nocookie.com/embed/${it.id}?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="تشغيل"></iframe></div><div class="rows"><div><small>التاريخ الهجري</small><b>${dateOf(it)}</b></div><div><small>التاريخ الميلادي</small><b>${it.d?fmtG(it.d):'—'}</b></div><div><small>تاريخ الرفع</small><b>${it.up?fmtG(it.up):'—'}</b></div><div><small>المدة</small><b>${it.dur}</b></div></div>
   <div><span class="lbl">عنوان المقطع الأصلي</span><div style="font-size:14px;line-height:1.8">${it.title.replace(/</g,'&lt;')}</div></div>
   <div><span class="lbl">الرابط المختصر للمشاركة</span><div class="short"><code>${u}</code><button data-copy="https://${u}">نسخ</button></div></div>
-  <a class="btn-gold wide" href="${ytUrl(it)}" target="_blank" rel="noopener">${I('play')}استمع على يوتيوب</a></div>`);
+  <a class="btn-gold wide" href="${ytUrl(it)}" target="_blank" rel="noopener">${I('play')}استمع على يوتيوب</a>
+  <div class="follow"><span class="lbl">تابعونا</span><div class="fl-row"><a class="fl-btn" href="https://t.me/KhaledAlMuhanna" target="_blank" rel="noopener">قناة التليجرام</a><a class="fl-btn" href="https://chat.whatsapp.com/Hy3d4T0zxmU74ON0d6fLPF" target="_blank" rel="noopener">جروب الواتساب</a></div></div></div>`);
 }
 function sheetMur(n){
   const v=MUR[n];if(!v)return;sheetItem(v);
