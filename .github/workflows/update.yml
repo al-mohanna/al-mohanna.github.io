@@ -17,9 +17,12 @@ jobs:
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: python scripts/fetch_youtube.py
+      - name: Link Telegram posts
+        continue-on-error: true
+        run: python scripts/telegram.py
       - name: Commit if changed
         run: |
           git config user.name "mihana-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data.json
-          git diff --cached --quiet || (git commit -m "تحديث تلقائي للتلاوات" && git push)
+          git add data.json telegram.json
+          git diff --cached --quiet || (git commit -m "تحديث تلقائي للتلاوات" && git pull --rebase && git push)
