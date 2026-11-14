@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@700&display=swap" rel="stylesheet">
 <meta name="theme-color" content="#0a3527">
 <base href="/">
 <meta name="description" content="مكتبة ذكية لتلاوات وخطب فضيلة الشيخ د. خالد المهنا إمام المسجد النبوي، مرتبة بالصلاة والتاريخ الهجري.">
@@ -290,6 +291,11 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
 .follow{display:flex;flex-direction:column;gap:8px;margin-top:4px}
 .fl-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .fl-btn{display:block;text-align:center;padding:12px 10px;border-radius:14px;border:1px solid var(--gold);color:var(--gold);font-weight:700;font-size:14px}
+.deco{font-family:'Aref Ruqaa',serif}
+.fl-3{grid-template-columns:repeat(3,1fr)}
+.mfol{display:none}
+.surahs{position:relative;font-size:13.5px;color:#e6c77f;margin-top:8px;line-height:1.7}
+.c-act2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 @media(max-width:1100px){.tiles{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:900px){
  .side{display:none}.main{margin-right:0}.bnav{display:grid}
@@ -313,6 +319,8 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
  .rows small{font-size:12.5px}
  .fl-btn{padding:15px 10px;font-size:15px}
  .short code{font-size:12.5px}
+ .mfol{display:flex;gap:6px}.mfol .fl-btn{padding:6px 10px;font-size:12px;border-radius:12px}
+ .c-act2{grid-template-columns:1fr}
  .bnav a{min-height:56px;font-size:13.5px;font-weight:600}
  .btn-gold{min-height:52px;font-size:16px}
 }
@@ -340,13 +348,14 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
   <div class="srcbox"><div class="sbt">مصادر الأرشيف</div>
     <div class="sr"><i></i>يوتيوب<span id="ytc"></span></div>
     <div class="sr"><i style="background:#8a8f8c;animation:none"></i>إكس<span>قريباً</span></div>
-    <a class="sr fl-link" href="https://t.me/KhaledAlMuhanna" target="_blank" rel="noopener"><i style="background:#2aa3d9;animation:none"></i>تليجرام<span>تابعنا</span></a>
-    <a class="sr fl-link" href="https://chat.whatsapp.com/Hy3d4T0zxmU74ON0d6fLPF" target="_blank" rel="noopener"><i style="background:#25d366;animation:none"></i>واتساب<span>انضم للجروب</span></a>
+    <a class="sr fl-link" href="https://t.me/KhaledAlMuhanna"><i style="background:#2aa3d9;animation:none"></i>تليجرام<span>تابعنا</span></a>
+    <a class="sr fl-link" href="https://chat.whatsapp.com/Hy3d4T0zxmU74ON0d6fLPF"><i style="background:#25d366;animation:none"></i>واتساب<span>انضم للجروب</span></a>
     <small id="sync"></small></div>
 </aside>
 <div class="main">
   <header class="top">
     <a class="brand" href="#home"><svg class="lg" viewBox="0 0 48 48"></svg>تلاوات المهنا</a>
+    <div class="mfol"><a class="fl-btn" href="https://t.me/KhaledAlMuhanna">تليجرام</a><a class="fl-btn" href="https://chat.whatsapp.com/Hy3d4T0zxmU74ON0d6fLPF">واتساب</a></div>
     <div class="pt" id="pt"></div>
     <div class="sp"></div>
     <a class="tb" href="#search" aria-label="بحث" id="tbS"></a>
@@ -431,7 +440,7 @@ const TYPES={fajr:{l:'صلاة الفجر',c:'p'},maghrib:{l:'صلاة المغ�
 const H2G={};
 for(let t=Date.UTC(2018,8,1);t<=Date.UTC(2027,0,31);t+=864e5){const iso=isoOf(t),h=hijri(iso);if(h.y>=1440)H2G[`${h.y}-${h.m}-${h.d}`]=iso}
 const g2h=(y,m,d)=>{for(let k=d;k>=Math.max(1,d-1);k--){const g=H2G[`${y}-${m}-${k}`];if(g)return k===d?g:null}return null};
-const ALLX=RAW.map((r,o)=>{const [id,t,y,m,d,s,full,dur,title,topic,up]=r;const it={id,o,t,s:s||[],full:!!full,dur,title,topic,up};
+const ALLX=RAW.map((r,o)=>{const [id,t,y,m,d,s,full,dur,title,topic,up]=r;const it={id,o,t,s:s||[],full:!!full,dur,title,topic,up,views:r[11]||0};
   if(y&&m&&d&&y>=1440){const g=g2h(y,m,d);if(g){it.d=g;it.h={y,m,d}}}
   if(!it.h&&y)it.year=y; if(!it.h&&y&&m)it.month=m;
   const p=dur.split(':').map(Number);it.sec=p.reduce((a,b)=>a*60+b,0);it.mins=Math.max(1,Math.round(it.sec/60));
@@ -485,7 +494,7 @@ function card(it,i=0,cls=''){
   <div class="c-top"><span class="badge b-${T.c}">${T.l}</span><span class="src" title="يوتيوب">${SRCI.yt}</span></div>
   <h3 class="c-title">${titleOf(it)}</h3>
   <div class="c-sub">${subOf(it)}</div>
-  <div class="c-meta"><span>${I('cal')}${dateOf(it)}</span>${it.d?`<span>${fmtG(it.d)}</span>`:''}<span>${I('clock')}${it.sec>=3600?it.dur:ar(it.mins)+' د'}</span></div>
+  <div class="c-meta">${it.h||it.year?`<span>${I('cal')}${dateOf(it)}</span>`:''}${it.up?`<span>رُفع ${fmtG(it.up)}</span>`:''}<span>${I('clock')}${it.sec>=3600?it.dur:ar(it.mins)+' د'}</span></div>
   <div class="c-act"><button class="play" data-play="${it.id}">${I('play')}<span>استماع</span></button><button class="ib" data-share="${it.id}" aria-label="نسخ الرابط المختصر">${I('share')}</button><button class="ib fav ${FAV.has(it.id)?'on':''}" data-fav="${it.id}" aria-label="المفضلة">${I('heart')}</button></div>
   </article>`;
 }
@@ -496,6 +505,13 @@ const empty=(t,p,ic='book')=>`<div class="empty">${I(ic)}<b>${t}</b>${p||''}</di
 const cnt=t=>ITEMS.filter(x=>x.t===t).length;
 
 /* ---------- views ---------- */
+function featSec(){
+  const top=ALLX.filter(x=>x.views>0).sort((a,b)=>b.views-a.views).slice(0,20);
+  const base=top.length?top:ITEMS.slice(0,20);
+  const pick=base.map(x=>[Math.random(),x]).sort((a,b)=>a[0]-b[0]).slice(0,6).map(p=>p[1]);
+  return `<section class="sec"><div class="sec-h"><h2>الأكثر استماعاً</h2><span class="muted" style="font-size:13px">تتغيّر مع كل زيارة</span></div>${grid(pick,'rows-scroll')}</section>`;
+}
+const followSec=()=>`<section class="sec"><div class="sec-h"><h2>تابعونا</h2></div><div class="fl-row fl-3"><a class="fl-btn" href="https://www.youtube.com/@khalid_almihana">يوتيوب</a><a class="fl-btn" href="https://t.me/KhaledAlMuhanna">تليجرام</a><a class="fl-btn" href="https://chat.whatsapp.com/Hy3d4T0zxmU74ON0d6fLPF">واتساب</a></div></section>`;
 function vHome(){
   const L=SORTED[0];
   const recs=ALLX.filter(x=>!['khutbah','lecture'].includes(x.t)).length;
@@ -516,7 +532,7 @@ function vHome(){
   return `<section class="hero"><svg class="pat">${PATf()}</svg>
     <div class="hero-in"><div>
       <span class="eyebrow">${I('mosque')}إمام وخطيب المسجد النبوي الشريف</span>
-      <h1>تلاوات فضيلة الشيخ<br><em>د. خالد المهنا</em></h1>
+      <h1 class="deco">تلاوات الشيخ<br><em>د. خالد سليمان المهنا</em></h1>
       <p>مكتبة ذكية تجمع التلاوات والخطب من قناة الشيخ على يوتيوب، وترتّبها حسب الصلاة والمناسبة والتاريخ الهجري.</p>
       <div class="cta"><a href="#date" class="btn-gold">${I('cal')}ابحث بالتاريخ</a><a href="#prayers" class="btn-ghost">تصفّح الصلوات</a></div>
     </div>
@@ -524,8 +540,9 @@ function vHome(){
     <div class="stats"><div><b data-count="${recs}">${ar(recs)}</b><small>تلاوة</small></div><div><b data-count="${kh}">${ar(kh)}</b><small>خطبة جمعة</small></div><div><b data-count="${sur}">${ar(sur)}</b><small>سورة مُتلوّة</small></div><div><b data-count="${years}">${ar(years)}</b><small>سنوات أرشيف</small></div></div>
   </section>
   <section class="tiles">${tiles.map(([h,ic,t,s,n],i)=>`<a class="tile" href="${h}" style="animation:up .55s var(--ease) both;animation-delay:${i*40}ms"><div class="ti">${I(ic)}</div>${n!=null?`<span class="n">${ar(n)}</span>`:''}<b>${t}</b><small>${s}</small></a>`).join('')}</section>
+  ${featSec()}
   <section class="sec"><div class="sec-h"><h2>أحدث التلاوات</h2><a href="#archive">الأرشيف كاملاً ›</a></div>${grid(SORTED.slice(0,8),'rows-scroll')}</section>
-  ${near.length?`<section class="sec"><div class="sec-h"><h2>في مثل هذه الأيام</h2><span class="muted" style="font-size:13px">${ar(th.d)} ${HM[th.m-1]} من الأعوام السابقة</span></div>${grid(near,'rows-scroll')}</section>`:''}`;
+  ${near.length?`<section class="sec"><div class="sec-h"><h2>في مثل هذه الأيام</h2><span class="muted" style="font-size:13px">${ar(th.d)} ${HM[th.m-1]} من الأعوام السابقة</span></div>${grid(near,'rows-scroll')}</section>`:''}${followSec()}`;
 }
 const GROUPS={
   prayers:{t:'الصلوات الجهرية',p:'تلاوات الصلوات الجهرية من الأحدث للأقدم، ولكل صلاة قسم مستقل.',tabs:[['fajr','الفجر'],['maghrib','المغرب'],['isha','العشاء']]},
@@ -690,15 +707,16 @@ let tt;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('sh
 function openSheet(html){SH.innerHTML=html;SH.scrollTop=0;OV.classList.add('open')}
 function closeSheet(){OV.classList.remove('open');setTimeout(()=>{if(!OV.classList.contains('open'))SH.innerHTML=''},500)}
 function sheetItem(it){
-  const u=shortUrl(it);
+  const u=ytUrl(it);
+  const sn=it.s.length?it.s.map(n=>SURAH[n-1]).join(' · '):'';
   openSheet(`<div class="sh-hero"><svg class="pat">${PATf()}</svg><div class="grab"></div><button class="x" data-close aria-label="إغلاق">${I('close')}</button>
-  <span class="eyebrow" style="position:relative">${TYPES[it.t].l}</span><div class="sh-title">${titleOf(it)}</div><div class="sh-sub">${subOf(it).replace('class="fl"','style="color:#e6c77f"')}</div>
+  <span class="eyebrow" style="position:relative">${TYPES[it.t].l}</span><div class="sh-title">${titleOf(it)}</div><div class="sh-sub">${subOf(it).replace('class="fl"','style="color:#e6c77f"')}</div>${sn?`<div class="surahs">${sn}</div>`:''}
   </div>
-  <div class="sh-body"><div class="player"><iframe src="https://www.youtube-nocookie.com/embed/${it.id}?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="تشغيل"></iframe></div><div class="rows"><div><small>التاريخ الهجري</small><b>${dateOf(it)}</b></div><div><small>التاريخ الميلادي</small><b>${it.d?fmtG(it.d):'—'}</b></div><div><small>تاريخ الرفع</small><b>${it.up?fmtG(it.up):'—'}</b></div><div><small>المدة</small><b>${it.dur}</b></div></div>
-  <div><span class="lbl">عنوان المقطع الأصلي</span><div style="font-size:14px;line-height:1.8">${it.title.replace(/</g,'&lt;')}</div></div>
-  <div><span class="lbl">الرابط المختصر للمشاركة</span><div class="short"><code>${u}</code><button data-copy="https://${u}">نسخ</button></div></div>
-  <a class="btn-gold wide" href="${ytUrl(it)}" target="_blank" rel="noopener">${I('play')}استمع على يوتيوب</a>
-  <div class="follow"><span class="lbl">تابعونا</span><div class="fl-row"><a class="fl-btn" href="https://t.me/KhaledAlMuhanna" target="_blank" rel="noopener">قناة التليجرام</a><a class="fl-btn" href="https://chat.whatsapp.com/Hy3d4T0zxmU74ON0d6fLPF" target="_blank" rel="noopener">جروب الواتساب</a></div></div></div>`);
+  <div class="sh-body"><div class="player"><iframe src="https://www.youtube-nocookie.com/embed/${it.id}?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="تشغيل"></iframe></div>
+  <div class="c-act2"><a class="btn-gold wide" href="${u}">${I('play')}استمع على يوتيوب</a><button class="btn-ghost wide" data-share="${it.id}">مشاركة الرابط</button></div>
+  <div class="rows">${it.h||it.year?`<div><small>تاريخ التلاوة</small><b>${dateOf(it)}</b></div>`:''}<div><small>تاريخ الرفع (ميلادي)</small><b>${it.up?fmtG(it.up):'—'}</b></div><div><small>المدة</small><b>${it.dur}</b></div></div>
+  <div><span class="lbl">الرابط المختصر</span><div class="short"><code>${u.replace('https://','')}</code><button data-copy="${u}">نسخ</button></div></div>
+  <div class="follow"><span class="lbl">تابعونا</span><div class="fl-row"><a class="fl-btn" href="https://t.me/KhaledAlMuhanna">قناة التليجرام</a><a class="fl-btn" href="https://chat.whatsapp.com/Hy3d4T0zxmU74ON0d6fLPF">جروب الواتساب</a></div></div></div>`);
 }
 function sheetMur(n){
   const v=MUR[n];if(!v)return;sheetItem(v);
@@ -712,7 +730,7 @@ document.addEventListener('click',e=>{
   if(!t)return;
   const d=t.dataset;
   if(d.play){sheetItem(BYID[d.play])}
-  else if(d.share){const it=BYID[d.share];copy('https://'+shortUrl(it))}
+  else if(d.share){const it=BYID[d.share];if(navigator.share)navigator.share({title:titleOf(it),url:ytUrl(it)}).catch(()=>{});else copy(ytUrl(it))}
   else if(d.fav){const id=d.fav;FAV.has(id)?FAV.delete(id):FAV.add(id);saveFav();t.classList.toggle('on',FAV.has(id));t.classList.remove('pop');void t.offsetWidth;t.classList.add('pop');toast(FAV.has(id)?'أُضيفت إلى المفضلة':'أُزيلت من المفضلة');if(location.hash==='#fav')render(false)}
   else if(d.more){const k=d.more;LIM[k]=(LIM[k]||24)+24;t.closest('[data-list]').innerHTML=listHTML(k)}
   else if(d.mur){sheetMur(+d.mur)}

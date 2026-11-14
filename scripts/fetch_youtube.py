@@ -32,15 +32,18 @@ def main():
         for it in r['items']:
             sn = it['snippet']
             if sn.get('title') in ('Private video', 'Deleted video'): continue
-            vids.append({'id': sn['resourceId']['videoId'], 'title': sn['title'], 'up': sn['publishedAt'][:10]})
+            vids.append({'id': sn['resourceId']['videoId'], 'title': sn['title'], 'up': sn['publishedAt'][:10], 'views': 0})
         token = r.get('nextPageToken')
         if not token: break
-    durs = {}
+    durs, views = {}, {}
     for i in range(0, len(vids), 50):
         ids = ','.join(v['id'] for v in vids[i:i+50])
-        for it in get('videos', part='contentDetails', id=ids)['items']:
+        for it in get('videos', part='contentDetails,statistics', id=ids)['items']:
             durs[it['id']] = iso_dur(it['contentDetails'].get('duration'))
-    for v in vids: v['dur'] = durs.get(v['id'], '0:00')
+            views[it['id']] = int(it.get('statistics', {}).get('viewCount', 0) or 0)
+    for v in vids:
+        v['dur'] = durs.get(v['id'], '0:00')
+        v['views'] = views.get(v['id'], 0)
     vids.sort(key=lambda v: v['up'], reverse=True)
     rows = build(vids)
     out = {'synced': datetime.datetime.utcnow().strftime('%Y-%m-%dT%H:%MZ'), 'count': len(rows), 'items': rows}
