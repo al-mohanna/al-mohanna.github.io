@@ -425,7 +425,7 @@ const fmtH=h=>`${ar(h.d)} ${HM[h.m-1]} ${ar(h.y)}هـ`;
 /* ---------- real data (YouTube @khalid_almihana) ---------- */
 const DATA=await fetch('/data.json',{cache:'no-cache'}).then(r=>r.json());
 const OVR=await fetch('/overrides.json',{cache:'no-cache'}).then(r=>r.ok?r.json():{}).catch(()=>({}));
-const RAW=DATA.items.filter(r=>!(OVR[r[0]]&&OVR[r[0]].hide)).map(r=>{const o=OVR[r[0]];if(!o)return r;const n=r.slice();if(o.t)n[1]=o.t;if(o.y!==undefined){n[2]=o.y;n[3]=o.m||0;n[4]=o.d||0}if(o.s)n[5]=o.s;if(o.title)n[8]=o.title;return n});
+const RAW=DATA.items.filter(r=>!(OVR[r[0]]&&OVR[r[0]].hide)).map(r=>{const o=OVR[r[0]];if(!o)return r;const n=r.slice();if(o.t)n[1]=o.t;if(o.y!==undefined){n[2]=o.y;n[3]=o.m||0;n[4]=o.d||0}if(o.s)n[5]=o.s;if(o.title)n[8]=o.title;return n}).map(r=>{if(['fajr','maghrib','isha','taraweeh','other'].includes(r[1])){const sv=(r[5]||[]).slice();if(!sv.includes(1))sv.push(1);sv.sort((a,b)=>a-b);r[5]=sv}return r});
 const SYNC=DATA.synced;
 const TYPES={fajr:{l:'صلاة الفجر',c:'p'},maghrib:{l:'صلاة المغرب',c:'p'},isha:{l:'صلاة العشاء',c:'p'},khutbah:{l:'خطبة الجمعة',c:'f'},jumuah:{l:'صلاة الجمعة',c:'f'},fitr:{l:'عيد الفطر',c:'o'},adha:{l:'عيد الأضحى',c:'o'},taraweeh:{l:'التراويح والقيام',c:'o'},istisqa:{l:'الاستسقاء',c:'o'},kusuf:{l:'الكسوف',c:'o'},murattal:{l:'المصحف المرتل',c:'f'},collection:{l:'إصدار مجمّع',c:'r'},lecture:{l:'محاضرة وكلمة',c:'r'},other:{l:'تلاوة',c:'r'}};
 const H2G={};
