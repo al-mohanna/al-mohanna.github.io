@@ -173,6 +173,14 @@ def main():
                 if v['status'] == 'في المكتبة': continue
                 w.writerow([v['status'], v['note'], v['title'], 'https://youtu.be/' + k, v['channel'], v['up'], v.get('dur', ''), v.get('views', ''), v.get('desc', '')])
         st = {s: sum(1 for v in F.values() if v['status'] == s) for s in order}
+        AR = str.maketrans('0123456789', '٠١٢٣٤٥٦٧٨٩')
+        n_new, done_t, all_t = st['جديد'], len(S['done']), len(tasks())
+        if S.get('complete'):
+            msg = f'اكتمل الجمع ✅\n\nعدد المقاطع من خارج قناتنا: {n_new}\nمرّ البحث على كل الصيغ ({all_t}) وعلى كل القنوات التي تنشر للشيخ.'
+        else:
+            msg = f'الجمع مستمر ولم يكتمل بعد ⏳\n\nعدد المقاطع حتى الآن: {n_new}\nصيغ البحث المنتهية: {done_t} من {all_t}\n\nيكمل وحده كل ليلة الساعة ١:٢٣.'
+        msg += '\n\nآخر تحديث: ' + datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M') + ' (بتوقيت غرينتش)'
+        open(os.path.join(ROOT, 'data/collect_status.txt'), 'w', encoding='utf-8-sig').write(msg.translate(AR))
         print(f"found {len(F)} | {st} | searches used {used['search']} | pages {used['cheap']} | tasks done {len(S['done'])}/{len(tasks())} | complete {S.get('complete')}")
 
 main()
