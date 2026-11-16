@@ -44,29 +44,43 @@ for vid, v in F.items():
     else: continue
     cands.setdefault(key, []).append((vid, v))
 
-def rank(x):
-    vid, v = x
-    return (('مهنا' in v['channel']) + ('الحرمين' in v['channel'] or 'السنة النبوية' in v['channel']), secs(v.get('dur')), v.get('views') or 0)
+def dur_of(vid):
+    if vid in F and F[vid].get('dur'): return secs(F[vid]['dur'])
+    r = next((r for r in data if r[0] == vid), None)
+    return secs(r[7]) if r else 0
 
-added = []
+def rank(vid):   # the most complete recording first, then channels dedicated to the Sheikh / the Two Mosques
+    v = F.get(vid, {})
+    ch = v.get('channel', '')
+    return (dur_of(vid), ('مهنا' in ch) + ('الحرمين' in ch or 'السنة النبوية' in ch), v.get('views') or 0)
+
+own_ids = {r[0] for r in data if not (len(r) > 12 and r[12])}      # recordings from our own channel
+added, swapped = [], []
 for key, L_ in sorted(cands.items()):
     t, y, m, d = key
-    if d and have.get(key): continue                       # already in the library
-    L_.sort(key=rank, reverse=True)
-    kept = []
-    for vid, v in L_:
-        s = secs(v.get('dur'))
-        twin = next((k for k in kept if abs(secs(F[k].get('dur')) - s) <= 0.15 * max(s, 1)), None)
-        if t != 'taraweeh' and kept: twin = kept[0]          # one copy per obligatory prayer
-        if twin: alts.setdefault(twin, []).append(vid); continue
-        kept.append(vid)
-    for vid in kept:
-        extras.append(vid); added.append((key, vid))
-        ovr[vid] = {'t': t, 'y': y, 'm': m, 'd': d}
+    lib = [x for x in have.get(key, []) if d]                     # what the library already has for this prayer/night
+    if any(x in own_ids for x in lib): continue                   # our channel's copy stays the main one
+    pool = [vid for vid, _ in L_] + [x for x in lib if x in extras]
+    best = max(pool, key=rank)
+    cur = [x for x in lib if x in extras]
+    if cur and best in cur: 
+        for vid, _ in L_: alts.setdefault(best, []).append(vid)
+        continue
+    if cur and dur_of(best) < 1.3 * max(dur_of(x) for x in cur): # not clearly longer: keep what we have
+        for vid, _ in L_: alts.setdefault(cur[0], []).append(vid)
+        continue
+    for x in cur:                                                 # a fuller copy replaces the short one
+        extras.remove(x); ovr.pop(x, None); alts.setdefault(best, []).append(x); swapped.append((key, x, best))
+    for vid, _ in L_:
+        if vid != best: alts.setdefault(best, []).append(vid)
+    extras.append(best); added.append((key, best))
+    ovr[best] = {'t': t, 'y': y, 'm': m, 'd': d}
+for k in alts: alts[k] = sorted(set(alts[k]) - {k})
 json.dump(extras, open(os.path.join(ROOT, 'data/extras.json'), 'w'), indent=0)
 json.dump(ovr, open(os.path.join(ROOT, 'overrides.json'), 'w', encoding='utf8'), ensure_ascii=False, indent=1)
 json.dump(alts, open(os.path.join(ROOT, 'data/alternates.json'), 'w'), indent=0)
 import collections
-print('added', len(added), collections.Counter((k[0], k[1]) for k, _ in added))
+print('added', len(added), collections.Counter((k[0], k[1]) for k, _ in added), '| replaced', len(swapped))
+for k, old, new in swapped: print('replaced', k, old, '->', new)
 print('alternates', sum(len(v) for v in alts.values()))
 for k, vid in added: print(k, vid, F[vid]['channel'][:18], '|', F[vid]['title'][:70], '|', F[vid].get('dur'))

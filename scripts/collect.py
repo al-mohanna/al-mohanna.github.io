@@ -60,6 +60,10 @@ def tasks():
               'محاضرة', 'درس', 'كلمة', 'لقاء', 'مقابلة', 'دورة علمية']
     # approved ranges first: obligatory prayers Safar 1441 – Muharram 1442, Ramadan nights 1436–1441
     T = []
+    # full-length copies wanted for nights we only have as short clips (owner's request 17-11-2026)
+    for y, n in [(1436, 3), (1436, 21), (1436, 24), (1436, 26), (1436, 28), (1441, 12), (1441, 15), (1441, 27), (1437, 8)]:
+        T += [(f'خالد المهنا ليلة {n} رمضان {y}', None)]
+    T += [('خالد المهنا صلاة العشاء 5 شعبان 1441', None), ('خالد المهنا تراويح 1441 كاملة', None), ('خالد المهنا تهجد 1436 كاملة', None)]
     for mo in ['صفر', 'ربيع الأول', 'ربيع الآخر', 'جمادى الأولى', 'جمادى الآخرة', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة']:
         T += [(f'صلاة الفجر خالد المهنا {mo} 1441', None), (f'خالد المهنا المغرب العشاء {mo} 1441', None)]
     T += [('خالد المهنا محرم 1442', None), ('صلاة الفجر خالد المهنا محرم 1442', None)]
@@ -81,8 +85,23 @@ def main():
     try: S = json.load(open(spath, encoding='utf8'))
     except Exception: S = {'done': [], 'chan_done': [], 'own': ''}
     lib = {r[0] for r in json.load(open(os.path.join(ROOT, 'data.json'), encoding='utf8'))['items']}
+    def details():
+        need = [] if os.environ.get('OFFLINE') else [k for k, v in F.items() if 'dur' not in v]
+        try:
+            for i in range(0, len(need), 50):
+                for it in get('videos', part='contentDetails,statistics,snippet', id=','.join(need[i:i+50])).get('items', []):
+                    v = F[it['id']]
+                    m = re.match(r'P(?:(\d+)D)?T?(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?', it['contentDetails'].get('duration') or '')
+                    d, h, mi, se = (int(x or 0) for x in m.groups()) if m else (0, 0, 0, 0)
+                    h += 24 * d
+                    v['dur'] = f'{h}:{mi:02d}:{se:02d}' if h else f'{mi}:{se:02d}'
+                    v['views'] = int(it.get('statistics', {}).get('viewCount', 0) or 0)
+                    v['desc'] = re.sub(r'\s+', ' ', it['snippet'].get('description', ''))[:220]
+        except (Quota, urllib.error.URLError, OSError) as e: print('details stopped:', e)
+
     try:
         if os.environ.get('OFFLINE'): raise Quota('offline rebuild')
+        details()
         if not S.get('own'):
             S['own'] = get('channels', part='id', forHandle=OWN)['items'][0]['id']
         new_ids = []
@@ -142,19 +161,8 @@ def main():
         S['complete'] = False
         print('stopped:', e)
     finally:
-        # details for videos without them (duration, views, description start)
-        need = [] if os.environ.get('OFFLINE') else [k for k, v in F.items() if 'dur' not in v]
-        try:
-            for i in range(0, len(need), 50):
-                for it in get('videos', part='contentDetails,statistics,snippet', id=','.join(need[i:i+50])).get('items', []):
-                    v = F[it['id']]
-                    m = re.match(r'P(?:(\d+)D)?T?(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?', it['contentDetails'].get('duration') or '')
-                    d, h, mi, se = (int(x or 0) for x in m.groups()) if m else (0, 0, 0, 0)
-                    h += 24 * d
-                    v['dur'] = f'{h}:{mi:02d}:{se:02d}' if h else f'{mi}:{se:02d}'
-                    v['views'] = int(it.get('statistics', {}).get('viewCount', 0) or 0)
-                    v['desc'] = re.sub(r'\s+', ' ', it['snippet'].get('description', ''))[:220]
-        except (Quota, urllib.error.URLError, OSError) as e: print('details stopped:', e)
+        details()
+
         own = S.get('own')
         for k in [k for k, v in F.items() if v['cid'] in BLOCK_CH or v['cid'] == own]: del F[k]   # never list our channel or the singer
         # both Mushafs (Prophet's Mosque and King Fahd Complex) are out of scope
