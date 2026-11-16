@@ -35,6 +35,7 @@ def get(path, cheap=True, **q):
 # ---- is this video about our Sheikh? ----
 NAME = re.compile(r'مهنا|muhanna|mohanna|mehanna|mihana|muhana|mohana', re.I)
 HOMONYM = re.compile(r'محنا|محنّا|mahna\b|mhna\b', re.I)      # «خالد محنا» – a different person (audio producer)
+BLOCK_CH = {'UCCxfgAfV8itfSr5P93Pfv4Q'}   # «خالد المهنا | Khalid Al-Muhanna»: the singer, not the Sheikh
 ARTIST = re.compile(r'اغني|أغني|أغان|فنان|موسيق|كليب|شيله|شيلة|عزف|طرب|لحن|ألحان|مطرب|song|music|clip|official audio|lyrics|concert', re.I)
 HARAM = re.compile(r'نبوي|حرم|مسجد|تلاو|صلاه|صلاة|تراويح|تهجد|قيام|فجر|مغرب|عشاء|جمعه|جمعة|خطبه|خطبة|سوره|سورة|quran|recit|prayer|madinah|nabawi|haram|taraweeh|surah', re.I)
 
@@ -72,11 +73,13 @@ def main():
     except Exception: S = {'done': [], 'chan_done': [], 'own': ''}
     lib = {r[0] for r in json.load(open(os.path.join(ROOT, 'data.json'), encoding='utf8'))['items']}
     try:
+        if os.environ.get('OFFLINE'): raise Quota('offline rebuild')
         if not S.get('own'):
             S['own'] = get('channels', part='id', forHandle=OWN)['items'][0]['id']
         new_ids = []
 
         def keep(vid, sn, how):
+            if sn.get('channelId') in BLOCK_CH or sn.get('channelId') == S['own']: return False
             note = relevant(sn)
             if note is None: return False
             if vid not in F:
@@ -130,7 +133,7 @@ def main():
         print('stopped:', e)
     finally:
         # details for videos without them (duration, views, description start)
-        need = [k for k, v in F.items() if 'dur' not in v]
+        need = [] if os.environ.get('OFFLINE') else [k for k, v in F.items() if 'dur' not in v]
         try:
             for i in range(0, len(need), 50):
                 for it in get('videos', part='contentDetails,statistics,snippet', id=','.join(need[i:i+50])).get('items', []):
@@ -141,9 +144,11 @@ def main():
                     v['dur'] = f'{h}:{mi:02d}:{se:02d}' if h else f'{mi}:{se:02d}'
                     v['views'] = int(it.get('statistics', {}).get('viewCount', 0) or 0)
                     v['desc'] = re.sub(r'\s+', ' ', it['snippet'].get('description', ''))[:220]
-        except Quota: pass
+        except (Quota, urllib.error.URLError, OSError) as e: print('details stopped:', e)
         own = S.get('own')
+        for k in [k for k, v in F.items() if v['cid'] in BLOCK_CH or v['cid'] == own]: del F[k]   # never list our channel or the singer
         for k, v in F.items():
+            if not v['note'] and not NAME.search(v['title']): v['note'] = 'اسم الشيخ ليس في العنوان – يحتاج تحقق'
             v['status'] = 'في المكتبة' if k in lib else ('قناة الشيخ – سيُضاف تلقائياً' if v['cid'] == own else 'جديد')
         json.dump(F, open(fpath, 'w', encoding='utf8'), ensure_ascii=False, separators=(',', ':'))
         json.dump(S, open(spath, 'w', encoding='utf8'), ensure_ascii=False, indent=0)
@@ -153,6 +158,7 @@ def main():
             w = csv.writer(f)
             w.writerow(['الحالة', 'تنبيه', 'العنوان', 'الرابط', 'القناة', 'تاريخ الرفع', 'المدة', 'المشاهدات', 'بداية الوصف'])
             for k, v in rows:
+                if v['status'] == 'في المكتبة': continue
                 w.writerow([v['status'], v['note'], v['title'], 'https://youtu.be/' + k, v['channel'], v['up'], v.get('dur', ''), v.get('views', ''), v.get('desc', '')])
         st = {s: sum(1 for v in F.values() if v['status'] == s) for s in order}
         print(f"found {len(F)} | {st} | searches used {used['search']} | pages {used['cheap']} | tasks done {len(S['done'])}/{len(tasks())} | complete {S.get('complete')}")
