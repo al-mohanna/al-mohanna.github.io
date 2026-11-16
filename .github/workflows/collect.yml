@@ -3,6 +3,10 @@ on:
   schedule:
     - cron: '23 22 * * *'   # 01:23 بتوقيت الرياض، بعد تجدد حصة يوتيوب اليومية
   workflow_dispatch:
+    inputs:
+      max_search:
+        description: 'عدد عمليات البحث (كل واحدة 100 وحدة من الحصة اليومية)'
+        default: '70'
 permissions:
   contents: write
 concurrency: collect
@@ -17,6 +21,7 @@ jobs:
       - name: Collect
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          MAX_SEARCH: ${{ inputs.max_search || '70' }}
         run: python scripts/collect.py
       - name: Save
         run: |

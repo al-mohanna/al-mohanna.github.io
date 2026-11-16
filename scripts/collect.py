@@ -80,7 +80,29 @@ def main():
                 new_ids.append(vid)
             return True
 
-        # 1) searches
+        def channels():
+            # 1) every upload of channels that publish the Sheikh (cheap: 1 unit per 50 videos)
+            seeds = {}
+            for v in F.values():
+                if v['cid'] and v['cid'] != S['own'] and not v['note']: seeds[v['cid']] = seeds.get(v['cid'], 0) + 1
+            for cid, n in sorted(seeds.items(), key=lambda x: -x[1]):
+                if cid in S['chan_done'] or n < 3: continue
+                up = get('channels', part='contentDetails', id=cid)['items']
+                if up:
+                    pl, token = up[0]['contentDetails']['relatedPlaylists']['uploads'], None
+                    while True:
+                        p = dict(part='snippet', playlistId=pl, maxResults=50)
+                        if token: p['pageToken'] = token
+                        r = get('playlistItems', **p)
+                        for it in r.get('items', []):
+                            sn = it['snippet']; sn['channelId'] = cid
+                            sn['channelTitle'] = sn.get('videoOwnerChannelTitle') or sn.get('channelTitle', '')
+                            keep(sn['resourceId']['videoId'], sn, 'قناة: ' + sn['channelTitle'])
+                        token = r.get('nextPageToken')
+                        if not token: break
+                S['chan_done'].append(cid)
+        channels()
+        # 2) searches
         for q, gy in tasks():
             key = f'{q}|{gy or ""}'
             if key in S['done']: continue
@@ -96,26 +118,7 @@ def main():
                 if not token or dry >= 2: break
             S['done'].append(key)
 
-        # 2) every upload of channels that publish the Sheikh (cheap: 1 unit per 50 videos)
-        seeds = {}
-        for v in F.values():
-            if v['cid'] and v['cid'] != S['own'] and not v['note']: seeds[v['cid']] = seeds.get(v['cid'], 0) + 1
-        for cid, n in sorted(seeds.items(), key=lambda x: -x[1]):
-            if cid in S['chan_done'] or n < 2: continue
-            up = get('channels', part='contentDetails', id=cid)['items']
-            if up:
-                pl, token = up[0]['contentDetails']['relatedPlaylists']['uploads'], None
-                while True:
-                    p = dict(part='snippet', playlistId=pl, maxResults=50)
-                    if token: p['pageToken'] = token
-                    r = get('playlistItems', **p)
-                    for it in r.get('items', []):
-                        sn = it['snippet']; sn['channelId'] = cid
-                        sn['channelTitle'] = sn.get('videoOwnerChannelTitle') or sn.get('channelTitle', '')
-                        keep(sn['resourceId']['videoId'], sn, 'قناة: ' + sn['channelTitle'])
-                    token = r.get('nextPageToken')
-                    if not token: break
-            S['chan_done'].append(cid)
+        channels()   # channels discovered by tonight's searches
         S['complete'] = True
     except Quota as e:
         S['complete'] = False
