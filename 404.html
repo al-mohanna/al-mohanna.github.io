@@ -426,6 +426,7 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
 .srcs{display:flex;flex-wrap:wrap;gap:8px}.srcs .fl-btn{flex:1;min-width:150px;text-align:center}
 .fl-btn.fav.on{background:var(--gold-s)}
 .note{font-size:12.5px}
+.rd{background:var(--gold-s);border-radius:14px;padding:10px 14px;display:flex;flex-direction:column;gap:2px;width:100%}.rd small{color:var(--muted);font-size:12.5px}.rd b{font-size:15.5px;line-height:1.7;font-weight:600}
 @media(max-width:900px){
  .stats2{grid-template-columns:repeat(3,1fr)}
  .shr-b{grid-template-columns:1fr 1fr}
@@ -553,17 +554,17 @@ const SYNC=DATA.synced||'';
 const PRAY=['fajr','maghrib','isha','jumuah','taraweeh','other'];
 const RAW=DATA.items.filter(r=>!(OVR[r[0]]&&OVR[r[0]].hide)).map(r0=>{
   const r=r0.slice();const m=META[r[0]]||{},o=OVR[r[0]]||{};
-  /* 1) reviewed records fill what the title does not say */
-  if(m.t==='short'||r[13])r[1]='short';
-  else if(r[1]==='other'&&m.t&&m.t!=='other')r[1]=m.t;
-  if(!(r[2]&&r[3]&&r[4])&&m.y&&!(r[2]&&r[2]!==m.y)){r[2]=m.y;r[3]=m.m||0;r[4]=m.d||0}
-  const own=(r[5]||[]).filter(n=>n!==1);
-  if(!own.length&&m.s&&m.s.length){r[5]=m.s.slice();r[14]='f'}
-  if(m.v&&m.s&&m.s.length&&(r[5]||[]).includes(m.s[0]))r[15]=m.v;
-  if(m.full&&!r[6])r[6]=1;
-  /* 2) your own edits always win */
+  /* 1) your manual edits (older reviews) */
   if(o.t)r[1]=o.t;if(o.y!==undefined){r[2]=o.y;r[3]=o.m||0;r[4]=o.d||0}
-  if(o.s){r[5]=o.s;r[14]=''}if(o.title)r[8]=o.title;if(o.v)r[15]=o.v;
+  if(o.s)r[5]=o.s;if(o.title)r[8]=o.title;
+  /* 2) the comprehensive archive file is the reference: it wins wherever it has a value */
+  if(m.t==='short'||r[13])r[1]='short';
+  else if(m.t&&m.t!=='other')r[1]=m.t;
+  if(m.y&&(m.d||!(r[2]&&r[3]&&r[4]))){r[2]=m.y;r[3]=m.m||0;r[4]=m.d||0}
+  if(m.s&&m.s.length){r[5]=m.s.slice();r[14]='f'}
+  if(m.v)r[15]=m.v;
+  if(m.full&&!r[6])r[6]=1;
+  if(o.v)r[15]=o.v;
   /* 3) every obligatory prayer opens with al-Fatiha */
   if(PRAY.includes(r[1])){const sv=(r[5]||[]).slice();if(!sv.includes(1))sv.push(1);r[5]=sv.sort((a,b)=>a-b)}
   return r});
@@ -596,7 +597,7 @@ const JSTART={26:46,27:51,28:58,29:67,30:78};
 const juzOf=n=>n>=78?30:n>=67?29:n>=58?28:n>=51?27:n>=46?26:0;
 const murFor=n=>MUR[n]?{v:MUR[n],j:0}:(JUZ[juzOf(n)]?{v:JUZ[juzOf(n)],j:juzOf(n)}:null);
 const norm=s=>String(s||'').replace(/[ً-ْٰـ]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/ؤ/g,'و').replace(/ئ/g,'ي').replace(/(^|\s)ال/g,'$1').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).toLowerCase();
-ALLX.forEach(x=>{x.hay=norm([x.title,x.s.map(n=>SURAH[n-1]).join(' '),TYPES[x.t].l,x.h?HM[x.h.m-1]+' '+x.h.y:'',x.year||'',x.full?'كاملة':'',x.src].join(' '))});
+ALLX.forEach(x=>{x.hay=norm([x.title,x.verses,x.s.map(n=>SURAH[n-1]).join(' '),TYPES[x.t].l,x.h?HM[x.h.m-1]+' '+x.h.y:'',x.year||'',x.full?'كاملة':'',x.src].join(' '))});
 
 /* ---------- state ---------- */
 let FAV=new Set();try{FAV=new Set(JSON.parse(localStorage.getItem('fav2')||'[]'))}catch(e){}
@@ -865,7 +866,7 @@ function parseQ(q){
 function matchQ(x,Q,dayTol=0){
   if(Q.s.length&&!Q.s.every(n=>x.s.includes(n)))return false;
   if(Q.types&&!Q.types.includes(x.t))return false;
-  if(Q.rx.length&&!Q.rx.every(r=>r.test(x.title)))return false;
+  if(Q.rx.length&&!Q.rx.every(r=>r.test(x.title+' '+x.verses)))return false;
   if(Q.y&&(x.h?x.h.y:x.year)!==Q.y)return false;
   if(Q.m&&(x.h?x.h.m:x.month)!==Q.m)return false;
   if(Q.d&&!(x.h&&Math.abs(x.h.d-Q.d)<=dayTol))return false;
@@ -940,7 +941,8 @@ function vRec(id){
     <span class="badge b-${TYPES[it.t].c}">${it.t==='short'?'مقطع قصير':typeL(it)}</span>
     <h1>${titleOf(it)}</h1>
     ${dateOf(it)?`<div class="rec-d">${I('cal')}${dateOf(it)}${it.d?` <span class="muted">· ${fmtG(it.d)}</span>`:''}</div>`:''}
-    ${S.length&&it.t!=='collection'?`<div class="rec-s">${S.map(n=>`<a href="#s-${n}" class="schip">سورة ${SURAH[n-1]}</a>`).join('')}${it.verses?`<span class="vchip">${it.verses.replace(/\d+/g,d=>ar(d))}</span>`:''}</div>`:''}
+    ${S.length&&it.t!=='collection'?`<div class="rec-s">${S.map(n=>`<a href="#s-${n}" class="schip">سورة ${SURAH[n-1]}</a>`).join('')}</div>`:''}
+    ${it.verses?`<div class="rd"><small>ما قرأه الشيخ</small><b>${it.verses.replace(/\d+/g,d=>ar(d))}</b></div>`:''}
     ${it.t==='collection'&&S.length?`<p class="muted">السور في هذا الإصدار: ${S.map(n=>`<a class="lnk" href="#s-${n}">${SURAH[n-1]}</a>`).join('، ')}</p>`:''}
    </div>
    <section class="aud2"><h2>${I('headphones')}الاستماع صوتياً</h2>
@@ -961,7 +963,6 @@ function vRec(id){
      <div><small>المصدر</small><b>${it.src?it.src:'قناة الشيخ على يوتيوب'}</b></div>
    </div>
    <div class="srcs"><a class="fl-btn" data-yt="${it.id}" href="https://www.youtube.com/watch?v=${it.id}">مشاهدة على يوتيوب</a>${tg.p?`<a class="fl-btn" data-tg="${tg.p}" href="${tgLink(tg.p)}">المنشور على تليجرام</a>`:''}<button class="fl-btn fav ${FAV.has(it.id)?'on':''}" data-fav="${it.id}">${FAV.has(it.id)?'في المفضلة ♥':'أضف للمفضلة ♡'}</button></div>
-   ${it.fromFile?`<p class="muted note">السور في هذا التسجيل مأخوذة من ملف المراجعة، لا من عنوان الفيديو.</p>`:''}
    </section>
    <div class="pn">${nx?`<a href="#v/${nx.id}">${I('prev')} ${nl} التالية</a>`:'<span></span>'}${pv?`<a href="#v/${pv.id}">${nl} السابقة ${I('next')}</a>`:''}</div>
    ${rel.length?`<section class="sec">${secH(`تلاوات أخرى من سورة ${SURAH[S[0]-1]}`,`#s-${S[0]}`,'الكل')}${grid(rel,'rows-scroll')}</section>`:''}

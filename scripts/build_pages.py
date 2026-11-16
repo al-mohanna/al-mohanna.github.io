@@ -55,15 +55,14 @@ def main():
     for vid, r in rows.items():
         m, o = meta.get(vid, {}), ovr.get(vid, {})
         if o.get('hide'): continue
-        t = r[1]
-        if m.get('t') == 'short' or (len(r) > 13 and r[13]): t = 'short'
-        elif t == 'other' and m.get('t'): t = m['t']
+        t = o.get('t', r[1])
         y, mo, d = r[2], r[3], r[4]
-        if not (y and mo and d) and m.get('y'): y, mo, d = m['y'], m.get('m', 0), m.get('d', 0)
-        S = [s for s in (r[5] or []) if s != 1] or [s for s in m.get('s', []) if s != 1]
-        t = o.get('t', t)
         if 'y' in o: y, mo, d = o['y'], o.get('m', 0), o.get('d', 0)
-        if 's' in o: S = [s for s in o['s'] if s != 1]
+        S = [s for s in (o.get('s') or r[5] or []) if s != 1]
+        if m.get('t') == 'short' or (len(r) > 13 and r[13]): t = 'short'
+        elif m.get('t') and m['t'] != 'other': t = m['t']
+        if m.get('y') and (m.get('d') or not (y and mo and d)): y, mo, d = m['y'], m.get('m', 0), m.get('d', 0)
+        if m.get('s'): S = [s for s in m['s'] if s != 1] or S
         if t == 'khutbah': title = 'خطبة الجمعة' + (f' – {r[9]}' if r[9] else '')
         elif t in ('collection', 'lecture'): title = r[8].replace('#', '').split('||')[0].strip()[:90]
         elif t == 'murattal': title = (f'{snames(S[:1])} – ' if S else '') + 'المصحف المرتل'

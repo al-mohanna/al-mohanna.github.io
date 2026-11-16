@@ -49,14 +49,29 @@ def verses(s):
     if '(' in v or 'حسب' in v: return ''
     return v
 
+ORD = {'الاولي': 1, 'الاول': 1, 'الثانيه': 2, 'الثاني': 2, 'الثالثه': 3, 'الثالث': 3, 'الرابعه': 4, 'الخامسه': 5, 'السادسه': 6, 'السابعه': 7,
+       'الثامنه': 8, 'التاسعه': 9, 'العاشره': 10, 'الحاديه عشر': 11, 'الثانيه عشر': 12, 'الثالثه عشر': 13, 'الرابعه عشر': 14,
+       'الخامسه عشر': 15, 'السادسه عشر': 16, 'السابعه عشر': 17, 'الثامنه عشر': 18, 'التاسعه عشر': 19, 'العشرين': 20}
+
+def night(t):
+    """Ramadan night number from 'ليلة 28' or 'الليلة الثامنة'."""
+    t = norm(digits(t))
+    m = re.search(r'ليله\s*(\d{1,2})\b', t)
+    if m and 1 <= int(m.group(1)) <= 30: return int(m.group(1))
+    for w in sorted(ORD, key=len, reverse=True):
+        if re.search(r'ليله\s+' + w + r'(\s|$)', t) or re.search(r'(ليله|ليالي)\s+' + w, t): return ORD[w]
+    return 0
+
 def main():
     R = json.load(open(os.path.join(ROOT, 'data/records.json'), encoding='utf8'))['records']
     out = {}
     for x in R:
         y, m, d = date(x['date_hijri'])
+        if y and not m and kind(x['prayer']) == 'taraweeh': m = 9
+        if y and m == 9 and not d: d = night(x['date_hijri']) or night(x['title'])
         e = {'t': kind(x['prayer']), 's': surahs(x['surah']), 'y': y, 'm': m, 'd': d}
-        v = verses(x['surah'])
-        if v: e['v'] = v
+        v = re.sub(r'^سور:\s*', '', x['surah']).strip()
+        if v and len(v) <= 160: e['v'] = v
         if 'كاملة' in x['surah']: e['full'] = 1
         out[x['video_id']] = {k: v for k, v in e.items() if v}
     json.dump(out, open(os.path.join(ROOT, 'meta.json'), 'w', encoding='utf8'), ensure_ascii=False, separators=(',', ':'))
