@@ -9,7 +9,7 @@ on:
         default: '70'
 permissions:
   contents: write
-concurrency: collect
+concurrency: data-sync
 jobs:
   collect:
     runs-on: ubuntu-latest

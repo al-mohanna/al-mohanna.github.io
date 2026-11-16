@@ -5,6 +5,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+concurrency: data-sync
 jobs:
   update:
     runs-on: ubuntu-latest
