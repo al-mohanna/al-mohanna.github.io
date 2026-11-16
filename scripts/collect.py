@@ -173,14 +173,15 @@ def main():
                 if v['status'] == 'في المكتبة': continue
                 w.writerow([v['status'], v['note'], v['title'], 'https://youtu.be/' + k, v['channel'], v['up'], v.get('dur', ''), v.get('views', ''), v.get('desc', '')])
         st = {s: sum(1 for v in F.values() if v['status'] == s) for s in order}
-        AR = str.maketrans('0123456789', '٠١٢٣٤٥٦٧٨٩')
-        n_new, done_t, all_t = st['جديد'], len(S['done']), len(tasks())
-        if S.get('complete'):
-            msg = f'اكتمل الجمع ✅\n\nعدد المقاطع من خارج قناتنا: {n_new}\nمرّ البحث على كل الصيغ ({all_t}) وعلى كل القنوات التي تنشر للشيخ.'
-        else:
-            msg = f'الجمع مستمر ولم يكتمل بعد ⏳\n\nعدد المقاطع حتى الآن: {n_new}\nصيغ البحث المنتهية: {done_t} من {all_t}\n\nيكمل وحده كل ليلة الساعة ١:٢٣.'
-        msg += '\n\nآخر تحديث: ' + datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M') + ' (بتوقيت غرينتش)'
-        open(os.path.join(ROOT, 'data/collect_status.txt'), 'w', encoding='utf-8-sig').write(msg.translate(AR))
+        n_new = st['جديد']
+        now = datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+        if not os.environ.get('OFFLINE'):
+            S.setdefault('runs', []).append({'at': now, 'added': max(0, n_new - S.get('last_total', 0)), 'total': n_new})
+            S['last_total'] = n_new
+        status = {'complete': bool(S.get('complete')), 'total': n_new, 'tasks_done': len(S['done']), 'tasks_all': len(tasks()),
+                  'channels_done': len(S.get('chan_done', [])), 'runs': S.get('runs', [])[-8:], 'updated_utc': now}
+        json.dump(status, open(os.path.join(ROOT, 'data/collect_status.json'), 'w', encoding='utf8'), ensure_ascii=False, indent=1)
+        json.dump(S, open(spath, 'w', encoding='utf8'), ensure_ascii=False, indent=0)
         print(f"found {len(F)} | {st} | searches used {used['search']} | pages {used['cheap']} | tasks done {len(S['done'])}/{len(tasks())} | complete {S.get('complete')}")
 
 main()
