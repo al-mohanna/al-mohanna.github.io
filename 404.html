@@ -562,6 +562,7 @@ const RAW=DATA.items.filter(r=>!(OVR[r[0]]&&OVR[r[0]].hide)).map(r0=>{
   else if(m.t&&m.t!=='other')r[1]=m.t;
   if(m.y&&(m.d||!(r[2]&&r[3]&&r[4]))){r[2]=m.y;r[3]=m.m||0;r[4]=m.d||0}
   if(m.s&&m.s.length){r[5]=m.s.slice();r[14]='f'}
+  if(m.k){r[5]=[];r[16]=m.k}
   if(m.v)r[15]=m.v;
   if(m.full&&!r[6])r[6]=1;
   if(o.v)r[15]=o.v;
@@ -573,7 +574,7 @@ const H2G={};
 for(let t=Date.UTC(2013,9,1);t<=Date.UTC(2027,0,31);t+=864e5){const iso=isoOf(t),h=hijri(iso);H2G[`${h.y}-${h.m}-${h.d}`]=iso}
 const g2h=(y,m,d)=>{for(let k=d;k>=Math.max(1,d-1);k--){const g=H2G[`${y}-${m}-${k}`];if(g)return k===d?g:null}return null};
 const ALLX=RAW.map((r,o)=>{const [id,t,y,m,d,s,full,dur,title,topic,up,views,src]=r;
-  const it={id,o,t,s:s||[],full:!!full,dur,title,topic,up,views:views||0,src:src||'',fromFile:r[14]==='f',verses:r[15]||''};
+  const it={id,o,t,s:s||[],full:!!full,dur,title,topic,up,views:views||0,src:src||'',fromFile:r[14]==='f',verses:r[15]||'',k:r[16]||''};
   if(y&&m&&d){const g=g2h(y,m,d);if(g){it.d=g;it.h={y,m,d}}}
   if(!it.h&&y)it.year=y; if(!it.h&&y&&m)it.month=m;
   const p=(dur||'0:00').split(':').map(Number);it.sec=p.reduce((a,b)=>a*60+b,0);it.mins=Math.max(1,Math.round(it.sec/60));
@@ -617,6 +618,7 @@ function titleOf(it){
   if(it.t==='murattal'){const j=Object.keys(JUZ).find(k=>JUZ[k]===it)||(JUZX.includes(it)?Object.keys(JN).map(w=>it.title.includes(w)?JN[w]:0).find(Boolean):0);return j?`الجزء ${ar(j)} – المصحف المرتل`:it.s.length?`سورة ${SURAH[it.s[0]-1]} – المصحف المرتل`:it.title.split('||')[0].trim()}
   if(it.t==='collection'||it.t==='lecture')return it.title.replace(/#/g,'').split(/\s[|–]\s|\|\|/)[0].slice(0,80);
   const S=shownS(it);
+  if(it.t==='short'&&it.k)return it.k==='kh'?'مقتطف من خطبة الجمعة':'من دعاء القنوت';
   if(it.t==='short')return S.length?sNames(S):(quoteOf(it.title)?'«'+quoteOf(it.title)+'»':'مقطع قصير');
   if(it.full&&S.length===1)return `${typeL(it)} – سورة ${SURAH[S[0]-1]} كاملة`;
   return S.length?`${typeL(it)} – ${sNames(S)}`:typeL(it);

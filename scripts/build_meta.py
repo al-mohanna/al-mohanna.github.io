@@ -70,10 +70,14 @@ def main():
         if y and not m and kind(x['prayer']) == 'taraweeh': m = 9
         if y and m == 9 and not d: d = night(x['date_hijri']) or night(x['title'])
         e = {'t': kind(x['prayer']), 's': surahs(x['surah']), 'y': y, 'm': m, 'd': d}
+        if 'خطب' in x['prayer'] and e['t'] == 'short':
+            e['s'] = []; e['k'] = 'kh'          # an excerpt of the khutbah: verses quoted by the preacher, not a recitation
+        elif x['prayer'].startswith('دعاء القنوت'):
+            e['s'] = []; e['k'] = 'dua'         # a du'a clip, not a recitation of al-Ikhlas
         v = re.sub(r'^سور:\s*', '', x['surah']).strip()
         if v and len(v) <= 160: e['v'] = v
         if 'كاملة' in x['surah']: e['full'] = 1
-        out[x['video_id']] = {k: v for k, v in e.items() if v}
+        out[x['video_id']] = {k: v for k, v in e.items() if v or k == 's' and 'k' in e}
     json.dump(out, open(os.path.join(ROOT, 'meta.json'), 'w', encoding='utf8'), ensure_ascii=False, separators=(',', ':'))
     print('meta', len(out), 'shorts', sum(1 for v in out.values() if v.get('t') == 'short'))
 
