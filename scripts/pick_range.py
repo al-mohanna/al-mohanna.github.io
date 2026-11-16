@@ -58,6 +58,9 @@ own_ids = {r[0] for r in data if not (len(r) > 12 and r[12])}      # recordings 
 added, swapped = [], []
 for key, L_ in sorted(cands.items()):
     t, y, m, d = key
+    if t == 'taraweeh' and not d:                                 # no night number: only a long recording, never a clip
+        L_ = [(vid, v) for vid, v in L_ if dur_of(vid) >= 20 * 60]
+        if not L_: continue
     lib = [x for x in have.get(key, []) if d]                     # what the library already has for this prayer/night
     if any(x in own_ids for x in lib): continue                   # our channel's copy stays the main one
     pool = [vid for vid, _ in L_] + [x for x in lib if x in extras]
