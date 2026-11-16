@@ -36,6 +36,8 @@ def get(path, cheap=True, **q):
 NAME = re.compile(r'مهنا|muhanna|mohanna|mehanna|mihana|muhana|mohana', re.I)
 HOMONYM = re.compile(r'محنا|محنّا|mahna\b|mhna\b', re.I)      # «خالد محنا» – a different person (audio producer)
 BLOCK_CH = {'UCCxfgAfV8itfSr5P93Pfv4Q'}   # «خالد المهنا | Khalid Al-Muhanna»: the singer, not the Sheikh
+MUSHAF = re.compile(r'مرتل|المصحف المرتل|مصحف المدينة|المصحف الشريف|مجمع الملك فهد|بصوت القارئ|عرض للصفحة|murattal|mushaf|with english translation', re.I)
+PRAYER = re.compile(r'فجر|مغرب|عشاء|عشا|تراويح|تهجد|قيام|صلاة|صلاه|خطبة|خطبه|جمعة|جمعه|عيد|استسقاء|كسوف|ليلة|ليله|fajr|maghrib|isha|taraweeh|tahajjud|prayer|khutbah', re.I)
 ARTIST = re.compile(r'اغني|أغني|أغان|فنان|موسيق|كليب|شيله|شيلة|عزف|طرب|لحن|ألحان|مطرب|song|music|clip|official audio|lyrics|concert', re.I)
 HARAM = re.compile(r'نبوي|حرم|مسجد|تلاو|صلاه|صلاة|تراويح|تهجد|قيام|فجر|مغرب|عشاء|جمعه|جمعة|خطبه|خطبة|سوره|سورة|quran|recit|prayer|madinah|nabawi|haram|taraweeh|surah', re.I)
 
@@ -54,7 +56,7 @@ def tasks():
              'Dr. Khalid Al-Muhanna', 'Khalid Al Muhanna', 'Khalid Al-Muhanna', 'Khaled Al Muhanna', 'Khaled Al-Muhanna',
              'Khaled Almohanna', 'Khalid Almuhanna', 'Sheikh Khalid Al Muhanna']
     topics = ['تلاوة', 'تراويح', 'تهجد', 'قيام الليل', 'صلاة الفجر', 'صلاة الظهر', 'صلاة العصر', 'صلاة المغرب', 'صلاة العشاء', 'صلاة الجمعة',
-              'خطبة الجمعة', 'خطبة العيد', 'صلاة العيد', 'استسقاء', 'كسوف', 'خسوف', 'دعاء القنوت', 'ختم القرآن', 'سورة', 'المصحف المرتل',
+              'خطبة الجمعة', 'خطبة العيد', 'صلاة العيد', 'استسقاء', 'كسوف', 'خسوف', 'دعاء القنوت', 'ختم القرآن', 'سورة',
               'محاضرة', 'درس', 'كلمة', 'لقاء', 'مقابلة', 'دورة علمية']
     T = [(n, None) for n in names]
     T += [(f'خالد المهنا {t}', None) for t in topics]
@@ -82,6 +84,7 @@ def main():
             if sn.get('channelId') in BLOCK_CH or sn.get('channelId') == S['own']: return False
             note = relevant(sn)
             if note is None: return False
+            if MUSHAF.search(sn.get('title', '') + ' ' + sn.get('description', '')[:300]) and not PRAYER.search(sn.get('title', '')): return False   # both Mushafs are out of scope
             if vid not in F:
                 F[vid] = {'title': sn['title'], 'channel': sn.get('channelTitle', ''), 'cid': sn.get('channelId', ''),
                           'up': sn.get('publishedAt', '')[:10], 'how': how, 'note': note}
@@ -147,6 +150,15 @@ def main():
         except (Quota, urllib.error.URLError, OSError) as e: print('details stopped:', e)
         own = S.get('own')
         for k in [k for k, v in F.items() if v['cid'] in BLOCK_CH or v['cid'] == own]: del F[k]   # never list our channel or the singer
+        # both Mushafs (Prophet's Mosque and King Fahd Complex) are out of scope
+        mus = lambda v: MUSHAF.search(v['title'] + ' ' + v.get('desc', '')) and not PRAYER.search(v['title'])
+        for k in [k for k, v in F.items() if mus(v)]: del F[k]
+        # channels that mostly publish Mushaf surahs ("سورة X - خالد المهنا"): keep only their prayer recordings
+        surah_only = lambda v: re.match(r'^\s*(سورة|سورتا|surah|quran)\b', v['title'], re.I) and not PRAYER.search(v['title'])
+        by = {}
+        for v in F.values(): by.setdefault(v['cid'], []).append(v)
+        S['mushaf_ch'] = sorted(set(S.get('mushaf_ch', [])) | {c for c, L in by.items() if len(L) >= 5 and sum(map(bool, map(surah_only, L))) / len(L) >= .6})
+        for k in [k for k, v in F.items() if v['cid'] in S['mushaf_ch'] and not PRAYER.search(v['title'])]: del F[k]
         for k, v in F.items():
             if not v['note'] and not NAME.search(v['title']): v['note'] = 'اسم الشيخ ليس في العنوان – يحتاج تحقق'
             v['status'] = 'في المكتبة' if k in lib else ('قناة الشيخ – سيُضاف تلقائياً' if v['cid'] == own else 'جديد')
