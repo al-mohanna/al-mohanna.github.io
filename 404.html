@@ -612,7 +612,7 @@ const AF={t:'all',y:'all',sort:'new'};
 
 /* ---------- components ---------- */
 const quoteOf=t=>{const m=(t||'').match(/[«"“]\s*([^»"”]{6,60}?)\s*[»"”]/);return m?m[1].replace(/\.+$/,''):''};
-const shownS=it=>it.s.length>1?it.s.filter(n=>n!==1):it.s;
+const shownS=it=>PRAY.includes(it.t)||it.s.length>1?it.s.filter(n=>n!==1):it.s;
 const sNames=S=>S.length===1?'سورة '+SURAH[S[0]-1]:S.length===2?`سورتا ${SURAH[S[0]-1]} و${SURAH[S[1]-1]}`:'سور '+S.slice(0,4).map(n=>SURAH[n-1]).join('، ')+(S.length>4?' …':'');
 const typeL=it=>it.t==='taraweeh'?(/تهجد|قيام/.test(it.title)?'صلاة التهجد':'صلاة التراويح'):TYPES[it.t].l;
 function titleOf(it){
