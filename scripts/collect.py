@@ -48,24 +48,19 @@ def relevant(sn):
     return note
 
 def tasks():
-    """Older material first (before 1442 AH ≈ before Aug 2020), then everything else."""
-    T = []
-    for y in range(1436, 1442):
-        T += [(f'المهنا تراويح {y}', None), (f'خالد المهنا {y}', None), (f'المهنا تهجد {y}', None)]
-    for gy in range(2014, 2021):
-        T += [(n, gy) for n in ['خالد المهنا', 'الشيخ خالد المهنا', 'Khalid Al-Muhanna', 'Khaled Al Muhanna']]
+    """All years are treated equally."""
     names = ['خالد المهنا', 'الشيخ خالد المهنا', 'خالد بن سليمان المهنا', 'الشيخ الدكتور خالد المهنا', 'د. خالد المهنا', 'المهنا المسجد النبوي',
              'Dr. Khalid Al-Muhanna', 'Khalid Al Muhanna', 'Khalid Al-Muhanna', 'Khaled Al Muhanna', 'Khaled Al-Muhanna',
              'Khaled Almohanna', 'Khalid Almuhanna', 'Sheikh Khalid Al Muhanna']
     topics = ['تلاوة', 'تراويح', 'تهجد', 'قيام الليل', 'صلاة الفجر', 'صلاة الظهر', 'صلاة العصر', 'صلاة المغرب', 'صلاة العشاء', 'صلاة الجمعة',
               'خطبة الجمعة', 'خطبة العيد', 'صلاة العيد', 'استسقاء', 'كسوف', 'خسوف', 'دعاء القنوت', 'ختم القرآن', 'سورة', 'المصحف المرتل',
               'محاضرة', 'درس', 'كلمة', 'لقاء', 'مقابلة', 'دورة علمية']
-    T += [(n, None) for n in names]
+    T = [(n, None) for n in names]
     T += [(f'خالد المهنا {t}', None) for t in topics]
-    for y in range(1442, 1449):
-        T += [(f'المهنا تراويح {y}', None), (f'خالد المهنا {y}', None)]
-    for gy in range(2021, 2027):
-        T += [(n, gy) for n in ['خالد المهنا', 'Khalid Al-Muhanna']]
+    for y in range(1436, 1449):
+        T += [(f'المهنا تراويح {y}', None), (f'خالد المهنا {y}', None), (f'المهنا تهجد {y}', None)]
+    for gy in range(2014, 2027):
+        T += [(n, gy) for n in ['خالد المهنا', 'الشيخ خالد المهنا', 'Khalid Al-Muhanna', 'Khaled Al Muhanna']]
     return T
 
 def main():

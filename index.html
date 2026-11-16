@@ -70,6 +70,8 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
 /* hero */
 .hero{position:relative;overflow:hidden;border-radius:30px;background:radial-gradient(120% 140% at 90% 0%,#1a6d4f 0%,#0b3d2b 46%,#05211a 100%);color:#f3ecd9;padding:42px 42px 30px;box-shadow:0 30px 60px -30px rgba(5,33,26,.6)}
 .pat{position:absolute;inset:0;width:100%;height:100%;opacity:.13;pointer-events:none}
+.hero::before{content:'';position:absolute;inset:0;background:url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/The_Enlightened_City.jpg/1280px-The_Enlightened_City.jpg') center 62%/cover no-repeat;opacity:.28;pointer-events:none}
+.hcredit{position:absolute;bottom:8px;left:14px;z-index:1;font-size:10.5px;color:rgba(243,236,217,.55)}.hcredit a{color:inherit;text-decoration:underline}
 .hero::after{content:'';position:absolute;width:520px;height:520px;border-radius:50%;left:-160px;bottom:-280px;background:radial-gradient(circle,rgba(227,196,126,.22),transparent 65%);pointer-events:none}
 .hero-in{position:relative;display:grid;grid-template-columns:1.35fr 1fr;gap:36px;align-items:center;z-index:1}
 .eyebrow{display:inline-flex;gap:8px;align-items:center;font-size:12.5px;color:#e6c77f;border:1px solid rgba(227,196,126,.35);padding:5px 13px;border-radius:99px;background:rgba(0,0,0,.12)}
@@ -678,6 +680,7 @@ function vHome(){
       <form class="hsearch" id="hsf"><span>${I('search')}</span><input id="hq" type="search" placeholder="سورة أو صلاة أو تاريخ… مثل: الكهف" autocomplete="off"><button>بحث</button></form>
     </div>
     ${F?`<a class="latest" href="#v/${F.id}/play"><div class="lb">من الأكثر استماعاً · ${typeL(F)}</div><div class="lt">${plain(titleOf(F)).split(' – ').pop()}</div><div class="ls">${dateOf(F)||F.dur}</div><div class="pbtn">${I('play')}</div></a>`:''}</div>
+    <span class="hcredit">صورة المسجد النبوي: <a href="https://commons.wikimedia.org/wiki/File:Flickr_-_omar_chatriwala_-_The_%22Enlightened%22_City.jpg" target="_blank" rel="noopener">Omar Chatriwala</a> · <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener">CC BY 2.0</a></span>
   </section>
   <section class="sec">${secH('أحدث التلاوات','#all','جميع التلاوات')}${grid(SORTED.slice(0,8),'rows-scroll')}</section>
   ${TOPV.length?`<section class="sec">${secH('الأكثر مشاهدة','#all-views','عرض المزيد')}${grid(TOPV.slice(0,8),'rows-scroll')}</section>`:''}
