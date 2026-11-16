@@ -35,26 +35,36 @@ def get(path, cheap=True, **q):
 # ---- is this video about our Sheikh? ----
 NAME = re.compile(r'مهنا|muhanna|mohanna|mehanna|mihana|muhana|mohana', re.I)
 HOMONYM = re.compile(r'محنا|محنّا|mahna\b|mhna\b', re.I)      # «خالد محنا» – a different person (audio producer)
+ARTIST = re.compile(r'اغني|أغني|أغان|فنان|موسيق|كليب|شيله|شيلة|عزف|طرب|لحن|ألحان|مطرب|song|music|clip|official audio|lyrics|concert', re.I)
 HARAM = re.compile(r'نبوي|حرم|مسجد|تلاو|صلاه|صلاة|تراويح|تهجد|قيام|فجر|مغرب|عشاء|جمعه|جمعة|خطبه|خطبة|سوره|سورة|quran|recit|prayer|madinah|nabawi|haram|taraweeh|surah', re.I)
 
 def relevant(sn):
     t = sn.get('title', '') + ' ' + sn.get('description', '')[:600] + ' ' + sn.get('channelTitle', '')
     if not NAME.search(t) and not NAME.search(norm(t)): return None
     note = ''
-    if HOMONYM.search(t) and not re.search(r'مهنا', t): note = 'قد يكون «خالد محنا» (شخص آخر)'
+    if ARTIST.search(sn.get('title', '') + ' ' + sn.get('channelTitle', '')) and not HARAM.search(sn.get('title', '')): note = 'مستبعد: يبدو للفنان صاحب الاسم المشابه'
+    elif HOMONYM.search(t) and not re.search(r'مهنا', t): note = 'قد يكون «خالد محنا» (شخص آخر)'
     elif not HARAM.search(t): note = 'لا يظهر أنه تلاوة'
     return note
 
 def tasks():
-    names = ['خالد المهنا', 'الشيخ خالد المهنا', 'خالد بن سليمان المهنا', 'د. خالد المهنا', 'المهنا المسجد النبوي',
-             'Khalid Al-Muhanna', 'Khaled Almohanna', 'Khalid Almuhanna', 'Khaled Al Muhanna', 'Sheikh Khalid Al Muhanna']
-    topics = ['تلاوة', 'تراويح', 'تهجد', 'قيام الليل', 'صلاة الفجر', 'صلاة المغرب', 'صلاة العشاء', 'خطبة الجمعة', 'دعاء القنوت',
-              'سورة', 'المصحف المرتل', 'تلاوة خاشعة', 'ختم القرآن', 'استسقاء', 'عيد']
-    T = [(n, None) for n in names]
+    """Older material first (before 1442 AH ≈ before Aug 2020), then everything else."""
+    T = []
+    for y in range(1436, 1442):
+        T += [(f'المهنا تراويح {y}', None), (f'خالد المهنا {y}', None), (f'المهنا تهجد {y}', None)]
+    for gy in range(2014, 2021):
+        T += [(n, gy) for n in ['خالد المهنا', 'الشيخ خالد المهنا', 'Khalid Al-Muhanna', 'Khaled Al Muhanna']]
+    names = ['خالد المهنا', 'الشيخ خالد المهنا', 'خالد بن سليمان المهنا', 'الشيخ الدكتور خالد المهنا', 'د. خالد المهنا', 'المهنا المسجد النبوي',
+             'Dr. Khalid Al-Muhanna', 'Khalid Al Muhanna', 'Khalid Al-Muhanna', 'Khaled Al Muhanna', 'Khaled Al-Muhanna',
+             'Khaled Almohanna', 'Khalid Almuhanna', 'Sheikh Khalid Al Muhanna']
+    topics = ['تلاوة', 'تراويح', 'تهجد', 'قيام الليل', 'صلاة الفجر', 'صلاة الظهر', 'صلاة العصر', 'صلاة المغرب', 'صلاة العشاء', 'صلاة الجمعة',
+              'خطبة الجمعة', 'خطبة العيد', 'صلاة العيد', 'استسقاء', 'كسوف', 'خسوف', 'دعاء القنوت', 'ختم القرآن', 'سورة', 'المصحف المرتل',
+              'محاضرة', 'درس', 'كلمة', 'لقاء', 'مقابلة', 'دورة علمية']
+    T += [(n, None) for n in names]
     T += [(f'خالد المهنا {t}', None) for t in topics]
-    for y in range(1436, 1449):
+    for y in range(1442, 1449):
         T += [(f'المهنا تراويح {y}', None), (f'خالد المهنا {y}', None)]
-    for gy in range(2014, 2027):                      # split by year to get past YouTube's 500-results limit
+    for gy in range(2021, 2027):
         T += [(n, gy) for n in ['خالد المهنا', 'Khalid Al-Muhanna']]
     return T
 
