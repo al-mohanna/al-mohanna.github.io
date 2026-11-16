@@ -1,7 +1,7 @@
 name: جمع تلاوات الشيخ من كل يوتيوب
 on:
   schedule:
-    - cron: '23 22 * * *'   # 01:23 بتوقيت الرياض، بعد تجدد حصة يوتيوب اليومية
+    - cron: '23 8 * * *'    # 11:23 بتوقيت الرياض، بعد تجدد حصة يوتيوب اليومية (منتصف الليل بتوقيت المحيط الهادئ)
   workflow_dispatch:
     inputs:
       max_search:
@@ -23,9 +23,11 @@ jobs:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           MAX_SEARCH: ${{ inputs.max_search || '70' }}
         run: python scripts/collect.py
+      - name: Pick approved ranges for the library
+        run: python scripts/pick_range.py
       - name: Save
         run: |
           git config user.name "mihana-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/found.json data/found.csv data/collect_state.json data/collect_status.json data/viewer.ps1
+          git add overrides.json data/extras.json data/alternates.json data/found.json data/found.csv data/collect_state.json data/collect_status.json data/viewer.ps1
           git diff --cached --quiet || (git commit -m "جمع تلاوات الشيخ من يوتيوب" && git pull --rebase && git push)

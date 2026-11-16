@@ -60,7 +60,7 @@ function Fill {
   $lines += 'القنوات التي مرّ عليها كاملة:  ' + (Ar $st.channels_done)
   $lines += 'عدد ليالي الجمع حتى الآن:  ' + (Ar $runs.Count)
   $lines += 'آخر تحديث:  ' + (Ar $up) + '  بتوقيت الرياض'
-  if (-not $st.complete) { $lines += 'التشغيل القادم: الليلة الساعة ١:٢٣ — يعمل وحده ولا يحتاج جهازك.' }
+  if (-not $st.complete) { $lines += 'التشغيل القادم: يومياً الساعة ١١:٢٣ صباحاً — يعمل وحده ولا يحتاج جهازك.' }
   $Body.Text = ($lines -join "`n")
 
   $h = @()
