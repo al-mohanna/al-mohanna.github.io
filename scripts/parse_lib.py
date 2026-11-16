@@ -116,13 +116,15 @@ def build(entries):
         it=parse(e['id'],e['title']+' '+e['dur'],o)
         it['up']=e.get('up','')
         it['views']=e.get('views',0)
+        it['src']=e.get('src','')
+        it['short']=e.get('short',0)
         rows.append(it)
     for i,it in enumerate(rows):
-        if it['d'] and not it['y']:
+        if it['d'] and not it['y'] and not it['src']:
             for j in list(range(i+1,min(i+15,len(rows))))+list(range(i-1,max(i-15,-1),-1)):
-                if rows[j]['y'] and rows[j]['y']>=1440: it['y']=rows[j]['y']; break
+                if rows[j]['y'] and rows[j]['y']>=1440 and not rows[j]['src']: it['y']=rows[j]['y']; break
     out=[]
     for x in rows:
-        e=[x['i'],x['t'],x.get('y') or 0,x.get('m') or 0,x.get('d') or 0,x.get('s',[]),1 if x.get('full') else 0,x['dur'],x['title'],x.get('topic') or '',x.get('up',''),x.get('views',0)]
+        e=[x['i'],x['t'],x.get('y') or 0,x.get('m') or 0,x.get('d') or 0,x.get('s',[]),1 if x.get('full') else 0,x['dur'],x['title'],x.get('topic') or '',x.get('up',''),x.get('views',0),x.get('src',''),1 if x.get('short') else 0]
         out.append(e)
     return out

@@ -294,10 +294,10 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
 .deco{font-family:'Aref Ruqaa',serif}
 .fl-3{grid-template-columns:repeat(3,1fr)}
 .mfol{display:none}
-.name-art{display:block;width:100%;max-width:660px;aspect-ratio:1400/503;margin:14px 0 6px;-webkit-mask:url(/name.webp) center/contain no-repeat;mask:url(/name.webp) center/contain no-repeat;background:linear-gradient(105deg,#b8862f 0%,#f6e2a6 22%,#fffaf0 30%,#e9c97f 42%,#c99d45 60%,#f6e2a6 80%,#c99d45 100%);background-size:280% 100%;animation:nameIn 1.6s var(--ease) both,shine 7s ease-in-out 1.6s infinite;filter:drop-shadow(0 2px 10px rgba(0,0,0,.25))}
+.name-art{display:block;width:100%;max-width:660px;aspect-ratio:1400/503;margin:14px 0 6px;-webkit-mask:url(/name.webp) center/contain no-repeat;mask:url(/name.webp) center/contain no-repeat;background:linear-gradient(105deg,#b8862f 0%,#f6e2a6 22%,#fffaf0 30%,#e9c97f 42%,#c99d45 60%,#f6e2a6 80%,#c99d45 100%);background-size:280% 100%;animation:nameIn 1.6s var(--ease) both,shine 3.5s ease-in-out 1.4s 2;filter:drop-shadow(0 2px 10px rgba(0,0,0,.25))}
 @keyframes nameIn{from{opacity:0;transform:translateY(14px) scale(.97);background-position:100% 0}to{opacity:1;transform:none;background-position:0 0}}
 @keyframes shine{0%,100%{background-position:0 0}50%{background-position:100% 0}}
-.hero{background-size:180% 180%;animation:heroGlow 14s ease-in-out infinite}
+.hero{background-size:180% 180%;animation:heroGlow 9s ease-in-out 1}
 @keyframes heroGlow{0%,100%{background-position:0% 0%}50%{background-position:100% 60%}}
 .ap{display:grid;grid-template-columns:150px 1fr;gap:14px;align-items:center;background:var(--card,rgba(127,127,127,.08));border:1px solid rgba(201,157,69,.35);border-radius:20px;padding:12px}
 .ap-vid{position:relative;width:150px;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000}
@@ -358,6 +358,85 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
 }
 @media(min-width:901px){.ov{align-items:center}.sheet{border-radius:30px;transform:translateY(30px) scale(.96);opacity:0;transition:transform .5s var(--ease),opacity .35s}.ov.open .sheet{opacity:1;transform:none}.grab{display:none}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* ---- v3: cards (title, date, then picture), recitation page, shorts, search ---- */
+.c2{padding:14px 14px 12px;gap:6px}
+.c2-main{display:flex;flex-direction:column;gap:6px;color:inherit;min-width:0}
+.c2 .c-title{font-size:19px;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.c-date{font-size:13.5px;color:var(--text);opacity:.85}
+.dt{display:inline-flex;gap:6px;align-items:center}.dt svg{width:15px;height:15px;color:var(--gold)}.dt.soft{color:var(--muted)}
+.thumb2{position:relative;display:block;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:12px;background:var(--bg2);margin:4px 0 2px}
+.thumb2 img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s var(--ease)}
+.card:hover .thumb2 img{transform:scale(1.04)}
+.c2 .c-act{padding-top:10px}
+.why{font-size:12.5px;color:var(--gold);background:var(--gold-s);padding:5px 10px;border-radius:10px;line-height:1.6}
+.sstrip{display:grid;grid-auto-flow:column;grid-auto-columns:150px;gap:12px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory;scrollbar-width:thin}
+.sgrid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.sc{position:relative;display:block;aspect-ratio:9/16;border-radius:16px;overflow:hidden;background:#000;scroll-snap-align:start;border:1px solid var(--line)}
+.sc img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.02)}
+.sc::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75),transparent 45%)}
+.sdur{position:absolute;top:8px;left:8px;z-index:1;background:rgba(0,0,0,.6);color:#fff;font-size:11px;padding:1px 6px;border-radius:6px;direction:ltr}
+.stl{position:absolute;bottom:8px;right:9px;left:9px;z-index:1;color:#fff;font-size:12.5px;font-weight:600;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.hero-in>*{min-width:0}
+.hsearch{width:100%;box-sizing:border-box;display:flex;align-items:center;gap:8px;margin-top:18px;background:rgba(255,255,255,.96);border-radius:16px;padding:6px 6px 6px 6px;max-width:560px}
+.hsearch span{color:#0b3d2b;display:grid;place-items:center;padding:0 8px}.hsearch span svg{width:20px;height:20px}
+.hsearch input{flex:1;min-width:0;border:0;outline:0;background:transparent;font:inherit;font-size:15.5px;color:#13261e;height:44px}
+.hsearch button{height:44px;padding:0 18px;border-radius:12px;background:linear-gradient(145deg,#e6c674,#ad8531);color:#082a1d;font-weight:700}
+.stats2{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.stats2>div{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;text-align:center}
+.stats2 b{display:block;font-family:var(--fq);font-size:28px;color:var(--gold)}.stats2 small{color:var(--muted);font-size:12.5px}
+.filt{display:flex;flex-direction:column;gap:10px;margin-bottom:8px}
+.filt .chips{margin:0}.chip.on{background:var(--green);border-color:var(--green);color:#fff}
+.fsel{display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:520px}.fsel select{height:44px}
+.cnt{margin:6px 0 12px}.cnt2{font-style:normal;font-family:var(--fa);font-size:13px;color:var(--muted);font-weight:500}
+.soon{background:var(--surface);border:1px dashed var(--gold);border-radius:20px;padding:30px;text-align:center;display:flex;flex-direction:column;gap:8px;align-items:center}
+.soon svg{width:40px;height:40px;color:var(--gold)}.soon b{font-family:var(--fq);font-size:22px}.soon p{color:var(--muted)}
+.lnk{color:var(--gold);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.qhint{font-size:14px;margin-bottom:4px}.qhint b{color:var(--gold)}
+.rec{max-width:880px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.vbox{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#000}
+.vbox img{width:100%;height:100%;object-fit:cover;opacity:.88}
+.vbox iframe,.vbox>div{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vplay{position:absolute;inset:0;margin:auto;width:76px;height:76px;border-radius:50%;background:linear-gradient(145deg,#e6c674,#ad8531);color:#082a1d;display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.vplay svg{width:30px;height:30px;margin-right:-4px}
+.verr{display:grid;place-items:center;color:#fff;padding:20px;text-align:center}
+.rec-h{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.rec-h h1{font-family:var(--fq);font-size:30px;line-height:1.4}
+.rec-d{display:flex;gap:7px;align-items:center;font-size:15.5px}.rec-d svg{width:17px;height:17px;color:var(--gold)}
+.rec-s{display:flex;flex-wrap:wrap;gap:6px}
+.schip{padding:6px 13px;border-radius:99px;background:var(--gold-s);color:var(--gold);font-weight:600;font-size:14px}
+.vchip{padding:6px 13px;border-radius:99px;border:1px solid var(--line);color:var(--muted);font-size:13.5px}
+.aud2,.shr,.det{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.aud2 h2,.shr h2{font-size:16px;font-weight:700;display:flex;gap:8px;align-items:center}.aud2 h2 svg,.shr h2 svg{width:20px;height:20px;color:var(--gold)}
+.ab{display:flex;gap:12px;align-items:center}.ab-m{flex:1;min-width:0}
+.ab input[type=range],.vol input{direction:ltr;width:100%;accent-color:#b08a35}
+.ap-play{width:58px;height:58px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--green);color:#fff}
+.ap-play svg{width:24px;height:24px}
+.ap-time{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);direction:ltr;margin-top:2px}
+.ab-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ab-row button{padding:9px 14px;border-radius:12px;border:1px solid var(--line);font-weight:600;font-size:13.5px}
+.ab-row button:hover{border-color:var(--gold);color:var(--gold)}
+.vol{display:flex;gap:6px;align-items:center;flex:1;min-width:140px}.vol svg{width:20px;height:20px;color:var(--muted);flex:none}
+.tgb{text-align:center}
+.spin{width:20px;height:20px;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.shr-b{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.sb{display:grid;place-items:center;min-height:48px;padding:8px;border-radius:14px;border:1px solid var(--line);font-weight:700;font-size:14.5px;text-align:center}
+.sb.wa{background:#1fa855;border-color:#1fa855;color:#fff}.sb.tgs{background:#2aa3d9;border-color:#2aa3d9;color:#fff}
+.srcs{display:flex;flex-wrap:wrap;gap:8px}.srcs .fl-btn{flex:1;min-width:150px;text-align:center}
+.fl-btn.fav.on{background:var(--gold-s)}
+.note{font-size:12.5px}
+@media(max-width:900px){
+ .stats2{grid-template-columns:repeat(3,1fr)}
+ .shr-b{grid-template-columns:1fr 1fr}
+ .rec-h h1{font-size:24px}
+ .hsearch{margin-inline:auto}
+ .c2 .c-title{font-size:18px}
+ .rows-scroll{grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:82%;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}
+ .rows-scroll>*{scroll-snap-align:start}
+ .sstrip{grid-auto-columns:128px}
+ .sgrid2{grid-template-columns:repeat(2,1fr)}
+}
 </style>
 </head>
 <body>
@@ -366,17 +445,17 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
   <a class="logo" href="#home"><svg class="lg" viewBox="0 0 48 48"></svg><div><b>تلاوات المهنا</b><small>المكتبة الذكية لتلاوات الشيخ</small></div></a>
   <div class="nl">تصفّح</div>
   <a class="ni" data-k="home" href="#home"></a>
+  <a class="ni" data-k="all" href="#all"></a>
   <a class="ni" data-k="prayers" href="#prayers"></a>
-  <a class="ni" data-k="friday" href="#friday"></a>
-  <a class="ni" data-k="occasions" href="#occasions"></a>
   <a class="ni" data-k="mushaf" href="#mushaf"></a>
-  <div class="nl">الأرشيف</div>
+  <a class="ni" data-k="surahs" href="#surahs"></a>
+  <a class="ni" data-k="shorts" href="#shorts"></a>
+  <div class="nl">الأرشيف والبحث</div>
+  <a class="ni" data-k="search" href="#search"></a>
   <a class="ni" data-k="date" href="#date"></a>
   <a class="ni" data-k="archive" href="#archive"></a>
   <a class="ni" data-k="collections" href="#collections"></a>
-  <a class="ni" data-k="rare" href="#rare"></a>
   <a class="ni" data-k="fav" href="#fav"></a>
-  <a class="ni" data-k="search" href="#search"></a>
   <div class="srcbox"><div class="sbt">مصادر الأرشيف</div>
     <div class="sr"><i></i>يوتيوب<span id="ytc"></span></div>
     <div class="sr"><i style="background:#8a8f8c;animation:none"></i>إكس<span>قريباً</span></div>
@@ -398,7 +477,7 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
 <nav class="bnav" id="bnav">
   <a data-k="home" href="#home"></a>
   <a data-k="prayers" href="#prayers"></a>
-  <a data-k="date" class="mid" href="#date"></a>
+  <a data-k="search" class="mid" href="#search"></a>
   <a data-k="mushaf" href="#mushaf"></a>
   <a data-k="archive" href="#archive"></a>
 </nav>
@@ -429,6 +508,10 @@ next:'<path d="m15 6-6 6 6 6"/>',
 prev:'<path d="m9 6 6 6-6 6"/>',
 hourglass:'<path d="M6 3h12M6 21h12M7 3c0 5 5 6 5 9s-5 4-5 9M17 3c0 5-5 6-5 9s5 4 5 9"/>',
 info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',
+eye:'<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/>',
+pause:'<path d="M8 5v14M16 5v14" stroke-width="3.2"/>',
+headphones:'<path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="5" height="7" rx="2"/><rect x="16" y="14" width="5" height="7" rx="2"/>',
+vol:'<path d="M4 9.5h4L13 5v14l-5-4.5H4z"/><path d="M16.5 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"/>',
 list:'<path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>'
 };
 const I=(k,c='')=>`<svg class="i ${c}" viewBox="0 0 24 24">${P[k]}</svg>`;
@@ -463,145 +546,199 @@ const fmtG=iso=>GF.format(toD(iso));
 const wd=iso=>WF.format(toD(iso));
 const fmtH=h=>`${ar(h.d)} ${HM[h.m-1]} ${ar(h.y)}هـ`;
 
-/* ---------- real data (YouTube @khalid_almihana) ---------- */
-const DATA=await fetch('/data.json',{cache:'no-cache'}).then(r=>r.json());
-const AUD=new Set(await fetch('/audio.json',{cache:'no-cache'}).then(r=>r.ok?r.json():[]).catch(()=>[]));
-const AUDURL=id=>`https://github.com/al-mohanna/al-mohanna.github.io/releases/download/audio/${id}.m4a`;
-const TG=await fetch('/telegram.json',{cache:'no-cache'}).then(r=>r.ok?r.json():{}).catch(()=>({}));
-const OVR=await fetch('/overrides.json',{cache:'no-cache'}).then(r=>r.ok?r.json():{}).catch(()=>({}));
-const RAW=DATA.items.filter(r=>!(OVR[r[0]]&&OVR[r[0]].hide)).map(r=>{const o=OVR[r[0]];if(!o)return r;const n=r.slice();if(o.t)n[1]=o.t;if(o.y!==undefined){n[2]=o.y;n[3]=o.m||0;n[4]=o.d||0}if(o.s)n[5]=o.s;if(o.title)n[8]=o.title;return n}).map(r=>{if(['fajr','maghrib','isha','taraweeh','other'].includes(r[1])){const sv=(r[5]||[]).slice();if(!sv.includes(1))sv.push(1);sv.sort((a,b)=>a-b);r[5]=sv}return r});
-const SYNC=DATA.synced;
-const TYPES={fajr:{l:'صلاة الفجر',c:'p'},maghrib:{l:'صلاة المغرب',c:'p'},isha:{l:'صلاة العشاء',c:'p'},khutbah:{l:'خطبة الجمعة',c:'f'},jumuah:{l:'صلاة الجمعة',c:'f'},fitr:{l:'عيد الفطر',c:'o'},adha:{l:'عيد الأضحى',c:'o'},taraweeh:{l:'التراويح والقيام',c:'o'},istisqa:{l:'الاستسقاء',c:'o'},kusuf:{l:'الكسوف',c:'o'},murattal:{l:'المصحف المرتل',c:'f'},collection:{l:'إصدار مجمّع',c:'r'},lecture:{l:'محاضرة وكلمة',c:'r'},other:{l:'تلاوة',c:'r'}};
+/* ---------- data: YouTube sync + reviewed records + your manual edits ---------- */
+const getJ=(u,d)=>fetch(u,{cache:'no-cache'}).then(r=>r.ok?r.json():d).catch(()=>d);
+const [DATA,TG,OVR,META]=await Promise.all([getJ('/data.json',{items:[]}),getJ('/telegram.json',{}),getJ('/overrides.json',{}),getJ('/meta.json',{})]);
+const SYNC=DATA.synced||'';
+const PRAY=['fajr','maghrib','isha','jumuah','taraweeh','other'];
+const RAW=DATA.items.filter(r=>!(OVR[r[0]]&&OVR[r[0]].hide)).map(r0=>{
+  const r=r0.slice();const m=META[r[0]]||{},o=OVR[r[0]]||{};
+  /* 1) reviewed records fill what the title does not say */
+  if(m.t==='short'||r[13])r[1]='short';
+  else if(r[1]==='other'&&m.t&&m.t!=='other')r[1]=m.t;
+  if(!(r[2]&&r[3]&&r[4])&&m.y&&!(r[2]&&r[2]!==m.y)){r[2]=m.y;r[3]=m.m||0;r[4]=m.d||0}
+  const own=(r[5]||[]).filter(n=>n!==1);
+  if(!own.length&&m.s&&m.s.length){r[5]=m.s.slice();r[14]='f'}
+  if(m.v&&m.s&&m.s.length&&(r[5]||[]).includes(m.s[0]))r[15]=m.v;
+  if(m.full&&!r[6])r[6]=1;
+  /* 2) your own edits always win */
+  if(o.t)r[1]=o.t;if(o.y!==undefined){r[2]=o.y;r[3]=o.m||0;r[4]=o.d||0}
+  if(o.s){r[5]=o.s;r[14]=''}if(o.title)r[8]=o.title;if(o.v)r[15]=o.v;
+  /* 3) every obligatory prayer opens with al-Fatiha */
+  if(PRAY.includes(r[1])){const sv=(r[5]||[]).slice();if(!sv.includes(1))sv.push(1);r[5]=sv.sort((a,b)=>a-b)}
+  return r});
+const TYPES={fajr:{l:'صلاة الفجر',c:'p'},maghrib:{l:'صلاة المغرب',c:'p'},isha:{l:'صلاة العشاء',c:'p'},khutbah:{l:'خطبة الجمعة',c:'f'},jumuah:{l:'صلاة الجمعة',c:'f'},fitr:{l:'عيد الفطر',c:'o'},adha:{l:'عيد الأضحى',c:'o'},taraweeh:{l:'التراويح والقيام',c:'o'},istisqa:{l:'الاستسقاء',c:'o'},kusuf:{l:'الكسوف',c:'o'},murattal:{l:'المصحف المرتل',c:'f'},collection:{l:'إصدار مجمّع',c:'r'},lecture:{l:'محاضرة وكلمة',c:'r'},short:{l:'مقطع قصير',c:'r'},other:{l:'تلاوة',c:'r'}};
 const H2G={};
-for(let t=Date.UTC(2018,8,1);t<=Date.UTC(2027,0,31);t+=864e5){const iso=isoOf(t),h=hijri(iso);if(h.y>=1440)H2G[`${h.y}-${h.m}-${h.d}`]=iso}
+for(let t=Date.UTC(2013,9,1);t<=Date.UTC(2027,0,31);t+=864e5){const iso=isoOf(t),h=hijri(iso);H2G[`${h.y}-${h.m}-${h.d}`]=iso}
 const g2h=(y,m,d)=>{for(let k=d;k>=Math.max(1,d-1);k--){const g=H2G[`${y}-${m}-${k}`];if(g)return k===d?g:null}return null};
-const ALLX=RAW.map((r,o)=>{const [id,t,y,m,d,s,full,dur,title,topic,up]=r;const it={id,o,t,s:s||[],full:!!full,dur,title,topic,up,views:r[11]||0};
-  if(y&&m&&d&&y>=1440){const g=g2h(y,m,d);if(g){it.d=g;it.h={y,m,d}}}
+const ALLX=RAW.map((r,o)=>{const [id,t,y,m,d,s,full,dur,title,topic,up,views,src]=r;
+  const it={id,o,t,s:s||[],full:!!full,dur,title,topic,up,views:views||0,src:src||'',fromFile:r[14]==='f',verses:r[15]||''};
+  if(y&&m&&d){const g=g2h(y,m,d);if(g){it.d=g;it.h={y,m,d}}}
   if(!it.h&&y)it.year=y; if(!it.h&&y&&m)it.month=m;
-  const p=dur.split(':').map(Number);it.sec=p.reduce((a,b)=>a*60+b,0);it.mins=Math.max(1,Math.round(it.sec/60));
+  const p=(dur||'0:00').split(':').map(Number);it.sec=p.reduce((a,b)=>a*60+b,0);it.mins=Math.max(1,Math.round(it.sec/60));
+  it.key=it.d||it.up||'';
   return it});
 const BYID={};ALLX.forEach(x=>BYID[x.id]=x);
 const MAINT=['fajr','maghrib','isha','khutbah','jumuah','fitr','adha','taraweeh','istisqa','kusuf','other'];
+const byKey=(a,b)=>b.key.localeCompare(a.key)||a.o-b.o;
 const ITEMS=ALLX.filter(x=>x.h&&MAINT.includes(x.t));
-const SORTED=ITEMS.slice().sort((a,b)=>b.d.localeCompare(a.d)||a.o-b.o);
+const SORTED=ITEMS.slice().sort(byKey);
 const RARE=ALLX.filter(x=>!x.h&&MAINT.includes(x.t));
 const COLL=ALLX.filter(x=>x.t==='collection');
 const LECT=ALLX.filter(x=>x.t==='lecture');
-const MUR={};const JUZ=[];
-ALLX.filter(x=>x.t==='murattal').forEach(x=>{if(/الجزء/.test(x.title))JUZ.push(x);else if(x.s[0]&&!MUR[x.s[0]])MUR[x.s[0]]=x});
-const ALL=SORTED.concat(RARE);
-const norm=s=>String(s||'').replace(/[ً-ْٰـ]/g,'').replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/(^|\s)ال/g,'$1').toLowerCase();
-ALLX.forEach(x=>{x.hay=norm([x.title,x.s.map(n=>SURAH[n-1]).join(' '),x.s.length?'سورة':'',TYPES[x.t].l,x.h?HM[x.h.m-1]+' '+x.h.y:'',x.year||'',x.full?'كاملة':''].join(' ')).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d))});
+const SHORTS=ALLX.filter(x=>x.t==='short').sort((a,b)=>(b.up||'').localeCompare(a.up||''));
+const LIB=ALLX.filter(x=>!['short','murattal'].includes(x.t)).sort(byKey); /* «جميع التلاوات» */
+/* the Mushaf of the Prophet's Mosque: single surahs, and parts 26–30 for the rest */
+const MUR={},JUZ={},JUZX=[];
+const JN={'السادس':26,'السابع':27,'الثامن':28,'التاسع':29,'الثلاثون':30};
+ALLX.filter(x=>x.t==='murattal').forEach(x=>{if(/الجزء/.test(x.title)){const k=Object.keys(JN).find(w=>x.title.includes(w));const j=k?JN[k]:0;if(j&&!JUZ[j])JUZ[j]=x;else JUZX.push(x)}else if(x.s[0]&&!MUR[x.s[0]])MUR[x.s[0]]=x});
+const JSTART={26:46,27:51,28:58,29:67,30:78};
+const juzOf=n=>n>=78?30:n>=67?29:n>=58?28:n>=51?27:n>=46?26:0;
+const murFor=n=>MUR[n]?{v:MUR[n],j:0}:(JUZ[juzOf(n)]?{v:JUZ[juzOf(n)],j:juzOf(n)}:null);
+const norm=s=>String(s||'').replace(/[ً-ْٰـ]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/ؤ/g,'و').replace(/ئ/g,'ي').replace(/(^|\s)ال/g,'$1').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).toLowerCase();
+ALLX.forEach(x=>{x.hay=norm([x.title,x.s.map(n=>SURAH[n-1]).join(' '),TYPES[x.t].l,x.h?HM[x.h.m-1]+' '+x.h.y:'',x.year||'',x.full?'كاملة':'',x.src].join(' '))});
 
 /* ---------- state ---------- */
 let FAV=new Set();try{FAV=new Set(JSON.parse(localStorage.getItem('fav2')||'[]'))}catch(e){}
 const saveFav=()=>{try{localStorage.setItem('fav2',JSON.stringify([...FAV]))}catch(e){}};
 const LISTS={};let LIM={};
-const DS={iso:SORTED[0].d,cal:'h'};
-let SQ='';
+const DS={iso:(SORTED[0]||{}).d||isoOf(Date.now()),cal:'h'};
+let SQ='',SNEAR=false;
+const AF={t:'all',y:'all',sort:'new'};
 
 /* ---------- components ---------- */
-const quoteOf=t=>{const m=t.match(/[«"“]\s*([^»"”]{6,60}?)\s*[»"”]/);return m?m[1].replace(/\.+$/,''):''};
-const PR=['fajr','maghrib','isha','jumuah','taraweeh','other','fitr','adha','istisqa','kusuf'];
+const quoteOf=t=>{const m=(t||'').match(/[«"“]\s*([^»"”]{6,60}?)\s*[»"”]/);return m?m[1].replace(/\.+$/,''):''};
 const shownS=it=>it.s.length>1?it.s.filter(n=>n!==1):it.s;
+const sNames=S=>S.length===1?'سورة '+SURAH[S[0]-1]:S.length===2?`سورتا ${SURAH[S[0]-1]} و${SURAH[S[1]-1]}`:'سور '+S.slice(0,4).map(n=>SURAH[n-1]).join('، ')+(S.length>4?' …':'');
+const typeL=it=>it.t==='taraweeh'?(/تهجد|قيام/.test(it.title)?'صلاة التهجد':'صلاة التراويح'):TYPES[it.t].l;
 function titleOf(it){
-  if(it.t==='khutbah')return it.topic||'خطبة الجمعة';
-  if(it.t==='murattal')return it.s.length?'سورة '+SURAH[it.s[0]-1]:it.title.split('||')[0].trim();
-  if(it.t==='collection'||it.t==='lecture')return it.title.split(/\s[|–-]\s|\|\|/)[0].replace(/#/g,'').slice(0,70);
+  if(it.t==='khutbah')return 'خطبة الجمعة'+(it.topic?` – ${it.topic}`:'');
+  if(it.t==='murattal'){const j=Object.keys(JUZ).find(k=>JUZ[k]===it)||(JUZX.includes(it)?Object.keys(JN).map(w=>it.title.includes(w)?JN[w]:0).find(Boolean):0);return j?`الجزء ${ar(j)} – المصحف المرتل`:it.s.length?`سورة ${SURAH[it.s[0]-1]} – المصحف المرتل`:it.title.split('||')[0].trim()}
+  if(it.t==='collection'||it.t==='lecture')return it.title.replace(/#/g,'').split(/\s[|–]\s|\|\|/)[0].slice(0,80);
   const S=shownS(it);
-  if(it.full&&S.length===1)return 'سورة '+SURAH[S[0]-1]+' كاملة';
-  const L=it.t==='taraweeh'?'التراويح':TYPES[it.t].l;
-  return it.h?`${L}، ${ar(it.h.d)} ${HM[it.h.m-1]} ${ar(it.h.y)}`:L;
+  if(it.t==='short')return S.length?sNames(S):(quoteOf(it.title)?'«'+quoteOf(it.title)+'»':'مقطع قصير');
+  if(it.full&&S.length===1)return `${typeL(it)} – سورة ${SURAH[S[0]-1]} كاملة`;
+  return S.length?`${typeL(it)} – ${sNames(S)}`:typeL(it);
 }
-function subOf(it){
-  const S=shownS(it);
-  if(it.t==='khutbah')return 'خطبة الجمعة';
-  if(it.t==='collection'||it.t==='lecture')return S.length?S.slice(0,6).map(n=>SURAH[n-1]).join('، ')+(S.length>6?' …':''):TYPES[it.t].l;
-  if(!S.length){const q=quoteOf(it.title);return q?'«'+q+'»':'السور تُضاف قريباً'}
-  return (S.length===1?'سورة ':'')+S.map(n=>SURAH[n-1]).join(' · ');
-}
-const dateOf=it=>it.h?fmtH(it.h):it.month&&it.year?`${HM[it.month-1]} ${ar(it.year)}هـ`:it.year?`${ar(it.year)}هـ · بدون يوم محدد`:'غير مؤرّخ';
-const shortUrl=it=>it.h?`${location.host}/${it.h.y}/${pad(it.h.m)}/${pad(it.h.d)}/${it.t}`:`${location.host}/v/${it.id}`;
+const plain=s=>String(s).replace(/<[^>]+>/g,'');
+const dateOf=it=>it.h?fmtH(it.h):it.month&&it.year?`${HM[it.month-1]} ${ar(it.year)}هـ`:it.year?`عام ${ar(it.year)}هـ`:'';
+const dateLine=it=>{const d=dateOf(it);return d?`<span class="dt">${I('cal')}${d}</span>`:(it.up?`<span class="dt soft">${I('cal')}نُشر ${fmtG(it.up)}</span>`:'')};
 const ytUrl=it=>'https://youtu.be/'+it.id;
-function card(it,i=0,cls=''){
-  const T=TYPES[it.t];
-  return `<article class="card ${cls}" style="--i:${i}">
-  <button class="thumb" data-play="${it.id}" aria-label="تشغيل"><img loading="lazy" src="https://i.ytimg.com/vi/${it.id}/mqdefault.jpg" alt=""><span class="tdur">${it.dur}</span><span class="tplay">${I('play')}</span></button>
-  <div class="c-top"><span class="badge b-${T.c}">${T.l}</span><span class="src" title="يوتيوب">${SRCI.yt}</span></div>
-  <h3 class="c-title">${titleOf(it)}</h3>
-  <div class="c-sub">${subOf(it)}</div>
-  <div class="c-meta">${it.h||it.year?`<span>${I('cal')}${dateOf(it)}</span>`:''}${it.up?`<span>رُفع ${fmtG(it.up)}</span>`:''}<span>${I('clock')}${it.sec>=3600?it.dur:ar(it.mins)+' د'}</span></div>
-  <div class="c-act"><button class="play" data-play="${it.id}">${I('play')}<span>استماع</span></button><button class="ib" data-share="${it.id}" aria-label="نسخ الرابط المختصر">${I('share')}</button><button class="ib fav ${FAV.has(it.id)?'on':''}" data-fav="${it.id}" aria-label="المفضلة">${I('heart')}</button></div>
+const siteUrl=it=>`https://${location.host}/v/${it.id}`;
+const fmtV=n=>n>=1e6?ar((n/1e6).toFixed(1).replace('.0',''))+' مليون':n>=1e3?ar(Math.round(n/1e3))+' ألف':ar(n);
+const thumbU=id=>`https://i.ytimg.com/vi/${id}/mqdefault.jpg`;
+function card(it,i=0,cls='',why=''){
+  const T=TYPES[it.t];const S=shownS(it);
+  return `<article class="card c2 ${cls}" style="--i:${i}">
+  <a class="c2-main" href="#v/${it.id}">
+   <div class="c-top"><span class="badge b-${T.c}">${it.t==='short'?'مقطع قصير':typeL(it)}</span>${it.src?`<span class="pill">من قناة أخرى</span>`:''}</div>
+   <h3 class="c-title">${titleOf(it)}</h3>
+   <div class="c-date">${dateLine(it)}</div>
+   <div class="thumb2"><img loading="lazy" src="${thumbU(it.id)}" alt=""><span class="tdur">${it.dur}</span><span class="tplay">${I('play')}</span></div>
+   ${why?`<div class="why">${why}</div>`:''}
+   ${it.t==='collection'&&S.length?`<div class="c-sub">${S.slice(0,6).map(n=>SURAH[n-1]).join('، ')}${S.length>6?' …':''}</div>`:''}
+   <div class="c-meta">${it.views?`<span>${I('eye')}${fmtV(it.views)} مشاهدة</span>`:''}<span>${I('clock')}${it.sec>=3600?it.dur:ar(it.mins)+' د'}</span></div>
+  </a>
+  <div class="c-act"><a class="play" href="#v/${it.id}/play">${I('play')}<span>استماع</span></a><button class="ib" data-share="${it.id}" aria-label="مشاركة">${I('share')}</button><button class="ib fav ${FAV.has(it.id)?'on':''}" data-fav="${it.id}" aria-label="المفضلة">${I('heart')}</button></div>
   </article>`;
 }
-const grid=(arr,cls='grid')=>`<div class="${cls}">${arr.map((x,i)=>card(x,i)).join('')}</div>`;
-function listHTML(k){const a=LISTS[k],lim=LIM[k]||24;return grid(a.slice(0,lim))+(a.length>lim?`<button class="more" data-more="${k}">عرض المزيد (${ar(a.length-lim)})</button>`:'')}
+const scard=(it,i=0)=>`<a class="sc" href="#v/${it.id}/play" style="--i:${i}"><img loading="lazy" src="https://i.ytimg.com/vi/${it.id}/hqdefault.jpg" alt=""><span class="sdur">${it.dur}</span><span class="stl">${titleOf(it)}</span></a>`;
+const grid=(arr,cls='grid',why)=>`<div class="${cls}">${arr.map((x,i)=>card(x,i,'',why?why(x):'')).join('')}</div>`;
+function listHTML(k){const a=LISTS[k],lim=LIM[k]||24;const why=LISTS[k+'_why'];return grid(a.slice(0,lim),'grid',why)+(a.length>lim?`<button class="more" data-more="${k}">عرض المزيد (${ar(a.length-lim)})</button>`:'')}
 const ph=(t,p,crumb='')=>`<div class="ph">${crumb?`<div class="crumb">${crumb}</div>`:''}<h1>${t}</h1>${p?`<p>${p}</p>`:''}</div>`;
 const empty=(t,p,ic='book')=>`<div class="empty">${I(ic)}<b>${t}</b>${p||''}</div>`;
 const cnt=t=>ITEMS.filter(x=>x.t===t).length;
+const secH=(t,link,lt)=>`<div class="sec-h"><h2>${t}</h2>${link?`<a href="${link}">${lt} ›</a>`:''}</div>`;
 
-/* ---------- views ---------- */
-const TOP=(()=>{const man=(OVR._featured||[]).map(id=>BYID[id]).filter(Boolean);if(man.length)return man;
-  const t=ALLX.filter(x=>x.views>0&&x.t!=='murattal'&&x.t!=='collection').sort((a,b)=>b.views-a.views).slice(0,24);return t.length?t:ITEMS.slice(0,24)})();
-const shuffled=TOP.map(x=>[Math.random(),x]).sort((a,b)=>a[0]-b[0]).map(p=>p[1]);
-function featSec(){return `<section class="sec"><div class="sec-h"><h2>الأكثر استماعاً</h2><span class="muted" style="font-size:13px">تتغيّر مع كل زيارة</span></div>${grid(shuffled.slice(1,7),'rows-scroll')}</section>`}
-const followSec=()=>`<section class="sec"><div class="sec-h"><h2>تابعونا</h2></div><div class="fl-row fl-3"><a class="fl-btn" data-ytc href="https://www.youtube.com/@khalid_almihana">يوتيوب</a><a class="fl-btn" data-tg="" href="https://t.me/KhaledAlMuhanna">تليجرام</a><a class="fl-btn" href="https://chat.whatsapp.com/Hy3d4T0zxmU74ON0d6fLPF">واتساب</a></div></section>`;
+/* ---------- home ---------- */
+const TOPV=ALLX.filter(x=>x.views>0&&!['murattal','collection','short'].includes(x.t)).sort((a,b)=>b.views-a.views);
+const FEAT=(()=>{const man=(OVR._featured||[]).map(id=>BYID[id]).filter(Boolean);const base=man.length?man:TOPV.slice(0,24);return base[Math.floor(Math.random()*base.length)]||SORTED[0]})();
+const followSec=()=>`<section class="sec">${secH('تابعونا')}<div class="fl-row fl-3"><a class="fl-btn" data-ytc href="https://www.youtube.com/@khalid_almihana">يوتيوب</a><a class="fl-btn" data-tg="" href="https://t.me/KhaledAlMuhanna">تليجرام</a><a class="fl-btn" href="https://chat.whatsapp.com/Hy3d4T0zxmU74ON0d6fLPF">واتساب</a></div></section>`;
 function vHome(){
-  const F=shuffled[0];
-  const recs=ALLX.filter(x=>!['khutbah','lecture'].includes(x.t)).length;
-  const kh=cnt('khutbah');
-  const years=new Set(ITEMS.map(x=>x.h.y)).size;
-  const sur=new Set(ALLX.flatMap(x=>x.s)).size;
+  const F=FEAT;
   const th=hijri(isoOf(Date.now()));
   const near=SORTED.filter(x=>x.h.m===th.m&&Math.abs(x.h.d-th.d)<=3&&x.h.y<th.y).slice(0,4);
+  const sur=new Set(ALLX.filter(x=>x.t!=='murattal').flatMap(x=>x.s)).size;
+  const years=new Set(ITEMS.map(x=>x.h.y)).size;
   const tiles=[
-    ['#prayers','mosque','الصلوات الجهرية','الفجر والمغرب والعشاء، كلٌّ في قسم',cnt('fajr')+cnt('maghrib')+cnt('isha')],
-    ['#friday','mic','الجمعة','الخطب وتلاوات الصلاة',cnt('khutbah')+cnt('jumuah')],
-    ['#occasions','star','رمضان والمناسبات','التراويح والقيام والاستسقاء',['fitr','adha','taraweeh','istisqa','kusuf'].reduce((a,t)=>a+cnt(t),0)],
-    ['#archive','arch','الأرشيف الهجري','من عام ١٤٤٠هـ حتى اليوم',null],
-    ['#mushaf-murattal','book','المصحف المرتل','تسجيل السور كاملة',Object.keys(MUR).length],
-    ['#mushaf-surah','list','السور والتلاوات','كل تلاوات السورة في مكان واحد',sur],
-    ['#collections','hourglass','الإصدارات المجمّعة','صلوات شهر كامل في مقطع واحد',COLL.length+LECT.length],
-    ['#rare','gem','تلاوات غير مؤرّخة','قديمة أو بلا يوم محدد',RARE.length]];
+    ['#prayers','mosque','الصلوات','الفجر والمغرب والعشاء والجمعة والتراويح',ITEMS.length],
+    ['#mushaf','book','المصحف المرتل','بصوت الشيخ من المسجد النبوي',null],
+    ['#surahs','list','السور','كل تلاوات السورة في مكان واحد',sur],
+    ['#archive','arch','الأرشيف الهجري','سنة ثم شهر ثم يوم',null],
+    ['#date','cal','البحث بالتاريخ','مع اليومين التاليين لتأخر الرفع',null],
+    ['#collections','hourglass','الإصدارات المجمّعة','صلوات شهر أو موسم في مقطع',COLL.length+LECT.length]];
   return `<section class="hero"><svg class="pat">${PATf()}</svg>
     <div class="hero-in"><div>
       <span class="eyebrow">${I('mosque')}إمام وخطيب المسجد النبوي الشريف</span>
       <h1 class="name-art" role="img" aria-label="فضيلة الشيخ الدكتور خالد بن سليمان المهنا"></h1>
       <p>تلاوات الشيخ وخطبه في مكان واحد، مرتّبة بالصلاة والتاريخ الهجري.</p>
-      <div class="cta"><a href="#date" class="btn-gold">${I('cal')}ابحث بالتاريخ</a><a href="#prayers" class="btn-ghost">تصفّح الصلوات</a></div>
+      <form class="hsearch" id="hsf"><span>${I('search')}</span><input id="hq" type="search" placeholder="سورة أو صلاة أو تاريخ… مثل: الكهف" autocomplete="off"><button>بحث</button></form>
     </div>
-    <div class="latest" data-play="${F.id}"><div class="lb">من الأكثر استماعاً · ${TYPES[F.t].l}</div><div class="lt">${subOf(F)}</div><div class="ls">${F.h?fmtH(F.h):F.dur}</div><div class="pbtn">${I('play')}</div></div></div>
-    <div class="stats"><div><b data-count="${recs}">${ar(recs)}</b><small>تلاوة</small></div><div><b data-count="${kh}">${ar(kh)}</b><small>خطبة جمعة</small></div><div><b data-count="${sur}">${ar(sur)}</b><small>سورة مُتلوّة</small></div><div><b data-count="${years}">${ar(years)}</b><small>سنوات أرشيف</small></div></div>
+    ${F?`<a class="latest" href="#v/${F.id}/play"><div class="lb">من الأكثر استماعاً · ${typeL(F)}</div><div class="lt">${plain(titleOf(F)).split(' – ').pop()}</div><div class="ls">${dateOf(F)||F.dur}</div><div class="pbtn">${I('play')}</div></a>`:''}</div>
   </section>
-  <section class="tiles">${tiles.map(([h,ic,t,s,n],i)=>`<a class="tile" href="${h}" style="animation:up .55s var(--ease) both;animation-delay:${i*40}ms"><div class="ti">${I(ic)}</div>${n!=null?`<span class="n">${ar(n)}</span>`:''}<b>${t}</b><small>${s}</small></a>`).join('')}</section>
-  ${featSec()}
-  <section class="sec"><div class="sec-h"><h2>أحدث التلاوات</h2><a href="#archive">الأرشيف كاملاً ›</a></div>${grid(SORTED.slice(0,8),'rows-scroll')}</section>
-  ${near.length?`<section class="sec"><div class="sec-h"><h2>في مثل هذه الأيام</h2><span class="muted" style="font-size:13px">${ar(th.d)} ${HM[th.m-1]} من الأعوام السابقة</span></div>${grid(near,'rows-scroll')}</section>`:''}${followSec()}`;
+  <section class="sec">${secH('أحدث التلاوات','#all','جميع التلاوات')}${grid(SORTED.slice(0,8),'rows-scroll')}</section>
+  ${TOPV.length?`<section class="sec">${secH('الأكثر مشاهدة','#all-views','عرض المزيد')}${grid(TOPV.slice(0,8),'rows-scroll')}</section>`:''}
+  ${SHORTS.length?`<section class="sec">${secH('مقاطع قصيرة','#shorts','عرض الكل')}<div class="sstrip">${SHORTS.slice(0,12).map(scard).join('')}</div></section>`:''}
+  <section class="sec">${secH('تصفّح المكتبة')}<div class="tiles">${tiles.map(([h,ic,t,s,n],i)=>`<a class="tile" href="${h}" style="animation:up .55s var(--ease) both;animation-delay:${i*40}ms"><div class="ti">${I(ic)}</div>${n!=null?`<span class="n">${ar(n)}</span>`:''}<b>${t}</b><small>${s}</small></a>`).join('')}</div></section>
+  ${near.length?`<section class="sec">${secH('في مثل هذه الأيام')}<p class="muted" style="margin:-6px 0 12px;font-size:13px">${ar(th.d)} ${HM[th.m-1]} من الأعوام السابقة</p>${grid(near,'rows-scroll')}</section>`:''}
+  <section class="sec">${secH('إحصائيات المكتبة')}<div class="stats2">
+    <div><b data-count="${LIB.length}">${ar(LIB.length)}</b><small>تلاوة وخطبة</small></div>
+    <div><b data-count="${cnt('khutbah')}">${ar(cnt('khutbah'))}</b><small>خطبة جمعة</small></div>
+    <div><b data-count="${sur}">${ar(sur)}</b><small>سورة مُتلوّة</small></div>
+    <div><b data-count="${SHORTS.length}">${ar(SHORTS.length)}</b><small>مقطع قصير</small></div>
+    <div><b data-count="${years}">${ar(years)}</b><small>سنوات أرشيف</small></div></div>
+    <p class="muted" style="font-size:12.5px;margin-top:8px">الأرقام محسوبة من بيانات المكتبة نفسها، وتتحدث تلقائياً كل ساعة.</p></section>
+  ${followSec()}`;
 }
-const GROUPS={
-  prayers:{t:'الصلوات الجهرية',p:'تلاوات الصلوات الجهرية من الأحدث للأقدم، ولكل صلاة قسم مستقل.',tabs:[['fajr','الفجر'],['maghrib','المغرب'],['isha','العشاء']]},
-  friday:{t:'الجمعة',p:'خطب الجمعة في قسم، وتلاوات صلاة الجمعة في قسم آخر.',tabs:[['khutbah','الخطب'],['jumuah','تلاوات الصلاة']]},
-  occasions:{t:'رمضان والمناسبات',p:'صلاة التراويح والقيام، والأعياد والاستسقاء والكسوف.',tabs:[['taraweeh','التراويح والقيام'],['fitr','عيد الفطر'],['adha','عيد الأضحى'],['istisqa','الاستسقاء'],['kusuf','الكسوف']]}};
-function vGroup(g,sub){
-  const G=GROUPS[g];const tabs=G.tabs.filter(([k])=>cnt(k)||k===G.tabs[0][0]);
+
+/* ---------- lists ---------- */
+const GTABS=[['fajr','الفجر'],['maghrib','المغرب'],['isha','العشاء'],['jumuah','صلاة الجمعة'],['khutbah','خطب الجمعة'],['taraweeh','التراويح والقيام'],['occ','الأعياد والمناسبات']];
+const OCC=['fitr','adha','istisqa','kusuf'];
+function vGroup(sub){
+  const pool=t=>t==='occ'?ALLX.filter(x=>OCC.includes(x.t)):ALLX.filter(x=>x.t===t);
+  const tabs=GTABS.filter(([k])=>pool(k).length);
   if(!tabs.some(x=>x[0]===sub))sub=tabs[0][0];
-  LISTS.g=SORTED.filter(x=>x.t===sub);
-  return ph(G.t,G.p)+`<div class="seg">${tabs.map(([k,l])=>`<a href="#${g}-${k}" class="${k===sub?'on':''}">${l}<i>${ar(cnt(k))}</i></a>`).join('')}</div><div data-list="g">${LISTS.g.length?listHTML('g'):empty('لا توجد مقاطع بعد','')}</div>`;
+  LISTS.g=pool(sub).sort(byKey);
+  return ph('الصلوات','لكل صلاة قسم مستقل، مرتّبة من الأحدث تلاوةً إلى الأقدم.')+`<div class="seg">${tabs.map(([k,l])=>`<a href="#prayers-${k}" class="${k===sub?'on':''}">${l}<i>${ar(pool(k).length)}</i></a>`).join('')}</div><div data-list="g">${listHTML('g')}</div>`;
 }
+const AFT=[['all','الكل'],['fajr','الفجر'],['maghrib','المغرب'],['isha','العشاء'],['fri','الجمعة'],['taraweeh','التراويح والقيام'],['occ','المناسبات'],['collection','الإصدارات'],['other','أخرى']];
+function allList(){
+  let a=LIB.filter(x=>AF.t==='all'?true:AF.t==='fri'?['jumuah','khutbah'].includes(x.t):AF.t==='occ'?OCC.includes(x.t):AF.t==='collection'?['collection','lecture'].includes(x.t):x.t===AF.t);
+  if(AF.y!=='all')a=a.filter(x=>(x.h?x.h.y:x.year)===+AF.y);
+  if(AF.sort==='views')a=a.slice().sort((p,q)=>q.views-p.views);
+  else if(AF.sort==='old')a=a.slice().sort((p,q)=>p.key.localeCompare(q.key));
+  else if(AF.sort==='up')a=a.slice().sort((p,q)=>(q.up||'').localeCompare(p.up||''));
+  return a;
+}
+function vAll(a){
+  if(a==='views')AF.sort='views';
+  const years=[...new Set(LIB.map(x=>x.h?x.h.y:x.year).filter(Boolean))].sort((p,q)=>q-p);
+  LISTS.a=allList();
+  return ph('جميع التلاوات',`${ar(LIB.length)} تسجيلاً من صلوات الشيخ وخطبه. المقاطع القصيرة والمصحف المرتل في قسميهما.`)+
+  `<div class="filt"><div class="chips">${AFT.map(([k,l])=>`<button class="chip ${AF.t===k?'on':''}" data-af="t:${k}">${l}</button>`).join('')}</div>
+   <div class="fsel"><select id="afY"><option value="all">كل السنوات</option>${years.map(y=>`<option value="${y}" ${String(AF.y)===String(y)?'selected':''}>${ar(y)}هـ</option>`).join('')}</select>
+   <select id="afS">${[['new','الأحدث تلاوةً'],['old','الأقدم تلاوةً'],['views','الأكثر مشاهدة'],['up','الأحدث نشراً']].map(([k,l])=>`<option value="${k}" ${AF.sort===k?'selected':''}>${l}</option>`).join('')}</select></div></div>
+   <p class="muted cnt">${ar(LISTS.a.length)} تسجيلاً</p><div data-list="a">${LISTS.a.length?listHTML('a'):empty('لا توجد تسجيلات بهذه الشروط','')}</div>`;
+}
+function vShorts(){
+  return ph('مقاطع قصيرة','مقتطفات قصيرة من تلاوات الشيخ نُشرت على يوتيوب بصيغة «شورتس».')+`<div class="sgrid2">${SHORTS.map(scard).join('')}</div>`;
+}
+
+/* ---------- date page (with the two following days for late uploads) ---------- */
 function vDate(){
   const D=DS.iso,h=hijri(D);
   const day=n=>SORTED.filter(x=>x.d===addD(D,n));
   const g=[day(0),day(1),day(2)];
   const lastFri=(SORTED.find(x=>x.t==='khutbah')||SORTED[0]).d;
-  const ram=SORTED.filter(x=>x.t==='taraweeh'&&x.h.y===1447).pop();
   const coll=COLL.filter(c=>c.year===h.y&&c.month===h.m);
+  const ys=[...new Set(ITEMS.map(x=>x.h.y))].sort();
   const ctrl=DS.cal==='g'
-    ?`<input type="date" class="inp" id="dIn" value="${D}" min="2018-09-11" max="2027-01-30">`
-    :`<div class="dsel"><select id="hD">${Array.from({length:30},(_,i)=>`<option value="${i+1}" ${h.d===i+1?'selected':''}>${ar(i+1)}</option>`).join('')}</select><select id="hM">${HM.map((n,i)=>`<option value="${i+1}" ${h.m===i+1?'selected':''}>${n}</option>`).join('')}</select><select id="hY">${[1440,1441,1442,1443,1444,1445,1446,1447,1448].map(y=>`<option value="${y}" ${h.y===y?'selected':''}>${ar(y)}هـ</option>`).join('')}</select></div>`;
+    ?`<input type="date" class="inp" id="dIn" value="${D}" min="2014-01-01" max="2027-01-30">`
+    :`<div class="dsel"><select id="hD">${Array.from({length:30},(_,i)=>`<option value="${i+1}" ${h.d===i+1?'selected':''}>${ar(i+1)}</option>`).join('')}</select><select id="hM">${HM.map((n,i)=>`<option value="${i+1}" ${h.m===i+1?'selected':''}>${n}</option>`).join('')}</select><select id="hY">${ys.map(y=>`<option value="${y}" ${h.y===y?'selected':''}>${ar(y)}هـ</option>`).join('')}</select></div>`;
   const lbl=['اليوم المطلوب','بعد يوم','بعد يومين'];
   return ph('البحث بالتاريخ','اختر يوماً بالتقويم الهجري أو الميلادي. ولأن المقطع قد يُرفع بعد يوم أو يومين، يعرض الموقع معه تلاوات اليومين التاليين.')+
   `<div class="dpanel"><div class="seg"><button data-cal="h" class="${DS.cal==='h'?'on':''}">هجري</button><button data-cal="g" class="${DS.cal==='g'?'on':''}">ميلادي</button></div>${ctrl}
-   <div class="chips"><button class="chip" data-dset="${SORTED[0].d}">آخر تلاوة</button><button class="chip" data-dset="${lastFri}">آخر خطبة جمعة</button>${ram?`<button class="chip" data-dset="${ram.d}">أول ليلة من رمضان ١٤٤٧هـ</button>`:''}</div></div>
+   <div class="chips"><button class="chip" data-dset="${(SORTED[0]||{}).d}">آخر تلاوة</button><button class="chip" data-dset="${lastFri}">آخر خطبة جمعة</button></div></div>
   <div class="dhead"><button class="nav2" data-dset="${addD(D,-1)}" aria-label="اليوم السابق">${I('prev')}</button><div><div class="wd">${wd(D)}</div><h2>${fmtH(h)}</h2><p>${fmtG(D)}</p></div><button class="nav2" data-dset="${addD(D,1)}" aria-label="اليوم التالي">${I('next')}</button></div>
   <div class="tl">${[0,1,2].map(n=>{const hh=hijri(addD(D,n));return `<a class="node ${n===0?'mainn':''} ${g[n].length?'has':''}" href="#date" data-node="${n}"><div class="dot">${ar(g[n].length)}</div><b>${lbl[n]}</b><small>${ar(hh.d)} ${HM[hh.m-1]}</small></a>`}).join('')}</div>
   <div id="g0">${g[0].length?grid(g[0]):empty('لا توجد تلاوة مؤرّخة بهذا اليوم',(g[1].length||g[2].length||coll.length)?'<div>انظر الاقتراحات أدناه، فقد تكون رُفعت لاحقاً.</div>':'<div>قد لا يكون الشيخ أمَّ الصلاة في هذا اليوم. جرّب يوماً آخر.</div>','cal')}</div>
@@ -610,23 +747,25 @@ function vDate(){
   ${[1,2].map(n=>g[n].length?`<div class="dg" id="g${n}"><h4><span>+${ar(n)} ${n===1?'يوم':'يومان'}</span>${wd(addD(D,n))} · ${fmtH(hijri(addD(D,n)))}</h4><div class="grid">${g[n].map((x,i)=>card(x,i,'soft')).join('')}</div></div>`:'').join('')||(!coll.length?'<p class="muted" style="margin-top:12px">لا توجد مقاطع في اليومين التاليين.</p>':'')}
   </section>`;
 }
+
+/* ---------- archive ---------- */
 function ys(y){return ITEMS.some(x=>x.h.y===y)}
 function vArchive(){
   const yc={};ITEMS.forEach(x=>{(yc[x.h.y]=yc[x.h.y]||Array(12).fill(0))[x.h.m-1]++});
   const years=Object.keys(yc).sort((a,b)=>b-a);
-  return ph('الأرشيف الهجري','أرشيف زمني يبدأ من عام ١٤٤٠هـ، مرتّب بالسنة ثم الشهر ثم اليوم.')+
+  return ph('الأرشيف الهجري','أرشيف زمني مرتّب بالسنة ثم الشهر ثم اليوم.')+
   `<div class="ygrid">${years.map((y,i)=>{const m=yc[y],mx=Math.max(...m,1),tot=m.reduce((a,b)=>a+b,0);return `<a class="ycard" href="#y-${y}" style="--i:${i}"><div class="yy">${ar(y)}<span>هـ</span></div><small>${ar(tot)} تلاوة وخطبة</small><div class="bars">${m.map(c=>`<i style="height:${Math.max(6,c/mx*100)}%"></i>`).join('')}</div></a>`}).join('')}</div>
-  <div class="sec"><a class="info" href="#rare">${I('gem')}<span>التلاوات الأقدم من ١٤٤٠هـ أو التي ليس فيها يوم محدد تجدها في قسم <b style="color:var(--gold)">التلاوات غير المؤرّخة</b>.</span></a></div>`;
+  <div class="sec"><a class="info" href="#rare">${I('gem')}<span>التلاوات التي ليس فيها يوم محدد تجدها في قسم <b style="color:var(--gold)">التلاوات غير المؤرّخة</b> (${ar(RARE.length)}).</span></a></div>`;
 }
 function vYear(y,m){
   y=+y;const all=SORTED.filter(x=>x.h.y===y);
   const cr=`<a href="#archive">الأرشيف</a>›`;
   if(!m){
-    const und=RARE.filter(r=>r.year===y),cl=COLL.filter(c=>c.year===y);
+    const und=RARE.filter(r=>r.year===y),cl=COLL.filter(c=>c.year===y||(c.h&&c.h.y===y));
     return ph(`عام ${ar(y)}هـ`,`${ar(all.length)} تلاوة وخطبة`,cr)+
     `<div class="mgrid">${HM.map((n,i)=>{const c=all.filter(x=>x.h.m===i+1).length;return `<a class="mcard ${c?'':'dim'}" href="#y-${y}-${i+1}" style="--i:${i}"><small>${ar(i+1)}</small><b>${n}</b><span>${c?ar(c)+' مقطع':'—'}</span></a>`}).join('')}</div>`+
-    (cl.length?`<section class="sec"><div class="sec-h"><h2>إصدارات مجمّعة</h2></div>${grid(cl)}</section>`:'')+
-    (und.length?`<section class="sec"><div class="sec-h"><h2>تاريخ غير محدد</h2></div><p class="muted" style="margin-bottom:12px">مقاطع ذُكرت فيها السنة فقط دون اليوم.</p>${grid(und)}</section>`:'')+
+    (cl.length?`<section class="sec">${secH('إصدارات مجمّعة')}${grid(cl)}</section>`:'')+
+    (und.length?`<section class="sec">${secH('تاريخ غير محدد')}<p class="muted" style="margin-bottom:12px">مقاطع ذُكرت فيها السنة فقط دون اليوم.</p>${grid(und)}</section>`:'')+
     `<div class="pn">${ys(y+1)?`<a href="#y-${y+1}">${I('prev')} ${ar(y+1)}هـ</a>`:'<span></span>'}${ys(y-1)?`<a href="#y-${y-1}">${ar(y-1)}هـ ${I('next')}</a>`:''}</div>`;
   }
   m=+m;const list=all.filter(x=>x.h.m===m).sort((a,b)=>a.d.localeCompare(b.d)||a.o-b.o);
@@ -638,140 +777,219 @@ function vYear(y,m){
    (list.length?Object.keys(days).map(d=>{const h=hijri(d);return `<div class="dayh"><b>${ar(h.d)} ${HM[m-1]}</b><small>${wd(d)} · ${fmtG(d)}</small></div><div class="grid">${days[d].map(x=>card(x,i++)).join('')}</div>`}).join(''):empty('لا توجد مقاطع في هذا الشهر','<div>قد لا يكون الشيخ أمَّ الصلوات في هذا الشهر.</div>'))+
    `<div class="pn"><a href="#y-${nm[0]}-${nm[1]}">${I('prev')} ${HM[nm[1]-1]}</a><a href="#y-${pm[0]}-${pm[1]}">${HM[pm[1]-1]} ${I('next')}</a></div>`;
 }
+
+/* ---------- the two Mushafs ---------- */
 function vMushaf(sub){
-  sub=sub==='surah'?'surah':'murattal';
-  const seg=`<div class="seg"><a href="#mushaf-murattal" class="${sub==='murattal'?'on':''}">المصحف المرتل<i>${ar(Object.keys(MUR).length)}</i></a><a href="#mushaf-surah" class="${sub==='surah'?'on':''}">السور والتلاوات</a></div>`;
-  if(sub==='murattal')return ph('المصحف المرتل','تسجيلات السور كاملة بصوت الشيخ، مرتّبة بترتيب المصحف. السور الباهتة لم تُرفع بعد.')+seg+
-    `<div class="sgrid">${SURAH.map((n,i)=>{const v=MUR[i+1];return `<button class="stile ${v?'':'dim'}" ${v?`data-mur="${i+1}"`:''}><span class="oct">${OCT}<em>${ar(i+1)}</em></span><span><b>${n}</b><small>${v?(v.sec>=3600?v.dur:ar(v.mins)+' دقيقة'):'غير متوفرة بعد'}</small></span></button>`}).join('')}</div>`+
-    (JUZ.length?`<section class="sec"><div class="sec-h"><h2>أجزاء كاملة</h2></div><div class="grid">${JUZ.map((x,i)=>`<article class="card" style="--i:${i}"><div class="c-top"><span class="badge b-f">المصحف المرتل</span></div><h3 class="c-title">${x.title.split(' من المصحف')[0]}</h3><div class="c-meta"><span>${I('clock')}${x.dur}</span></div><div class="c-act"><button class="play" data-play="${x.id}">${I('play')}<span>استماع</span></button></div></article>`).join('')}</div></section>`:'');
-  const C={};ALLX.forEach(x=>{if(x.t==='murattal')return;x.s.forEach(s=>{const c=C[s]=C[s]||{n:0,f:0};c.n++;if(x.full&&x.s.length===1)c.f++})});
-  return ph('السور والتلاوات','كل سورة مع عدد تلاواتها في الصلوات، والمرات التي قُرئت فيها كاملة.')+seg+
-    `<div class="sgrid">${SURAH.map((n,i)=>{const c=C[i+1];return `<a class="stile ${c?'':'dim'}" href="#s-${i+1}"><span class="oct">${OCT}<em>${ar(i+1)}</em></span><span><b>${n}</b><small>${c?`${ar(c.n)} تلاوة${c.f?` · <span class="fb">${ar(c.f)} كاملة</span>`:''}`:'لا توجد بعد'}</small></span></a>`}).join('')}</div>`;
+  sub=sub==='fahd'?'fahd':'haram';
+  const seg=`<div class="seg"><a href="#mushaf-haram" class="${sub==='haram'?'on':''}">مصحف المسجد النبوي</a><a href="#mushaf-fahd" class="${sub==='fahd'?'on':''}">مصحف مجمع الملك فهد</a></div>`;
+  if(sub==='fahd')return ph('المصحف المرتل','مصحفا الشيخ المرتّلان، كلٌّ في قسم مستقل.')+seg+
+    `<div class="soon">${I('book')}<b>مصحف الشيخ المرتل – تسجيل مجمع الملك فهد لطباعة المصحف الشريف</b><p>تسجيل مستقل خارج تلاوات الحرم، يُضاف هنا قريباً بإذن الله.</p></div>`;
+  return ph('المصحف المرتل','مصحفا الشيخ المرتّلان، كلٌّ في قسم مستقل.')+seg+
+    `<p class="muted" style="margin:-6px 0 14px">المصحف كاملاً من الفاتحة إلى الناس، من تلاوات المسجد النبوي. السور من الأحقاف إلى الناس مسجّلة ضمن الأجزاء ٢٦–٣٠.</p>
+    <div class="sgrid">${SURAH.map((n,i)=>{const f=murFor(i+1);return `<a class="stile ${f?'':'dim'}" ${f?`href="#v/${f.v.id}/play"`:''}><span class="oct">${OCT}<em>${ar(i+1)}</em></span><span><b>${n}</b><small>${!f?'غير متوفرة':f.j?`ضمن الجزء ${ar(f.j)}`:(f.v.sec>=3600?f.v.dur:ar(f.v.mins)+' دقيقة')}</small></span></a>`}).join('')}</div>`+
+    `<section class="sec">${secH('الأجزاء ٢٦–٣٠')}<div class="grid">${Object.keys(JUZ).sort((a,b)=>a-b).map((j,i)=>card(JUZ[j],i)).join('')}</div>${JUZX.length?`<p class="muted" style="margin-top:10px">ولبعض الأجزاء نسخة ثانية على القناة: ${JUZX.map(x=>`<a class="lnk" href="#v/${x.id}">${plain(titleOf(x)).split(' – ')[0]}</a>`).join('، ')}.</p>`:''}</section>`;
+}
+/* surah index: counts equal what the surah page shows */
+const inSurah=n=>ALLX.filter(x=>x.t!=='murattal'&&x.s.includes(n));
+function vSurahs(){
+  return ph('السور','كل سورة وعدد التسجيلات التي قرأها فيها الشيخ، في الصلوات والإصدارات والمقاطع القصيرة.')+
+    `<div class="sgrid">${SURAH.map((n,i)=>{const c=inSurah(i+1).length;return `<a class="stile ${c?'':'dim'}" href="#s-${i+1}"><span class="oct">${OCT}<em>${ar(i+1)}</em></span><span><b>${n}</b><small>${c?`${ar(c)} تسجيل`:'لا توجد بعد'}</small></span></a>`}).join('')}</div>`;
 }
 function vSurah(n){
   n=Math.min(114,Math.max(1,+n||1));
-  const list=ALL.filter(x=>x.s.includes(n));
-  const full=list.filter(x=>x.full&&x.s.length===1),part=list.filter(x=>!(x.full&&x.s.length===1));
-  return ph(`سورة ${SURAH[n-1]}`,`${ar(AYAT[n-1])} آية · ${ar(list.length)} تلاوة في الأرشيف`,`<a href="#mushaf-surah">السور</a>›`)+
-  (MUR[n]?`<button class="btn-gold" data-mur="${n}" style="margin-bottom:6px">${I('book')}استمع للسورة من المصحف المرتل</button>`:'')+
-  (full.length?`<section class="sec"><div class="sec-h"><h2>تلاوات كاملة للسورة</h2></div>${grid(full)}</section>`:'')+
-  (part.length?`<section class="sec"><div class="sec-h"><h2>من تلاوات الصلوات</h2></div>${grid(part)}</section>`:'')+
+  const list=inSurah(n).sort(byKey);
+  const G=[['تلاوات كاملة للسورة',list.filter(x=>x.full&&shownS(x).length===1&&x.t!=='short')],
+    ['في الصلوات',list.filter(x=>MAINT.includes(x.t)&&!(x.full&&shownS(x).length===1))],
+    ['الإصدارات المجمّعة',list.filter(x=>x.t==='collection'||x.t==='lecture')],
+    ['مقاطع قصيرة',list.filter(x=>x.t==='short')]];
+  const f=murFor(n);
+  return ph(`سورة ${SURAH[n-1]}`,`${ar(AYAT[n-1])} آية · ${ar(list.length)} تسجيل`,`<a href="#surahs">السور</a>›`)+
+  (f?`<a class="btn-gold" href="#v/${f.v.id}/play" style="margin-bottom:6px">${I('book')}${f.j?`استمع من المصحف المرتل (الجزء ${ar(f.j)})`:'استمع للسورة من المصحف المرتل'}</a>`:'')+
+  G.filter(g=>g[1].length).map(([t,a])=>`<section class="sec">${secH(`${t} <i class="cnt2">${ar(a.length)}</i>`)}${t==='مقاطع قصيرة'?`<div class="sstrip">${a.map(scard).join('')}</div>`:grid(a)}</section>`).join('')+
   (!list.length?`<div class="sec">${empty('لا توجد تلاوات مسجّلة لهذه السورة بعد','')}</div>`:'')+
   `<div class="pn">${n<114?`<a href="#s-${n+1}">${I('prev')} ${SURAH[n]}</a>`:'<span></span>'}${n>1?`<a href="#s-${n-1}">${SURAH[n-2]} ${I('next')}</a>`:''}</div>`;
 }
 function vColl(sub){
   sub=sub==='lect'?'lect':'coll';
-  LISTS.c=sub==='coll'?COLL:LECT;
+  LISTS.c=(sub==='coll'?COLL:LECT).slice().sort(byKey);
   return ph('الإصدارات المجمّعة','مقاطع طويلة تجمع صلوات شهر أو موسم كامل، ومحاضرات وكلمات الشيخ.')+
   `<div class="seg"><a href="#collections-coll" class="${sub==='coll'?'on':''}">صلوات مجمّعة<i>${ar(COLL.length)}</i></a><a href="#collections-lect" class="${sub==='lect'?'on':''}">محاضرات وكلمات<i>${ar(LECT.length)}</i></a></div><div data-list="c">${listHTML('c')}</div>`;
 }
 function vRare(){
-  return ph('تلاوات غير مؤرّخة','تلاوات قديمة أو ليس في عنوانها يوم محدد. ما ذُكرت فيه السنة تُعرض معه.')+
-  `<div class="info">${I('info')}<span>يُضاف المقطع هنا تلقائياً إذا لم يُذكر في عنوانه يوم محدد. وإذا ذُكرت السنة فقط يظهر أيضاً في أرشيف تلك السنة.</span></div>`+grid(RARE);
+  LISTS.r=RARE.slice().sort(byKey);
+  return ph('تلاوات غير مؤرّخة','تلاوات ليس في بياناتها يوم محدد. ما ذُكرت فيه السنة يظهر أيضاً في أرشيف تلك السنة.')+`<div data-list="r">${listHTML('r')}</div>`;
 }
 function vFav(){
   const l=ALLX.filter(x=>FAV.has(x.id));
   return ph('المفضلة','التلاوات التي حفظتها، وتبقى في هذا المتصفح.')+(l.length?grid(l):empty('لا توجد تلاوات في المفضلة بعد','<div>اضغط على ♡ في أي تلاوة لحفظها هنا.</div>','heart'));
 }
+
+/* ---------- smart search: surahs (with typos), prayers, Hijri & Gregorian dates ---------- */
+const SN=SURAH.map(n=>norm(n).trim());
+const STOP=new Set(['سوره','سور','صلاه','تلاوه','تلاوات','شيخ','مهنا','خالد','من','في','و','يوم','ليله','عام','سنه','هـ','ه']);
+const PW=[[/^(فجر|فجريه|فجريات)$/,['fajr'],'صلاة الفجر'],[/^مغرب$/,['maghrib'],'صلاة المغرب'],[/^(عشاء|عشا)$/,['isha'],'صلاة العشاء'],[/^جمعه$/,['jumuah','khutbah'],'الجمعة'],[/^(خطبه|خطب)$/,['khutbah'],'خطب الجمعة'],[/^(تراويح|تروايح)$/,['taraweeh'],'التراويح'],[/^(تهجد|قيام)$/,['taraweeh'],'التهجد والقيام',/تهجد|قيام/],[/^وتر$/,null,'الوتر',/وتر/],[/^قنوت$/,null,'القنوت',/قنوت/],[/^عيد$/,['fitr','adha'],'العيد'],[/^استسقاء$/,['istisqa'],'الاستسقاء'],[/^كسوف$/,['kusuf'],'الكسوف'],[/^(مرتل|مصحف)$/,['murattal'],'المصحف المرتل'],[/^(قصير|قصيره|شورتس|shorts)$/,['short'],'المقاطع القصيرة'],[/^(اصدار|مجمع|مجموع)$/,['collection'],'الإصدارات المجمّعة'],[/^(ظهر|عصر)$/,[],'']];
+const MN=HM.map(m=>norm(m).trim());
+function lev(a,b){if(Math.abs(a.length-b.length)>2)return 9;const d=Array.from({length:a.length+1},(_,i)=>[i]);for(let j=1;j<=b.length;j++)d[0][j]=j;for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[a.length][b.length]}
+function findSurah(w){
+  if(w.length<2)return 0;
+  let i=SN.indexOf(w);if(i>=0)return i+1;
+  if(w.length>=3){i=SN.findIndex(s=>s.startsWith(w));if(i>=0)return i+1}
+  if(w.length===3){const k=SN.findIndex(s=>s.length===3&&lev(w,s)===1);if(k>=0)return k+1}
+  if(w.length>=4){let best=0,bd=9;SN.forEach((s,k)=>{const d=lev(w,s);if(d<bd){bd=d;best=k+1}});if(bd<=(w.length>=7?2:1))return best}
+  return 0;
+}
+function parseQ(q){
+  const raw=q;q=norm(q).replace(/[^\p{L}\p{N}\s\/\-.]/gu,' ').trim();
+  const Q={s:[],types:null,typeL:[],rx:[],y:0,m:0,d:0,gy:0,g:'',text:[],silent:false,why:[]};
+  let m;
+  if((m=q.match(/(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})/))){const a=+m[1];if(a>1900)Q.g=`${a}-${pad(+m[2])}-${pad(+m[3])}`;else{Q.y=a;Q.m=+m[2];Q.d=+m[3]}q=q.replace(m[0],' ')}
+  else if((m=q.match(/(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})/))){const a=+m[3];if(a>1900)Q.g=`${a}-${pad(+m[2])}-${pad(+m[1])}`;else{Q.y=a;Q.m=+m[2];Q.d=+m[1]}q=q.replace(m[0],' ')}
+  for(let k=0;k<12;k++){if(q.includes(MN[k])){Q.m=k+1;q=q.replace(MN[k],' ');break}}
+  if(!Q.m&&/ربيع (اول|اخر|ثاني)|جماد (اولي|اخره)/.test(q)){const mm=q.match(/ربيع (اول|اخر|ثاني)|جماد (اولي|اخره)/)[0];Q.m={'ربيع اول':3,'ربيع اخر':4,'ربيع ثاني':4,'جماد اولي':5,'جماد اخره':6}[mm];q=q.replace(mm,' ')}
+  const W=q.split(/\s+/).filter(Boolean);
+  for(let i=0;i<W.length;i++){
+    const w=W[i],prev=W[i-1]||'';
+    if(/^\d+$/.test(w)){const n=+w;if(n>=1430&&n<1500)Q.y=n;else if(n>=2000&&n<2100)Q.gy=n;else if(n>=1&&n<=30&&Q.m&&!Q.d)Q.d=n;else if(n>=1&&n<=30)Q.d=n;else Q.text.push(w);continue}
+    if(STOP.has(w))continue;
+    if(i+1<W.length&&SN.includes(w+' '+W[i+1])){Q.s.push(SN.indexOf(w+' '+W[i+1])+1);i++;continue}
+    const pw=PW.find(p=>p[0].test(w));
+    const asSurah=prev==='سوره'||prev==='سور';
+    if(pw&&!pw[2]&&prev!=='صلاه'){const s0=findSurah(w);if(s0){Q.s.push(s0);continue}}
+    if(pw&&!(asSurah&&findSurah(w))){if(!pw[2]){Q.silent=true;continue}if(pw[1])Q.types=(Q.types||[]).concat(pw[1]);if(pw[3])Q.rx.push(pw[3]);Q.typeL.push(pw[2]);continue}
+    const s=findSurah(w);if(s){Q.s.push(s);continue}
+    Q.text.push(w);
+  }
+  if(!Q.d&&Q.m&&/^\s*\d{1,2}\s/.test(norm(raw)))Q.d=+norm(raw).trim().split(/\s+/)[0];
+  return Q;
+}
+function matchQ(x,Q,dayTol=0){
+  if(Q.s.length&&!Q.s.every(n=>x.s.includes(n)))return false;
+  if(Q.types&&!Q.types.includes(x.t))return false;
+  if(Q.rx.length&&!Q.rx.every(r=>r.test(x.title)))return false;
+  if(Q.y&&(x.h?x.h.y:x.year)!==Q.y)return false;
+  if(Q.m&&(x.h?x.h.m:x.month)!==Q.m)return false;
+  if(Q.d&&!(x.h&&Math.abs(x.h.d-Q.d)<=dayTol))return false;
+  if(Q.g&&!(x.d&&Math.abs(Date.parse(x.d)-Date.parse(Q.g))<=dayTol*864e5))return false;
+  if(Q.gy&&!((x.d||x.up||'').startsWith(String(Q.gy))))return false;
+  if(Q.text.length&&!Q.text.every(t=>x.hay.includes(t)))return false;
+  return true;
+}
+function whyOf(x,Q){
+  const r=[];
+  Q.s.forEach(n=>r.push(`تتضمن سورة ${SURAH[n-1]}`));
+  if(Q.typeL.length)r.push(Q.typeL.join('، '));
+  if(Q.d&&x.h&&x.h.d!==Q.d){const df=x.h.d-Q.d;r.push(`<b>${df>0?'بعد':'قبل'} ${Math.abs(df)===1?'يوم':Math.abs(df)===2?'يومين':ar(Math.abs(df))+' أيام'}</b> من التاريخ المطلوب`)}
+  else if(Q.g&&x.d&&x.d!==Q.g){const df=Math.round((Date.parse(x.d)-Date.parse(Q.g))/864e5);r.push(`<b>${df>0?'بعد':'قبل'} ${Math.abs(df)===1?'يوم':Math.abs(df)===2?'يومين':ar(Math.abs(df))+' أيام'}</b> من التاريخ المطلوب`)}
+  else if(Q.d||Q.m||Q.y||Q.g)r.push('مطابقة للتاريخ');
+  return r.join(' · ');
+}
 function vSearch(){
-  return ph('بحث','ابحث باسم السورة أو الصلاة أو الشهر أو السنة الهجرية، أو بكلمة من الآية.')+
-  `<div class="sbox">${I('search')}<input id="q" type="search" placeholder="مثال: الكهف، الفجر رمضان، ١٤٤٧…" value="${SQ.replace(/"/g,'&quot;')}" autocomplete="off"></div>
-  <div class="chips" style="margin-bottom:20px">${['الكهف','يس','الرحمن','الأنعام','خطبة','تراويح','كاملة','1448'].map(q=>`<button class="chip" data-q="${q}">${q}</button>`).join('')}</div><div id="sres"></div>`;
+  return ph('بحث','اكتب اسم سورة أو صلاة أو تاريخ، أو اجمع بينها. لا يلزم أن تكتب الاسم مطابقاً تماماً.')+
+  `<div class="sbox">${I('search')}<input id="q" type="search" placeholder="مثال: العصر، الكهف فجر، ١٥ ربيع الأول ١٤٤٦…" value="${SQ.replace(/"/g,'&quot;')}" autocomplete="off"></div>
+  <div class="chips" style="margin-bottom:20px">${['الكهف','سورة العصر','فجر الأنعام','تراويح ١٤٤٦','خطبة','١٥ ربيع الأول','مريم','الملك'].map(q=>`<button class="chip" data-q="${q}">${q}</button>`).join('')}<a class="chip" href="#date">${I('cal')} اختيار تاريخ من التقويم</a></div><div id="sres"></div>`;
 }
 function runSearch(){
   const el=$('#sres');if(!el)return;
-  const q=norm(SQ.replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d))).trim();
-  if(!q){el.innerHTML='';return}
-  const terms=q.split(/\s+/);
-  const r=ALLX.filter(x=>terms.every(t=>x.hay.includes(t))).sort((a,b)=>a.o-b.o);
-  LISTS.s=r;LIM.s=24;
-  el.innerHTML=`<p class="muted" style="margin-bottom:12px">${ar(r.length)} نتيجة</p><div data-list="s">${r.length?listHTML('s'):empty('لا توجد نتائج','','search')}</div>`;
+  if(!SQ.trim()){el.innerHTML='';return}
+  const Q=parseQ(SQ);
+  const pool=ALLX;
+  const sc=x=>(Q.s.length&&shownS(x).length===1?3:0)+(x.full?1:0)+(x.t==='short'?-2:0)+(x.t==='murattal'?-1:0)+(['lecture','collection','khutbah'].includes(x.t)?-1:0);
+  const onlySilent=Q.silent&&!Q.s.length&&!Q.types&&!Q.y&&!Q.m&&!Q.d&&!Q.g&&!Q.text.length;
+  let ex=onlySilent?[]:pool.filter(x=>matchQ(x,Q,0)).sort((a,b)=>sc(b)-sc(a)||byKey(a,b));
+  let near=[];
+  const dateQ=Q.d||Q.g;
+  if(dateQ&&(SNEAR||!ex.length))near=pool.filter(x=>!ex.includes(x)&&matchQ(x,Q,3)).sort((a,b)=>Math.abs((a.h||{}).d-Q.d)-Math.abs((b.h||{}).d-Q.d)||byKey(a,b));
+  let closest=null;
+  if(dateQ&&!ex.length&&!near.length){const want=Q.g||(Q.y&&Q.m?g2h(Q.y,Q.m,Q.d):null);if(want){const T=Date.parse(want);closest=ALLX.filter(x=>x.d&&matchQ(x,{...Q,d:0,g:'',y:0,m:0,gy:0},0)).sort((a,b)=>Math.abs(Date.parse(a.d)-T)-Math.abs(Date.parse(b.d)-T)).slice(0,2)}}
+  const parts=[];
+  if(Q.s.length)parts.push(Q.s.map(n=>'سورة '+SURAH[n-1]).join(' + '));
+  if(Q.typeL.length)parts.push(Q.typeL.join('، '));
+  if(Q.d||Q.m||Q.y)parts.push([Q.d?ar(Q.d):'',Q.m?HM[Q.m-1]:'',Q.y?ar(Q.y)+'هـ':''].filter(Boolean).join(' '));
+  if(Q.g)parts.push(fmtG(Q.g));
+  if(Q.gy)parts.push(ar(Q.gy)+'م');
+  if(Q.text.length)parts.push('«'+Q.text.join(' ')+'»');
+  LISTS.s=ex;LIM.s=24;LISTS.s_why=x=>whyOf(x,Q);
+  LISTS.n=near;LIM.n=24;LISTS.n_why=x=>whyOf(x,Q);
+  el.innerHTML=(Q.silent?`<div class="info">${I('info')}<span>صلاتا الظهر والعصر سرّيتان، فلا تُسجَّل فيهما تلاوة جهرية. جرّب الفجر أو المغرب أو العشاء.</span></div>`:'')+
+    (parts.length?`<p class="qhint">يبحث عن: <b>${parts.join(' · ')}</b></p>`:'')+
+    `<p class="muted" style="margin-bottom:12px">${ar(ex.length)} نتيجة${dateQ?' في اليوم نفسه':''}</p>`+
+    `<div data-list="s">${ex.length?listHTML('s'):(near.length||onlySilent?'':empty('لا توجد نتائج','<div>جرّب اسم سورة فقط، أو أزل التاريخ.</div>','search'))}</div>`+
+    (closest&&closest.length?`<section class="sec">${secH('أقرب تلاوة لهذا التاريخ')}<p class="muted" style="margin:-6px 0 12px">لا توجد تلاوة مسجّلة في هذا اليوم ولا في الأيام الثلاثة حوله.</p>${grid(closest)}</section>`:'')+
+    (near.length?`<section class="sec">${secH('نتائج قريبة من التاريخ')}<p class="muted" style="margin:-6px 0 12px">تسجيلات قبل التاريخ المطلوب أو بعده بثلاثة أيام على الأكثر.</p><div data-list="n">${listHTML('n')}</div></section>`:(dateQ&&ex.length&&!SNEAR?`<button class="more" data-near="1">عرض الأيام القريبة أيضاً (±٣ أيام)</button>`:''));
 }
 
-/* ---------- router ---------- */
-const VIEW=$('#view');
-const TITLES={home:'الرئيسية',prayers:'الصلوات الجهرية',friday:'الجمعة',occasions:'رمضان والمناسبات',date:'البحث بالتاريخ',archive:'الأرشيف الهجري',mushaf:'المصحف والسور',rare:'تلاوات غير مؤرّخة',collections:'الإصدارات المجمّعة',fav:'المفضلة',search:'بحث'};
-const NAVL={home:['home','الرئيسية'],prayers:['mosque','الصلوات الجهرية'],friday:['mic','الجمعة'],occasions:['star','رمضان والمناسبات'],mushaf:['book','المصحف والسور'],date:['cal','البحث بالتاريخ'],archive:['arch','الأرشيف الهجري'],rare:['gem','تلاوات غير مؤرّخة'],collections:['hourglass','الإصدارات المجمّعة'],fav:['heart','المفضلة'],search:['search','بحث']};
-const BN={home:'الرئيسية',prayers:'الصلوات',mushaf:'المصحف',archive:'الأرشيف'};
-document.querySelectorAll('.side a.ni').forEach(a=>{const[k,l]=NAVL[a.dataset.k];a.innerHTML=I(k)+l});
-document.querySelectorAll('#bnav a').forEach(a=>{const k=a.dataset.k;a.innerHTML=k==='date'?`<span class="c">${I('cal')}</span><span>بالتاريخ</span>`:I(NAVL[k][0])+`<span>${BN[k]}</span>`});
-document.querySelectorAll('svg.lg').forEach(s=>s.innerHTML=LOGOf());
-$('.side .pat').innerHTML=PATf();
-$('#tbS').innerHTML=I('search');
-
-function render(scroll=true){
-  const raw=location.hash.slice(1)||'home';
-  const [v,a,b]=raw.split('-');
-  LIM={};let html,key=v;
-  switch(v){
-    case 'prayers':case 'friday':case 'occasions':html=vGroup(v,a);break;
-    case 'date':html=vDate();break;
-    case 'archive':html=vArchive();break;
-    case 'y':html=vYear(a,b);key='archive';break;
-    case 'mushaf':html=vMushaf(a);break;
-    case 's':html=vSurah(a);key='mushaf';break;
-    case 'rare':html=vRare();break;
-    case 'collections':html=vColl(a);break;
-    case 'fav':html=vFav();break;
-    case 'search':html=vSearch();break;
-    default:html=vHome();key='home';
-  }
-  VIEW.classList.remove('anim');VIEW.innerHTML=html;void VIEW.offsetWidth;VIEW.classList.add('anim');
-  document.querySelectorAll('[data-k]').forEach(e=>e.classList.toggle('on',e.dataset.k===key));
-  $('#pt').textContent=TITLES[key]||'';
-  if(scroll)window.scrollTo({top:0,behavior:'instant'in document.documentElement.style?'instant':'auto'});
-  after(key);
-}
-function after(key){
-  if(key==='home')countUp();
-  if(key==='date'){
-    const dIn=$('#dIn');if(dIn)dIn.addEventListener('change',()=>{if(dIn.value){DS.iso=dIn.value;render(false)}});
-    ['#hD','#hM','#hY'].forEach(s=>{const e=$(s);if(e)e.addEventListener('change',()=>{const y=+$('#hY').value,m=+$('#hM').value,d=+$('#hD').value;let g=null;for(let k=d;k>=27&&!g;k--)g=H2G[`${y}-${m}-${k}`];if(g){DS.iso=g;render(false)}else toast('هذا التاريخ خارج نطاق الأرشيف')})});
-  }
-  if(key==='search'){const q=$('#q');q.addEventListener('input',()=>{SQ=q.value;runSearch()});runSearch();if(matchMedia('(min-width:901px)').matches)q.focus()}
-}
-function countUp(){
-  document.querySelectorAll('[data-count]').forEach(el=>{const to=+el.dataset.count,t0=performance.now(),dur=1100;const f=t=>{const p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);el.textContent=ar(Math.round(to*e));if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)});
-}
-window.addEventListener('hashchange',()=>render(true));
-
-/* ---------- sheet & toast ---------- */
-const OV=$('#ov'),SH=$('#sheet');
-let tt;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2200)}
-function openSheet(html){SH.innerHTML=html;SH.scrollTop=0;OV.classList.add('open')}
-function closeSheet(){if(typeof stopPlayer==='function')stopPlayer();OV.classList.remove('open');setTimeout(()=>{if(!OV.classList.contains('open'))SH.innerHTML=''},500)}
-const siteLink=it=>`${location.host}/v/${it.id}`;
+/* ---------- recitation page ---------- */
 const tgLink=n=>`https://t.me/KhaledAlMuhanna${n?'/'+n:''}`;
-function sheetItem(it){
-  const u=ytUrl(it), sl=siteLink(it), tg=TG[it.id]||{};
-  openSheet(`<div class="sh-hero"><svg class="pat">${PATf()}</svg><div class="grab"></div><button class="x" data-close aria-label="إغلاق">${I('close')}</button>
-  <span class="eyebrow" style="position:relative">${TYPES[it.t].l}</span><div class="sh-title">${titleOf(it)}</div><div class="sh-sub">${subOf(it).replace('class="fl"','style="color:#e6c77f"')}</div>
-  </div>
-  <div class="sh-body">
-  <div class="ap-mode"><button class="on" data-mode="audio">🎧 صوت فقط</button><button data-mode="video">🎬 فيديو</button></div>
-  <div class="ap" id="ap"><div class="ap-vid"><div id="ytp"></div></div>
-   <div class="ap-ctl"><div class="ap-top"><button class="ap-play" id="apPlay" aria-label="تشغيل">${I('play')}</button><div style="flex:1;min-width:0"><input type="range" id="apSeek" min="0" max="1000" value="0" aria-label="التقدم"><div class="ap-time"><span id="apCur">0:00</span><span>${it.dur}</span></div></div></div>
-   <div class="ap-row"><button data-sk="-15">١٥ث ↺</button><button data-sk="15">↻ ١٥ث</button><button id="apRate">1×</button></div></div></div>
-  ${tg.p||tg.a?`<div class="tg-row">${tg.a?`<a class="fl-btn" data-tg="${tg.a}" href="${tgLink(tg.a)}">🎧 الصوت على التليجرام</a>`:''}${tg.p?`<a class="fl-btn" data-tg="${tg.p}" href="${tgLink(tg.p)}">المنشور على التليجرام</a>`:''}</div>`:''}
-  <div class="c-act2"><button class="btn-gold wide" data-share="${it.id}">${I('share')}مشاركة التلاوة</button><a class="fl-btn" data-yt="${it.id}" href="${u}">فتح في يوتيوب</a></div>
-  <div class="rows">${it.h||it.year?`<div><small>تاريخ التلاوة</small><b>${dateOf(it)}</b></div>`:''}<div><small>تاريخ الرفع</small><b>${it.up?fmtG(it.up):'—'}</b></div><div><small>المدة</small><b>${it.dur}</b></div></div>
-  <div><span class="lbl">رابط التلاوة</span><div class="short"><code>${sl}</code><button data-copy="https://${sl}">نسخ</button></div></div>
-  <div class="follow"><span class="lbl">تابعونا</span><div class="fl-row fl-3"><a class="fl-btn" data-ytc href="https://www.youtube.com/@khalid_almihana">يوتيوب</a><a class="fl-btn" data-tg="" href="${tgLink()}">تليجرام</a><a class="fl-btn" href="https://chat.whatsapp.com/Hy3d4T0zxmU74ON0d6fLPF">واتساب</a></div></div></div>`);
-  startPlayer(it);
+const shareMsg=it=>{const d=dateOf(it);return `استمع إلى هذه التلاوة الرائعة من تلاوات الشيخ خالد المهنا 🎧\n\n📖 ${plain(titleOf(it))}${d?`\n🗓️ ${d}`:''}\n\n${siteUrl(it)}`};
+function neighbours(it){
+  if(it.t==='murattal'){const n=it.s[0];const p=n>1?murFor(n-1):null,q=n<114?murFor(n+1):null;return [p&&p.v!==it?p.v:null,q&&q.v!==it?q.v:null,'السورة']}
+  const L=(it.t==='short'?SHORTS:LIB.filter(x=>x.t===it.t)).slice().sort((a,b)=>a.key.localeCompare(b.key)||b.o-a.o);
+  const i=L.indexOf(it);return [L[i-1]||null,L[i+1]||null,'التلاوة'];
 }
-/* ---------- audio player (YouTube IFrame API) ---------- */
-let YTP=null,YTT=null;
+function vRec(id){
+  const it=BYID[id];
+  if(!it)return ph('التلاوة غير موجودة','ربما حُذفت من القناة.')+`<a class="btn-gold" href="#all">جميع التلاوات</a>`;
+  const S=shownS(it),tg=TG[it.id]||{};
+  const [pv,nx,nl]=neighbours(it);
+  const rel=S.length&&it.t!=='murattal'?ALLX.filter(x=>x!==it&&x.t!=='murattal'&&x.t!=='short'&&shownS(x).some(n=>n===S[0])).sort(byKey).slice(0,4):[];
+  const upH=it.up?hijri(it.up):null;
+  return `<div class="crumb"><a href="javascript:history.back()">› رجوع</a></div>
+  <article class="rec">
+   <div class="vbox" id="vbox"><img src="https://i.ytimg.com/vi/${it.id}/hqdefault.jpg" alt=""><button class="vplay" data-start="1" aria-label="تشغيل الفيديو">${I('play')}</button></div>
+   <div class="rec-h">
+    <span class="badge b-${TYPES[it.t].c}">${it.t==='short'?'مقطع قصير':typeL(it)}</span>
+    <h1>${titleOf(it)}</h1>
+    ${dateOf(it)?`<div class="rec-d">${I('cal')}${dateOf(it)}${it.d?` <span class="muted">· ${fmtG(it.d)}</span>`:''}</div>`:''}
+    ${S.length&&it.t!=='collection'?`<div class="rec-s">${S.map(n=>`<a href="#s-${n}" class="schip">سورة ${SURAH[n-1]}</a>`).join('')}${it.verses?`<span class="vchip">${it.verses.replace(/\d+/g,d=>ar(d))}</span>`:''}</div>`:''}
+    ${it.t==='collection'&&S.length?`<p class="muted">السور في هذا الإصدار: ${S.map(n=>`<a class="lnk" href="#s-${n}">${SURAH[n-1]}</a>`).join('، ')}</p>`:''}
+   </div>
+   <section class="aud2"><h2>${I('headphones')}الاستماع صوتياً</h2>
+    <div class="ab"><button class="ap-play" id="apPlay" aria-label="تشغيل">${I('play')}</button>
+     <div class="ab-m"><input type="range" id="apSeek" min="0" max="1000" value="0" aria-label="التقدم"><div class="ap-time"><span id="apCur">0:00</span><span>${it.dur}</span></div></div></div>
+    <div class="ab-row"><button data-sk="-15" aria-label="رجوع ١٥ ثانية">↺ ١٥ث</button><button data-sk="15" aria-label="تقديم ١٥ ثانية">١٥ث ↻</button><button id="apRate">السرعة 1×</button><label class="vol">${I('vol')}<input type="range" id="apVol" min="0" max="100" value="100" aria-label="مستوى الصوت"></label></div>
+    ${tg.a?`<a class="fl-btn tgb" data-tg="${tg.a}" href="${tgLink(tg.a)}">الملف الصوتي على تليجرام (للحفظ والتحميل)</a>`:''}
+   </section>
+   <section class="shr"><h2>${I('share')}مشاركة التلاوة</h2>
+    <div class="shr-b"><a class="sb wa" href="https://wa.me/?text=${encodeURIComponent(shareMsg(it))}" target="_blank" rel="noopener">واتساب</a><a class="sb tgs" href="https://t.me/share/url?url=${encodeURIComponent(siteUrl(it))}&text=${encodeURIComponent(shareMsg(it).replace('\n\n'+siteUrl(it),''))}" target="_blank" rel="noopener">تليجرام</a><button class="sb" data-copy="${siteUrl(it)}">نسخ الرابط</button>${navigator.share?`<button class="sb" data-share="${it.id}">مشاركة أخرى</button>`:''}</div>
+    <div class="short"><code>${siteUrl(it).replace('https://','')}</code></div>
+   </section>
+   <section class="det"><div class="rows">
+     ${dateOf(it)?`<div><small>تاريخ التلاوة</small><b>${dateOf(it)}</b></div>`:''}
+     ${it.up?`<div><small>تاريخ النشر على يوتيوب</small><b>${fmtG(it.up)}</b><small>${upH?fmtH(upH):''}</small></div>`:''}
+     <div><small>المدة</small><b>${it.dur}</b></div>
+     ${it.views?`<div><small>المشاهدات</small><b>${fmtV(it.views)}</b></div>`:''}
+     <div><small>المصدر</small><b>${it.src?it.src:'قناة الشيخ على يوتيوب'}</b></div>
+   </div>
+   <div class="srcs"><a class="fl-btn" data-yt="${it.id}" href="https://www.youtube.com/watch?v=${it.id}">مشاهدة على يوتيوب</a>${tg.p?`<a class="fl-btn" data-tg="${tg.p}" href="${tgLink(tg.p)}">المنشور على تليجرام</a>`:''}<button class="fl-btn fav ${FAV.has(it.id)?'on':''}" data-fav="${it.id}">${FAV.has(it.id)?'في المفضلة ♥':'أضف للمفضلة ♡'}</button></div>
+   ${it.fromFile?`<p class="muted note">السور في هذا التسجيل مأخوذة من ملف المراجعة، لا من عنوان الفيديو.</p>`:''}
+   </section>
+   <div class="pn">${nx?`<a href="#v/${nx.id}">${I('prev')} ${nl} التالية</a>`:'<span></span>'}${pv?`<a href="#v/${pv.id}">${nl} السابقة ${I('next')}</a>`:''}</div>
+   ${rel.length?`<section class="sec">${secH(`تلاوات أخرى من سورة ${SURAH[S[0]-1]}`,`#s-${S[0]}`,'الكل')}${grid(rel,'rows-scroll')}</section>`:''}
+  </article>`;
+}
+
+/* ---------- player (YouTube IFrame API): the video above and the audio bar below share one player ---------- */
+let YTP=null,YTT=null,CUR=null;
 const ytApi=()=>new Promise(res=>{if(window.YT&&YT.Player)return res();const prev=window.onYouTubeIframeAPIReady;window.onYouTubeIframeAPIReady=()=>{prev&&prev();res()};if(!document.getElementById('ytapi')){const sc=document.createElement('script');sc.id='ytapi';sc.src='https://www.youtube.com/iframe_api';document.head.appendChild(sc)}});
 const fmtT=x=>{x=Math.max(0,Math.floor(x||0));const h=Math.floor(x/3600),m=Math.floor(x%3600/60),s2=x%60;return (h?h+':'+String(m).padStart(2,'0'):m)+':'+String(s2).padStart(2,'0')};
-function stopPlayer(){clearInterval(YTT);YTT=null;try{YTP&&YTP.destroy()}catch(e){}YTP=null}
-async function startPlayer(it){
-  stopPlayer();await ytApi();if(!$('#ytp'))return;
-  YTP=new YT.Player('ytp',{videoId:it.id,host:'https://www.youtube-nocookie.com',playerVars:{autoplay:1,rel:0,playsinline:1,modestbranding:1},
-    events:{onReady:e=>{try{e.target.playVideo()}catch(_){}},onStateChange:e=>{const b=$('#apPlay');if(b)b.innerHTML=e.data===1?'❚❚':I('play')}}});
-  YTT=setInterval(()=>{if(!YTP||!YTP.getDuration)return;const d=YTP.getDuration()||it.sec,c=YTP.getCurrentTime()||0,sk=$('#apSeek'),cu=$('#apCur');if(!sk){stopPlayer();return}if(!sk.matches(':active'))sk.value=d?Math.round(c/d*1000):0;cu.textContent=fmtT(c)},500);
+function stopPlayer(){clearInterval(YTT);YTT=null;try{YTP&&YTP.destroy()}catch(e){}YTP=null;CUR=null}
+async function startPlayer(id){
+  if(YTP&&CUR===id){try{YTP.playVideo()}catch(e){}return}
+  stopPlayer();CUR=id;const box=$('#vbox');if(!box)return;box.innerHTML='<div id="ytp"></div>';box.classList.add('on');
+  const b=$('#apPlay');if(b)b.innerHTML='<span class="spin"></span>';
+  await ytApi();if(!$('#ytp')||CUR!==id)return;
+  YTP=new YT.Player('ytp',{videoId:id,host:'https://www.youtube-nocookie.com',playerVars:{autoplay:1,rel:0,playsinline:1,modestbranding:1},
+    events:{onReady:e=>{try{e.target.playVideo();const v=$('#apVol');if(v)e.target.setVolume(+v.value)}catch(_){}},
+      onStateChange:e=>{const b=$('#apPlay');if(b)b.innerHTML=e.data===1?I('pause'):I('play')},
+      onError:()=>{const box=$('#vbox');if(box)box.innerHTML=`<div class="verr">تعذّر تشغيل هذا التسجيل هنا. <a class="lnk" href="https://www.youtube.com/watch?v=${id}" target="_blank" rel="noopener">افتحه على يوتيوب</a></div>`}}});
+  YTT=setInterval(()=>{if(!YTP||!YTP.getDuration)return;const it=BYID[id];const d=YTP.getDuration()||(it&&it.sec),c=YTP.getCurrentTime()||0,sk=$('#apSeek'),cu=$('#apCur');if(!sk){stopPlayer();return}if(!sk.matches(':active'))sk.value=d?Math.round(c/d*1000):0;cu.textContent=fmtT(c)},500);
 }
-document.addEventListener('input',e=>{if(e.target.id==='apSeek'&&YTP&&YTP.getDuration){YTP.seekTo(YTP.getDuration()*e.target.value/1000,true)}});
+document.addEventListener('input',e=>{
+  if(e.target.id==='apSeek'&&YTP&&YTP.getDuration)YTP.seekTo(YTP.getDuration()*e.target.value/1000,true);
+  if(e.target.id==='apVol'&&YTP&&YTP.setVolume)YTP.setVolume(+e.target.value);
+});
 const RATES=[1,1.25,1.5,0.75];
+
 /* ---------- open apps directly on phones ---------- */
 const UA=navigator.userAgent,isAnd=/android/i.test(UA),isIOS=/iphone|ipad|ipod/i.test(UA)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
 function appOpen(appUrl,webUrl,intent){
@@ -780,40 +998,94 @@ function appOpen(appUrl,webUrl,intent){
   window.open(webUrl,'_blank','noopener');
 }
 const enc=encodeURIComponent;
-function sheetMur(n){
-  const v=MUR[n];if(!v)return;sheetItem(v);
+let tt;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2400)}
+async function copy(t){try{await navigator.clipboard.writeText(t);toast('تم نسخ الرابط ✓')}catch(e){toast(t)}}
+
+/* ---------- router ---------- */
+const VIEW=$('#view');
+const TITLES={home:'الرئيسية',all:'جميع التلاوات',prayers:'الصلوات',date:'البحث بالتاريخ',archive:'الأرشيف الهجري',mushaf:'المصحف المرتل',surahs:'السور',shorts:'مقاطع قصيرة',rare:'تلاوات غير مؤرّخة',collections:'الإصدارات المجمّعة',fav:'المفضلة',search:'بحث',v:'التلاوة'};
+const NAVL={home:['home','الرئيسية'],all:['list','جميع التلاوات'],prayers:['mosque','الصلوات'],mushaf:['book','المصحف المرتل'],surahs:['list','السور'],shorts:['play','مقاطع قصيرة'],date:['cal','البحث بالتاريخ'],archive:['arch','الأرشيف الهجري'],collections:['hourglass','الإصدارات المجمّعة'],fav:['heart','المفضلة'],search:['search','بحث']};
+const BN={home:'الرئيسية',prayers:'الصلوات',search:'بحث',mushaf:'المصحف',archive:'الأرشيف'};
+document.querySelectorAll('.side a.ni').forEach(a=>{const[k,l]=NAVL[a.dataset.k];a.innerHTML=I(k)+l});
+document.querySelectorAll('#bnav a').forEach(a=>{const k=a.dataset.k;a.innerHTML=k==='search'?`<span class="c">${I('search')}</span><span>بحث</span>`:I(NAVL[k][0])+`<span>${BN[k]}</span>`});
+document.querySelectorAll('svg.lg').forEach(s=>s.innerHTML=LOGOf());
+$('.side .pat').innerHTML=PATf();
+$('#tbS').innerHTML=I('search');
+
+function render(scroll=true){
+  const raw=decodeURIComponent(location.hash.slice(1))||'home';
+  let html,key;
+  if(raw.startsWith('v/')){const [,id,act]=raw.split('/');key='v';html=vRec(id);
+    VIEW.innerHTML=html;document.querySelectorAll('[data-k]').forEach(e=>e.classList.remove('on'));$('#pt').textContent=TITLES.v;
+    if(scroll)window.scrollTo({top:0});const it=BYID[id];document.title=it?plain(titleOf(it))+' | تلاوات الشيخ د. خالد المهنا':'تلاوات الشيخ د. خالد المهنا';
+    if(act==='play'){history.replaceState(null,'','#v/'+id);startPlayer(id)}else stopPlayer();
+    return}
+  stopPlayer();document.title='تلاوات الشيخ د. خالد المهنا – إمام وخطيب المسجد النبوي';
+  const [v,a,b]=raw.split('-');
+  LIM={};key=v;
+  switch(v){
+    case 'all':html=vAll(a);break;
+    case 'prayers':html=vGroup(a);break;
+    case 'friday':html=vGroup(a==='khutbah'?'khutbah':'jumuah');key='prayers';break;
+    case 'occasions':html=vGroup(a==='taraweeh'||!a?'taraweeh':'occ');key='prayers';break;
+    case 'date':html=vDate();break;
+    case 'archive':html=vArchive();break;
+    case 'y':html=vYear(a,b);key='archive';break;
+    case 'mushaf':html=vMushaf(a);break;
+    case 'surahs':html=vSurahs();break;
+    case 's':html=vSurah(a);key='surahs';break;
+    case 'shorts':html=vShorts();break;
+    case 'rare':html=vRare();key='archive';break;
+    case 'collections':html=vColl(a);break;
+    case 'fav':html=vFav();break;
+    case 'search':html=vSearch();break;
+    default:html=vHome();key='home';
+  }
+  VIEW.classList.remove('anim');VIEW.innerHTML=html;void VIEW.offsetWidth;VIEW.classList.add('anim');
+  document.querySelectorAll('[data-k]').forEach(e=>e.classList.toggle('on',e.dataset.k===key));
+  $('#pt').textContent=TITLES[key]||'';
+  if(scroll)window.scrollTo({top:0});
+  after(key);
 }
-async function copy(t){try{await navigator.clipboard.writeText(t);toast('تم نسخ الرابط المختصر ✓')}catch(e){toast(t)}}
+function after(key){
+  if(key==='home'){countUp();const f=$('#hsf');if(f)f.addEventListener('submit',e=>{e.preventDefault();SQ=$('#hq').value;SNEAR=false;location.hash='#search'})}
+  if(key==='all'){const y=$('#afY'),s=$('#afS');y.addEventListener('change',()=>{AF.y=y.value;render(false)});s.addEventListener('change',()=>{AF.sort=s.value;render(false)})}
+  if(key==='date'){
+    const dIn=$('#dIn');if(dIn)dIn.addEventListener('change',()=>{if(dIn.value){DS.iso=dIn.value;render(false)}});
+    ['#hD','#hM','#hY'].forEach(s=>{const e=$(s);if(e)e.addEventListener('change',()=>{const y=+$('#hY').value,m=+$('#hM').value,d=+$('#hD').value;let g=null;for(let k=d;k>=27&&!g;k--)g=H2G[`${y}-${m}-${k}`];if(g){DS.iso=g;render(false)}else toast('هذا التاريخ خارج نطاق الأرشيف')})});
+  }
+  if(key==='search'){const q=$('#q');let tm;q.addEventListener('input',()=>{clearTimeout(tm);tm=setTimeout(()=>{SQ=q.value;SNEAR=false;runSearch()},180)});runSearch();if(matchMedia('(min-width:901px)').matches)q.focus()}
+}
+function countUp(){
+  document.querySelectorAll('[data-count]').forEach(el=>{const to=+el.dataset.count,t0=performance.now(),dur=1100;const f=t=>{const p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);el.textContent=ar(Math.round(to*e));if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)});
+}
+window.addEventListener('hashchange',()=>render(true));
 
 /* ---------- events ---------- */
 document.addEventListener('click',e=>{
-  if(e.target===OV){closeSheet();return}
-  const ap=e.target.closest('[data-mode],[data-sk],#apPlay,#apRate,[data-tg],[data-yt],[data-ytc]');
-  if(ap){const d=ap.dataset;
-    if(d.mode){document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('on',b===ap));$('#ap').classList.toggle('video',d.mode==='video');return}
-    if(d.sk&&YTP){YTP.seekTo(Math.max(0,YTP.getCurrentTime()+ +d.sk),true);return}
-    if(ap.id==='apPlay'&&YTP){YTP.getPlayerState()===1?YTP.pauseVideo():YTP.playVideo();return}
-    if(ap.id==='apRate'&&YTP){const r=RATES[(RATES.indexOf(YTP.getPlaybackRate())+1)%RATES.length];YTP.setPlaybackRate(r);ap.textContent=r+'×';return}
+  const ap=e.target.closest('[data-start],[data-sk],#apPlay,#apRate,[data-tg],[data-yt],[data-ytc]');
+  if(ap){const d=ap.dataset;const id=(location.hash.match(/^#v\/([\w-]{11})/)||[])[1];
+    if(d.start||ap.id==='apPlay'){if(!YTP||CUR!==id){startPlayer(id);return}YTP.getPlayerState()===1?YTP.pauseVideo():YTP.playVideo();return}
+    if(d.sk){if(YTP)YTP.seekTo(Math.max(0,YTP.getCurrentTime()+ +d.sk),true);return}
+    if(ap.id==='apRate'){if(!YTP)return;const r=RATES[(RATES.indexOf(YTP.getPlaybackRate())+1)%RATES.length];YTP.setPlaybackRate(r);ap.textContent='السرعة '+r+'×';return}
     if('tg' in d){if(!(isAnd||isIOS))return;e.preventDefault();const post=d.tg,web=tgLink(post);appOpen(`tg://resolve?domain=KhaledAlMuhanna${post?'&post='+post:''}`,web,`intent://resolve?domain=KhaledAlMuhanna${post?'&post='+post:''}#Intent;scheme=tg;S.browser_fallback_url=${enc(web)};end`);return}
     if(d.yt){if(!(isAnd||isIOS))return;e.preventDefault();YTP&&YTP.pauseVideo&&YTP.pauseVideo();const web='https://www.youtube.com/watch?v='+d.yt;appOpen('youtube://www.youtube.com/watch?v='+d.yt,web,`intent://www.youtube.com/watch?v=${d.yt}#Intent;scheme=https;package=com.google.android.youtube;S.browser_fallback_url=${enc(web)};end`);return}
     if('ytc' in d){if(!(isAnd||isIOS))return;e.preventDefault();const web='https://www.youtube.com/@khalid_almihana';appOpen('youtube://www.youtube.com/@khalid_almihana',web,`intent://www.youtube.com/@khalid_almihana#Intent;scheme=https;package=com.google.android.youtube;S.browser_fallback_url=${enc(web)};end`);return}
   }
-  const t=e.target.closest('[data-play],[data-share],[data-fav],[data-more],[data-mur],[data-copy],[data-close],[data-dset],[data-cal],[data-q],[data-node]');
+  const t=e.target.closest('[data-share],[data-fav],[data-more],[data-copy],[data-dset],[data-cal],[data-q],[data-node],[data-af],[data-near]');
   if(!t)return;
   const d=t.dataset;
-  if(d.play){sheetItem(BYID[d.play])}
-  else if(d.share){const it=BYID[d.share];const url='https://'+siteLink(it);if(navigator.share)navigator.share({title:titleOf(it)+' — الشيخ د. خالد المهنا',text:titleOf(it)+' — '+subOf(it).replace(/<[^>]+>/g,''),url}).catch(()=>{});else copy(url)}
-  else if(d.fav){const id=d.fav;FAV.has(id)?FAV.delete(id):FAV.add(id);saveFav();t.classList.toggle('on',FAV.has(id));t.classList.remove('pop');void t.offsetWidth;t.classList.add('pop');toast(FAV.has(id)?'أُضيفت إلى المفضلة':'أُزيلت من المفضلة');if(location.hash==='#fav')render(false)}
+  if(d.share){const it=BYID[d.share];const url=siteUrl(it);if(navigator.share)navigator.share({title:plain(titleOf(it)),text:shareMsg(it).replace('\n\n'+url,''),url}).catch(()=>{});else copy(shareMsg(it))}
+  else if(d.fav){const id=d.fav;FAV.has(id)?FAV.delete(id):FAV.add(id);saveFav();t.classList.toggle('on',FAV.has(id));if(t.classList.contains('fl-btn'))t.textContent=FAV.has(id)?'في المفضلة ♥':'أضف للمفضلة ♡';toast(FAV.has(id)?'أُضيفت إلى المفضلة':'أُزيلت من المفضلة');if(location.hash==='#fav')render(false)}
   else if(d.more){const k=d.more;LIM[k]=(LIM[k]||24)+24;t.closest('[data-list]').innerHTML=listHTML(k)}
-  else if(d.mur){sheetMur(+d.mur)}
   else if(d.copy){copy(d.copy)}
-  else if('close' in d){closeSheet()}
   else if(d.dset){DS.iso=d.dset;render(false);const h=$('.dhead');if(h)h.scrollIntoView({behavior:'smooth',block:'start'})}
   else if(d.cal){DS.cal=d.cal;render(false)}
-  else if(d.q){SQ=d.q;$('#q').value=SQ;runSearch()}
+  else if(d.q){SQ=d.q;SNEAR=false;$('#q').value=SQ;runSearch()}
+  else if(d.near){SNEAR=true;runSearch()}
+  else if(d.af){const [k,v]=d.af.split(':');AF[k]=v;render(false)}
   else if(d.node){e.preventDefault();const g=$('#g'+d.node)||$('.late');if(g)g.scrollIntoView({behavior:'smooth',block:'center'})}
 });
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet()});
 
 /* ---------- theme ---------- */
 const TB=$('#theme');
@@ -824,12 +1096,12 @@ TB.addEventListener('click',()=>setTheme(document.documentElement.dataset.theme=
 
 $('#ytc').textContent=ar(RAW.length)+' مقطع';
 try{$('#sync').textContent='آخر تحديث: '+new Intl.DateTimeFormat('ar-SA-u-ca-gregory-nu-arab',{dateStyle:'medium',timeStyle:'short'}).format(new Date(SYNC.replace('Z',':00Z')))}catch(e){}
-const pm=location.pathname.match(/^\/(\d{4})\/(\d{1,2})\/(\d{1,2})(?:\/(\w+))?\/?$/),pv=location.pathname.match(/^\/v\/([\w-]{11})/);
-let openId=null;
-if(pm){const iso=H2G[`${+pm[1]}-${+pm[2]}-${+pm[3]}`];if(iso){DS.iso=iso;const f=SORTED.find(x=>x.d===iso&&(!pm[4]||x.t===pm[4]));if(f)openId=f.id;history.replaceState(null,'','/#date')}}
-if(pv&&BYID[pv[1]]){openId=pv[1];history.replaceState(null,'','/')}
+/* short links: /v/ID, /?v=ID, and the old /YYYY/MM/DD/type form */
+const pv=location.pathname.match(/^\/v\/([\w-]{11})/)||location.search.match(/[?&]v=([\w-]{11})/);
+const pm=location.pathname.match(/^\/(\d{4})\/(\d{1,2})\/(\d{1,2})(?:\/(\w+))?\/?$/);
+if(pv)history.replaceState(null,'','/#v/'+pv[1]);
+else if(pm){const iso=H2G[`${+pm[1]}-${+pm[2]}-${+pm[3]}`];const f=iso&&SORTED.find(x=>x.d===iso&&(!pm[4]||x.t===pm[4]));history.replaceState(null,'',f?'/#v/'+f.id:'/#date');if(iso)DS.iso=iso}
 render(false);
-if(openId)sheetItem(BYID[openId]);
 if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
 })();
 </script>
