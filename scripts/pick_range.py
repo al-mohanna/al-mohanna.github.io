@@ -36,6 +36,9 @@ for vid, v in F.items():
     T = norm(digits(v['title']))
     p = parse(vid, v['title'] + ' ' + (v.get('dur') or '0:00'), 0)
     t, y, m, d = p['t'], p.get('y') or 0, p.get('m') or 0, p.get('d') or 0
+    if not y:                                                 # «… ليلة 20 رمضان … لعام 1440هـ»: year far from the month
+        my = re.search(r'(?<!\d)(14[34]\d)(?!\d)', T)
+        y = int(my.group(1)) if my else 0
     if t in ('fajr', 'maghrib', 'isha', 'jumuah') and y and m and d and LO <= hk(y, m, d) <= HI:
         key = (t, y, m, d)
     elif re.search(r'تراويح|تروايح|تهجد|قيام|رمضان', T) and (y or 0) in range(1436, 1442) and not MULTI.search(T) and secs(v.get('dur')) <= 2.5 * 3600:
