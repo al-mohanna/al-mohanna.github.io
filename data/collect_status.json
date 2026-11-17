@@ -1,9 +1,9 @@
 {
  "complete": false,
- "total": 2063,
- "tasks_done": 7,
+ "total": 11954,
+ "tasks_done": 14,
  "tasks_all": 178,
- "channels_done": 9,
+ "channels_done": 15,
  "runs": [
   {
    "at": "2026-11-16T20:30:12Z",
@@ -14,7 +14,12 @@
    "at": "2026-11-17T09:18:35Z",
    "added": 296,
    "total": 2063
+  },
+  {
+   "at": "2026-11-17T09:25:57Z",
+   "added": 9891,
+   "total": 11954
   }
  ],
- "updated_utc": "2026-11-17T09:18:35Z"
+ "updated_utc": "2026-11-17T09:25:57Z"
 }
