@@ -2,7 +2,7 @@
 Runs nightly in GitHub Actions and resumes where it stopped (YouTube allows ~100 searches a day).
 1) many searches (name spellings x topics x years), 2) then every upload of channels that publish him.
 Writes data/found.json (all finds) and data/found.csv (opens in Excel) with a status per video."""
-import json, os, re, sys, csv, urllib.request, urllib.parse, urllib.error, datetime
+import json, os, re, sys, csv, time, urllib.request, urllib.parse, urllib.error, datetime
 sys.path.insert(0, os.path.dirname(__file__))
 from parse_lib import norm
 
@@ -24,13 +24,18 @@ def get(path, cheap=True, **q):
         if used['search'] >= MAX_SEARCH: raise Quota('search budget')
         used['search'] += 1
     q['key'] = KEY
-    try:
-        with urllib.request.urlopen(API + path + '?' + urllib.parse.urlencode(q), timeout=40) as r:
-            return json.load(r)
-    except urllib.error.HTTPError as e:
-        body = e.read().decode('utf8', 'ignore')
-        if e.code == 403 and 'quota' in body.lower(): raise Quota('daily quota')
-        raise
+    if not cheap: time.sleep(1.5)                      # be gentle: YouTube refuses bursts (429)
+    for attempt in range(5):
+        try:
+            with urllib.request.urlopen(API + path + '?' + urllib.parse.urlencode(q), timeout=40) as r:
+                return json.load(r)
+        except urllib.error.HTTPError as e:
+            body = e.read().decode('utf8', 'ignore')
+            if e.code == 403 and 'quotaexceeded' in body.lower().replace(' ', ''): raise Quota('daily quota')
+            if e.code == 429 or (e.code == 403 and 'ratelimit' in body.lower()) or e.code >= 500:
+                time.sleep(20 * (attempt + 1)); continue
+            raise
+    raise Quota('YouTube keeps refusing (rate limit)')
 
 # ---- is this video about our Sheikh? ----
 NAME = re.compile(r'مهنا|muhanna|mohanna|mehanna|mihana|muhana|mohana', re.I)
