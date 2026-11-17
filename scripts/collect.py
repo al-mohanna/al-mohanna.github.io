@@ -11,7 +11,7 @@ API = 'https://www.googleapis.com/youtube/v3/'
 ROOT = os.path.join(os.path.dirname(__file__), '..')
 OWN = '@khalid_almihana'
 MAX_SEARCH = int(os.environ.get('MAX_SEARCH', '70'))     # 100 units each
-MAX_PAGES = int(os.environ.get('MAX_PAGES', '600'))      # 1 unit each (channel uploads, details)
+MAX_PAGES = int(os.environ.get('MAX_PAGES', '1200'))      # 1 unit each (channel uploads, details)
 
 class Quota(Exception): pass
 used = {'search': 0, 'cheap': 0}
@@ -126,7 +126,7 @@ def main():
                 if cid in S['chan_done'] or n < 3: continue
                 up = get('channels', part='contentDetails', id=cid)['items']
                 if up:
-                    pl, token = up[0]['contentDetails']['relatedPlaylists']['uploads'], None
+                    pl, token = up[0]['contentDetails']['relatedPlaylists']['uploads'], S.setdefault('chan_tok', {}).get(cid)
                     while True:
                         p = dict(part='snippet', playlistId=pl, maxResults=50)
                         if token: p['pageToken'] = token
@@ -136,27 +136,33 @@ def main():
                             sn['channelTitle'] = sn.get('videoOwnerChannelTitle') or sn.get('channelTitle', '')
                             keep(sn['resourceId']['videoId'], sn, 'قناة: ' + sn['channelTitle'])
                         token = r.get('nextPageToken')
+                        S['chan_tok'][cid] = token
                         if not token: break
                 S['chan_done'].append(cid)
-        channels()
-        # 2) searches
-        for q, gy in tasks():
-            key = f'{q}|{gy or ""}'
-            if key in S['done']: continue
-            token, dry = None, 0
-            for _ in range(10):
-                p = dict(part='snippet', q=q, type='video', maxResults=50, relevanceLanguage='ar')
-                if gy: p.update(publishedAfter=f'{gy}-01-01T00:00:00Z', publishedBefore=f'{gy+1}-01-01T00:00:00Z')
-                if token: p['pageToken'] = token
-                r = get('search', cheap=False, **p)
-                hits = sum(keep(it['id']['videoId'], it['snippet'], 'بحث: ' + q) for it in r.get('items', []) if it['id'].get('videoId'))
-                dry = dry + 1 if hits == 0 else 0
-                token = r.get('nextPageToken')
-                if not token or dry >= 2: break
-            S['done'].append(key)
-
-        channels()   # channels discovered by tonight's searches
-        S['complete'] = True
+        # 1) searches first (the scarce, expensive part of the daily quota)
+        searched_all = False
+        try:
+            for q, gy in tasks():
+                key = f'{q}|{gy or ""}'
+                if key in S['done']: continue
+                token, dry = None, 0
+                for _ in range(10):
+                    p = dict(part='snippet', q=q, type='video', maxResults=50, relevanceLanguage='ar')
+                    if gy: p.update(publishedAfter=f'{gy}-01-01T00:00:00Z', publishedBefore=f'{gy+1}-01-01T00:00:00Z')
+                    if token: p['pageToken'] = token
+                    r = get('search', cheap=False, **p)
+                    hits = sum(keep(it['id']['videoId'], it['snippet'], 'بحث: ' + q) for it in r.get('items', []) if it['id'].get('videoId'))
+                    dry = dry + 1 if hits == 0 else 0
+                    token = r.get('nextPageToken')
+                    if not token or dry >= 2: break
+                S['done'].append(key)
+            searched_all = True
+        except Quota as e: print('searches stopped:', e)
+        # 2) then every upload of the channels that publish the Sheikh, resuming where the last run stopped
+        try: channels()
+        except Quota as e: print('channels stopped:', e)
+        seeds = {c for c in {v['cid'] for v in F.values() if v['cid']} if sum(1 for v in F.values() if v['cid'] == c and not v['note']) >= 3}
+        S['complete'] = searched_all and all(c in S['chan_done'] for c in seeds - {S['own']})
     except Quota as e:
         S['complete'] = False
         print('stopped:', e)
