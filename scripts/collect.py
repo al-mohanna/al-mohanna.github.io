@@ -139,7 +139,9 @@ def main():
                         for it in r.get('items', []):
                             sn = it['snippet']; sn['channelId'] = cid
                             sn['channelTitle'] = sn.get('videoOwnerChannelTitle') or sn.get('channelTitle', '')
-                            keep(sn['resourceId']['videoId'], sn, 'قناة: ' + sn['channelTitle'])
+                            # a general channel (not named after the Sheikh): only videos naming him in the title
+                            if NAME.search(sn['channelTitle'] or '') or NAME.search(sn.get('title', '')):
+                                keep(sn['resourceId']['videoId'], sn, 'قناة: ' + sn['channelTitle'])
                         token = r.get('nextPageToken')
                         S['chan_tok'][cid] = token
                         if not token: break
@@ -176,6 +178,7 @@ def main():
 
         own = S.get('own')
         for k in [k for k, v in F.items() if v['cid'] in BLOCK_CH or v['cid'] == own]: del F[k]   # never list our channel or the singer
+        for k in [k for k, v in F.items() if v.get('how', '').startswith('قناة:') and not NAME.search(v['channel']) and not NAME.search(v['title'])]: del F[k]
         # both Mushafs (Prophet's Mosque and King Fahd Complex) are out of scope
         mus = lambda v: MUSHAF.search(v['title'] + ' ' + v.get('desc', '')) and not PRAYER.search(v['title'])
         for k in [k for k, v in F.items() if mus(v)]: del F[k]
