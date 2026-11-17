@@ -1282,12 +1282,6 @@
   "m": 9,
   "d": 0
  },
- "59ckHXiiQ4U": {
-  "t": "fajr",
-  "y": 1441,
-  "m": 3,
-  "d": 5
- },
  "Y6ROfgz5x7k": {
   "t": "fajr",
   "y": 1441,
@@ -1438,12 +1432,6 @@
   "m": 1,
   "d": 9
  },
- "PCqHHcygtps": {
-  "t": "fajr",
-  "y": 1442,
-  "m": 1,
-  "d": 10
- },
  "h68sWOEiMis": {
   "t": "fajr",
   "y": 1442,
@@ -1455,12 +1443,6 @@
   "y": 1442,
   "m": 1,
   "d": 25
- },
- "A1eln_njXKE": {
-  "t": "isha",
-  "y": 1441,
-  "m": 2,
-  "d": 27
  },
  "UFFiOPsLu9Y": {
   "t": "isha",
@@ -1510,12 +1492,6 @@
   "m": 5,
   "d": 6
  },
- "gnWp_bTMVSY": {
-  "t": "isha",
-  "y": 1441,
-  "m": 5,
-  "d": 7
- },
  "r4N4uKs4zbg": {
   "t": "isha",
   "y": 1441,
@@ -1540,35 +1516,11 @@
   "m": 8,
   "d": 12
  },
- "0pcqJxmQh9k": {
-  "t": "isha",
-  "y": 1441,
-  "m": 8,
-  "d": 15
- },
  "HpsbxEATmNk": {
   "t": "isha",
   "y": 1441,
   "m": 8,
   "d": 17
- },
- "ip5izjvBvOQ": {
-  "t": "isha",
-  "y": 1442,
-  "m": 1,
-  "d": 18
- },
- "JxDmfNmgk6I": {
-  "t": "isha",
-  "y": 1442,
-  "m": 1,
-  "d": 19
- },
- "XkJ5yEh1-zA": {
-  "t": "isha",
-  "y": 1442,
-  "m": 1,
-  "d": 20
  },
  "gj_qkSCMxsU": {
   "t": "isha",
@@ -1576,23 +1528,11 @@
   "m": 1,
   "d": 21
  },
- "VYe4HK0yLbQ": {
-  "t": "isha",
-  "y": 1442,
-  "m": 1,
-  "d": 22
- },
  "6Xq-Q-HODRA": {
   "t": "isha",
   "y": 1442,
   "m": 1,
   "d": 23
- },
- "ocmvkGZ7ccs": {
-  "t": "maghrib",
-  "y": 1441,
-  "m": 2,
-  "d": 15
  },
  "yZHuZYlmAP4": {
   "t": "maghrib",
@@ -1720,53 +1660,11 @@
   "m": 9,
   "d": 7
  },
- "5qLBTmZC1xA": {
-  "t": "taraweeh",
-  "y": 1437,
-  "m": 9,
-  "d": 8
- },
- "Nrl93UAqGsk": {
-  "t": "taraweeh",
-  "y": 1437,
-  "m": 9,
-  "d": 8
- },
- "YN7G9U3apOo": {
-  "t": "taraweeh",
-  "y": 1438,
-  "m": 9,
-  "d": 4
- },
  "OVAFkOBAHMU": {
   "t": "taraweeh",
   "y": 1438,
   "m": 9,
   "d": 8
- },
- "YCBdU8hiS20": {
-  "t": "taraweeh",
-  "y": 1438,
-  "m": 9,
-  "d": 12
- },
- "sDX_X8s3SBA": {
-  "t": "taraweeh",
-  "y": 1438,
-  "m": 9,
-  "d": 20
- },
- "3328c03C-rY": {
-  "t": "taraweeh",
-  "y": 1438,
-  "m": 9,
-  "d": 27
- },
- "vkshb_APAcg": {
-  "t": "taraweeh",
-  "y": 1439,
-  "m": 9,
-  "d": 15
  },
  "hXkV68bI4xw": {
   "t": "taraweeh",
@@ -1774,59 +1672,17 @@
   "m": 9,
   "d": 25
  },
- "BBXPb4edE58": {
-  "t": "taraweeh",
-  "y": 1439,
-  "m": 9,
-  "d": 27
- },
- "chtI67tka8M": {
-  "t": "taraweeh",
-  "y": 1439,
-  "m": 9,
-  "d": 29
- },
  "FKLe5w1JhQ4": {
   "t": "taraweeh",
   "y": 1440,
   "m": 9,
   "d": 0
  },
- "OUOnVzY513o": {
-  "t": "taraweeh",
-  "y": 1440,
-  "m": 9,
-  "d": 2
- },
  "yr5ugpvDXjQ": {
   "t": "taraweeh",
   "y": 1441,
   "m": 9,
   "d": 0
- },
- "1lKTsh1UR2I": {
-  "t": "taraweeh",
-  "y": 1441,
-  "m": 9,
-  "d": 12
- },
- "f6dzvNCtckA": {
-  "t": "taraweeh",
-  "y": 1441,
-  "m": 9,
-  "d": 15
- },
- "RPsKfQ4eKdo": {
-  "t": "taraweeh",
-  "y": 1441,
-  "m": 9,
-  "d": 15
- },
- "H0WHO0CmfJI": {
-  "t": "taraweeh",
-  "y": 1441,
-  "m": 9,
-  "d": 27
  },
  "_RBkyIU6uFA": {
   "t": "taraweeh",
@@ -1851,18 +1707,6 @@
   "y": 1439,
   "m": 9,
   "d": 3
- },
- "wNt-LeCvOxs": {
-  "t": "taraweeh",
-  "y": 1440,
-  "m": 9,
-  "d": 17
- },
- "ieEOoxa1ZeI": {
-  "t": "taraweeh",
-  "y": 1440,
-  "m": 9,
-  "d": 20
  },
  "fuGIMqOZGG0": {
   "t": "fajr",
@@ -2253,5 +2097,521 @@
   "y": 1441,
   "m": 9,
   "d": 30
+ },
+ "-JKtJAT4UHA": {
+  "t": "fajr",
+  "y": 1441,
+  "m": 3,
+  "d": 5
+ },
+ "HQzbWoicekM": {
+  "t": "fajr",
+  "y": 1441,
+  "m": 11,
+  "d": 9
+ },
+ "tM0pgH7bD-M": {
+  "t": "fajr",
+  "y": 1441,
+  "m": 11,
+  "d": 10
+ },
+ "Yce-v5xD9s4": {
+  "t": "fajr",
+  "y": 1441,
+  "m": 12,
+  "d": 4
+ },
+ "5hT0N5IagBQ": {
+  "t": "fajr",
+  "y": 1441,
+  "m": 12,
+  "d": 5
+ },
+ "puto6z21Rf0": {
+  "t": "fajr",
+  "y": 1442,
+  "m": 1,
+  "d": 10
+ },
+ "r3by3t0t9Go": {
+  "t": "isha",
+  "y": 1441,
+  "m": 2,
+  "d": 27
+ },
+ "Oq6EWcNiyqA": {
+  "t": "isha",
+  "y": 1441,
+  "m": 5,
+  "d": 7
+ },
+ "yaBZNKRIOwo": {
+  "t": "isha",
+  "y": 1441,
+  "m": 8,
+  "d": 15
+ },
+ "HwJQo-IH0fg": {
+  "t": "isha",
+  "y": 1441,
+  "m": 8,
+  "d": 16
+ },
+ "5RNHfTAKStk": {
+  "t": "isha",
+  "y": 1442,
+  "m": 1,
+  "d": 18
+ },
+ "Ke0CZPYAMJg": {
+  "t": "isha",
+  "y": 1442,
+  "m": 1,
+  "d": 19
+ },
+ "Nkcd4iQ5SIY": {
+  "t": "isha",
+  "y": 1442,
+  "m": 1,
+  "d": 20
+ },
+ "Xur-M7W5jyM": {
+  "t": "isha",
+  "y": 1442,
+  "m": 1,
+  "d": 22
+ },
+ "-6xRlgcq4T8": {
+  "t": "isha",
+  "y": 1442,
+  "m": 1,
+  "d": 24
+ },
+ "JqDniTFHzME": {
+  "t": "maghrib",
+  "y": 1441,
+  "m": 2,
+  "d": 15
+ },
+ "i4Z1AZtD7PM": {
+  "t": "maghrib",
+  "y": 1441,
+  "m": 8,
+  "d": 28
+ },
+ "kwLInntHpLI": {
+  "t": "maghrib",
+  "y": 1441,
+  "m": 8,
+  "d": 29
+ },
+ "J2J2TmCFVnk": {
+  "t": "maghrib",
+  "y": 1441,
+  "m": 10,
+  "d": 28
+ },
+ "P5Tx24v4Q8w": {
+  "t": "maghrib",
+  "y": 1441,
+  "m": 10,
+  "d": 29
+ },
+ "ydzPAk6RriY": {
+  "t": "maghrib",
+  "y": 1441,
+  "m": 11,
+  "d": 4
+ },
+ "IxLx4n5ngbk": {
+  "t": "taraweeh",
+  "y": 1436,
+  "m": 9,
+  "d": 0
+ },
+ "91bwuncakUg": {
+  "t": "taraweeh",
+  "y": 1436,
+  "m": 9,
+  "d": 12
+ },
+ "-aS1GlgNZnY": {
+  "t": "taraweeh",
+  "y": 1436,
+  "m": 9,
+  "d": 22
+ },
+ "JGcAO5rlQsA": {
+  "t": "taraweeh",
+  "y": 1437,
+  "m": 9,
+  "d": 0
+ },
+ "YERqHF5XuRg": {
+  "t": "taraweeh",
+  "y": 1437,
+  "m": 9,
+  "d": 8
+ },
+ "Dzg4y6-Qf-A": {
+  "t": "taraweeh",
+  "y": 1437,
+  "m": 9,
+  "d": 11
+ },
+ "memROsNLc2k": {
+  "t": "taraweeh",
+  "y": 1437,
+  "m": 9,
+  "d": 19
+ },
+ "wrdHlFORarE": {
+  "t": "taraweeh",
+  "y": 1437,
+  "m": 9,
+  "d": 24
+ },
+ "EPFD8s4m8Is": {
+  "t": "taraweeh",
+  "y": 1437,
+  "m": 9,
+  "d": 26
+ },
+ "Xl82s6ODjOU": {
+  "t": "taraweeh",
+  "y": 1437,
+  "m": 9,
+  "d": 28
+ },
+ "Xp75vk_zYwI": {
+  "t": "taraweeh",
+  "y": 1438,
+  "m": 9,
+  "d": 3
+ },
+ "d0TodxXHHEw": {
+  "t": "taraweeh",
+  "y": 1438,
+  "m": 9,
+  "d": 4
+ },
+ "EI8aWjMRPf0": {
+  "t": "taraweeh",
+  "y": 1438,
+  "m": 9,
+  "d": 7
+ },
+ "z8gn4tLTOoE": {
+  "t": "taraweeh",
+  "y": 1438,
+  "m": 9,
+  "d": 12
+ },
+ "EkMbM2UM4PM": {
+  "t": "taraweeh",
+  "y": 1438,
+  "m": 9,
+  "d": 20
+ },
+ "VNZxCsEJjg8": {
+  "t": "taraweeh",
+  "y": 1438,
+  "m": 9,
+  "d": 21
+ },
+ "H_wUaXMJrEg": {
+  "t": "taraweeh",
+  "y": 1438,
+  "m": 9,
+  "d": 23
+ },
+ "8QwzUBTQX_Q": {
+  "t": "taraweeh",
+  "y": 1438,
+  "m": 9,
+  "d": 25
+ },
+ "hWlMvwIBTDY": {
+  "t": "taraweeh",
+  "y": 1438,
+  "m": 9,
+  "d": 27
+ },
+ "CN-QTrbspJo": {
+  "t": "taraweeh",
+  "y": 1439,
+  "m": 9,
+  "d": 7
+ },
+ "1d283M00fCg": {
+  "t": "taraweeh",
+  "y": 1439,
+  "m": 9,
+  "d": 15
+ },
+ "S41dC01NwZk": {
+  "t": "taraweeh",
+  "y": 1439,
+  "m": 9,
+  "d": 19
+ },
+ "AgqSeqSlTy8": {
+  "t": "taraweeh",
+  "y": 1439,
+  "m": 9,
+  "d": 21
+ },
+ "yK5SQTgqxPk": {
+  "t": "taraweeh",
+  "y": 1439,
+  "m": 9,
+  "d": 23
+ },
+ "rlxeD1j5C2A": {
+  "t": "taraweeh",
+  "y": 1439,
+  "m": 9,
+  "d": 27
+ },
+ "8_P9XNP557s": {
+  "t": "taraweeh",
+  "y": 1439,
+  "m": 9,
+  "d": 29
+ },
+ "KK7rV0wyrsM": {
+  "t": "taraweeh",
+  "y": 1440,
+  "m": 9,
+  "d": 0
+ },
+ "kpN8c2-m6gc": {
+  "t": "taraweeh",
+  "y": 1440,
+  "m": 9,
+  "d": 1
+ },
+ "rSZBS03OC0c": {
+  "t": "taraweeh",
+  "y": 1440,
+  "m": 9,
+  "d": 2
+ },
+ "W3wTA0QrqIU": {
+  "t": "taraweeh",
+  "y": 1440,
+  "m": 9,
+  "d": 4
+ },
+ "hlWL-zPLcZU": {
+  "t": "taraweeh",
+  "y": 1440,
+  "m": 9,
+  "d": 5
+ },
+ "iEebfK0CRXk": {
+  "t": "taraweeh",
+  "y": 1440,
+  "m": 9,
+  "d": 7
+ },
+ "Tb6hVlJorTc": {
+  "t": "taraweeh",
+  "y": 1440,
+  "m": 9,
+  "d": 8
+ },
+ "T_2vwgHN_yU": {
+  "t": "taraweeh",
+  "y": 1440,
+  "m": 9,
+  "d": 10
+ },
+ "VsYFG6Pnoek": {
+  "t": "taraweeh",
+  "y": 1440,
+  "m": 9,
+  "d": 11
+ },
+ "CyBcy7tjtAY": {
+  "t": "taraweeh",
+  "y": 1440,
+  "m": 9,
+  "d": 13
+ },
+ "Nt-Z7eTJvh8": {
+  "t": "taraweeh",
+  "y": 1440,
+  "m": 9,
+  "d": 14
+ },
+ "mtEaypp4gvA": {
+  "t": "taraweeh",
+  "y": 1440,
+  "m": 9,
+  "d": 16
+ },
+ "rj15_dwlgAQ": {
+  "t": "taraweeh",
+  "y": 1440,
+  "m": 9,
+  "d": 17
+ },
+ "enw2CLpnMTU": {
+  "t": "taraweeh",
+  "y": 1440,
+  "m": 9,
+  "d": 20
+ },
+ "UG9Ql3rW3Ag": {
+  "t": "taraweeh",
+  "y": 1440,
+  "m": 9,
+  "d": 21
+ },
+ "Yj-n6w3jrzc": {
+  "t": "taraweeh",
+  "y": 1440,
+  "m": 9,
+  "d": 23
+ },
+ "YgEDS_ileiA": {
+  "t": "taraweeh",
+  "y": 1440,
+  "m": 9,
+  "d": 24
+ },
+ "j829EEjlrpo": {
+  "t": "taraweeh",
+  "y": 1440,
+  "m": 9,
+  "d": 26
+ },
+ "KYs9_Of9Epg": {
+  "t": "taraweeh",
+  "y": 1440,
+  "m": 9,
+  "d": 27
+ },
+ "2oLcmN7dBlM": {
+  "t": "taraweeh",
+  "y": 1440,
+  "m": 9,
+  "d": 29
+ },
+ "oeUi12d9ol4": {
+  "t": "taraweeh",
+  "y": 1441,
+  "m": 9,
+  "d": 2
+ },
+ "wQq7grgtrYM": {
+  "t": "taraweeh",
+  "y": 1441,
+  "m": 9,
+  "d": 3
+ },
+ "FLbyalRvwkw": {
+  "t": "taraweeh",
+  "y": 1441,
+  "m": 9,
+  "d": 5
+ },
+ "x7_Pj2giW1Y": {
+  "t": "taraweeh",
+  "y": 1441,
+  "m": 9,
+  "d": 6
+ },
+ "q74r8KmLHAM": {
+  "t": "taraweeh",
+  "y": 1441,
+  "m": 9,
+  "d": 8
+ },
+ "YR8UiWPHalE": {
+  "t": "taraweeh",
+  "y": 1441,
+  "m": 9,
+  "d": 9
+ },
+ "H9MouDg-2m4": {
+  "t": "taraweeh",
+  "y": 1441,
+  "m": 9,
+  "d": 11
+ },
+ "uwp19WQ4loc": {
+  "t": "taraweeh",
+  "y": 1441,
+  "m": 9,
+  "d": 12
+ },
+ "NoZ0ZeaAAd0": {
+  "t": "taraweeh",
+  "y": 1441,
+  "m": 9,
+  "d": 14
+ },
+ "YNxWnKP7spc": {
+  "t": "taraweeh",
+  "y": 1441,
+  "m": 9,
+  "d": 15
+ },
+ "bbdCPCnG3kw": {
+  "t": "taraweeh",
+  "y": 1441,
+  "m": 9,
+  "d": 17
+ },
+ "uVxkUj86HE8": {
+  "t": "taraweeh",
+  "y": 1441,
+  "m": 9,
+  "d": 18
+ },
+ "1P180ofIOgs": {
+  "t": "taraweeh",
+  "y": 1441,
+  "m": 9,
+  "d": 21
+ },
+ "VrTXzJfLT_o": {
+  "t": "taraweeh",
+  "y": 1441,
+  "m": 9,
+  "d": 23
+ },
+ "PC2DyHsqb9A": {
+  "t": "taraweeh",
+  "y": 1441,
+  "m": 9,
+  "d": 24
+ },
+ "1btCG-YX81c": {
+  "t": "taraweeh",
+  "y": 1441,
+  "m": 9,
+  "d": 25
+ },
+ "74UZEpt2eMA": {
+  "t": "taraweeh",
+  "y": 1441,
+  "m": 9,
+  "d": 26
+ },
+ "5F44nhER-LE": {
+  "t": "taraweeh",
+  "y": 1441,
+  "m": 9,
+  "d": 27
+ },
+ "c8nExcjfZa0": {
+  "t": "taraweeh",
+  "y": 1441,
+  "m": 9,
+  "d": 29
  }
 }
