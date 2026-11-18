@@ -63,12 +63,10 @@ def main():
         elif m.get('t') and m['t'] != 'other': t = m['t']
         if m.get('y') and (m.get('d') or not (y and mo and d)): y, mo, d = m['y'], m.get('m', 0), m.get('d', 0)
         if m.get('s'): S = [s for s in m['s'] if s != 1] or S
-        if m.get('k'): S = []
         if t == 'khutbah': title = 'خطبة الجمعة' + (f' – {r[9]}' if r[9] else '')
         elif t in ('collection', 'lecture'): title = r[8].replace('#', '').split('||')[0].strip()[:90]
         elif t == 'murattal': title = (f'{snames(S[:1])} – ' if S else '') + 'المصحف المرتل'
-        elif t == 'short' and m.get('k'): title = 'مقتطف من خطبة الجمعة' if m['k'] == 'kh' else 'من دعاء القنوت'
-        elif t == 'short': title = (snames(S) if S else 'مقطع قصير') + ' – مقطع قصير'
+        elif t == 'short': title = r[8].strip()[:110]
         else: title = TL.get(t, 'تلاوة') + (f' – {snames(S)}' if S else '')
         date = (f'{d} {HM[mo-1]} {y}هـ' if y and mo and d else f'{HM[mo-1]} {y}هـ' if y and mo else f'عام {y}هـ' if y else '').translate(AR)
         desc = 'استمع إلى هذه التلاوة الرائعة من تلاوات الشيخ خالد المهنا' + (f' – {date}' if date else '') + '، إمام وخطيب المسجد النبوي.'
